@@ -11,3 +11,4 @@
 - Issues are assigned to milestones which allows us to track our progress towards meeting a specific deadline. Issues can be assigned to multiple milestones.
 - The **README** is written in the [markdown format](https://youtu.be/HUBNt18RFbo?si=gQAA_U-E8poBMxpN), most importantly: [emojis](https://gist.github.com/rxaviers/7360908) can be used throughout :smirk:
 - A Discord Bot will send notifications of any hapennings on the repo to the `github-updates` text channel on our Discord server
+- git showcase
