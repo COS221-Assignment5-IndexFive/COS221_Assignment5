@@ -1,10 +1,7 @@
-/* retailer_detail.css */
-
-/* Layout grid for retailer detail form */
 .retailer-detail form {
   display: grid;
   grid-template-columns: 1fr 2fr;
-  gap: 1.5rem 2rem; /* Increased vertical spacing between fields */
+  gap: 1.5rem 2rem;
   align-items: start;
   max-width: 800px;
   margin: 0 auto;
@@ -14,7 +11,7 @@
 .form-group {
   display: flex;
   flex-direction: column;
-  margin-bottom: 1rem; /* Extra spacing between each form field */
+  margin-bottom: 1rem; 
 }
 
 .form-group label {
