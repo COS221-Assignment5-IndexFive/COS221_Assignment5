@@ -27,9 +27,9 @@ class API {
 	public function handleRequest() {
 
     $input = json_decode(file_get_contents("php://input"), true);
-    // echo json_encode(['input' => $input]);
+    echo json_encode(['input' => $input]);
 
-		$action = $input['action'] ?? $_POST['action'] ?? $_GET['action'] ?? null;
+		$action = $input['type'] ?? $_POST['type'] ?? $_GET['type'] ?? null;
 
 		if (!$action) {
 			sendResponse($success=false, $data = null, $message = 'No action specified.', $statusCode = 400) ;
@@ -37,10 +37,10 @@ class API {
 		}
 
 		switch ($action) {
-      case 'signup':
+      case 'Register':
 				register($this->conn,  $input);
         break;
-      case 'login':
+      case 'Login':
 				login($this->conn,  $input);
         break;
 			default:

@@ -1,34 +1,43 @@
 <?php
 session_start();
 
+
+
+
 function register($connection, $data)
 {
 
+
     $hashed = password_hash($data["password"], PASSWORD_DEFAULT);
+    $aoikey = bin2hex(random_bytes(16)); // generating the api key - 32 char alphanumeric
+
 
     // note user_id == auto increment
     $stmt = $connection->prepare("
-        INSERT INTO users (password_hash, first_name, last_name, cell_number, email_address)
-        VALUES (?, ?, ?, ?, ?)
+        INSERT INTO users (password_hash, first_name, last_name, cell_number, email_address, apikey)
+        VALUES (?, ?, ?, ?, ?, ?)
     ");
 
     if (!$stmt) {
         sendResponse($success=false, $data=null,$message='Preparation failed: ' . $connection->error, $statusCode=500);
     }
 
+    $cellNumber = $data["cell_number"] ?? '';
+
     $stmt->bind_param(
-        "sssss",
+        "ssssss",
         $hashed,
-        $data["first_name"],
-        $data["last_name"],
-        $data["cell_number"],
-        $data["email_address"]
-    );
+        $data["name"],
+        $data["surname"],
+        $cellNumber,
+        $data["email"],
+        $aoikey
+    ) ;
 
     $result = $stmt->execute();
 
     if ($result) {
-        sendResponse($success=true, $data=null,$message='User registered successfully.', $statusCode=200);
+        sendResponse($success=true, $data=['apikey' => $aoikey ],$message='User registered successfully.', $statusCode=200);
     } else {
         sendResponse($success=false, $data=null,$message='Registration failed: ' . $stmt->error, $statusCode=500);
     }
@@ -42,7 +51,7 @@ function login($connection, $data)
     $email = $data['email_address'];
     $password = $data['password'];
 
-    $stmt = $connection->prepare("SELECT user_id, password_hash FROM users WHERE email_address = ?");
+    $stmt = $connection->prepare("SELECT user_id, password_hash, apikey FROM users WHERE email_address = ?");
     if (!$stmt) {
         sendResponse(false, null, 'Preparation failed: ' . $connection->error, 500);
     }
@@ -69,7 +78,7 @@ function login($connection, $data)
             $_SESSION['user_id'] = $user_id;
             $_SESSION['user_type'] = $user_type;
 
-            sendResponse($success=true, $data=['user_id' => $user_id, 'user_type' => $user_type],  $message='Login successful.', $statusCode=200);
+            sendResponse($success=true, $data=['apikey' => $result['apikey'], 'user_type' => $user_type],  $message='Login successful.', $statusCode=200);
         } else {
             sendResponse(false, null, 'Invalid password.', 401);
         }

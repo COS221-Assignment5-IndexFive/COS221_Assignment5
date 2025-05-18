@@ -10,15 +10,15 @@ function validateName()
     var nameRegEx = /^[A-Za-z]{2,}$/;
     var valid = nameRegEx.test(trimmedName);
 
-    if(trimmedName === "") 
+    if(trimmedName === "")
     {
         nameField.style.borderColor = "#ccc";
     }
-    else if(valid == false) 
+    else if(valid == false)
     {
         nameField.style.borderColor = "red";
     }
-    else 
+    else
     {
         nameField.style.borderColor = "#ccc";
     }
@@ -38,15 +38,15 @@ function validateSurname()
     var surnameRegEx = /^[A-Za-z]{2,}$/;
     var valid = surnameRegEx.test(trimmedSurname);
 
-    if(trimmedSurname === "") 
+    if(trimmedSurname === "")
     {
         surnameField.style.borderColor = "#ccc";
     }
-    else if(valid == false) 
+    else if(valid == false)
     {
         surnameField.style.borderColor = "red";
     }
-    else 
+    else
     {
         surnameField.style.borderColor = "#ccc";
     }
@@ -66,15 +66,15 @@ function validateEmail()
     var emailRegEx = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     var valid = emailRegEx.test(trimmedEmail);
 
-    if(trimmedEmail === "") 
+    if(trimmedEmail === "")
     {
         emailField.style.borderColor = "#ccc";
     }
-    else if(valid == false) 
+    else if(valid == false)
     {
         emailField.style.borderColor = "red";
     }
-    else 
+    else
     {
         emailField.style.borderColor = "#ccc";
     }
@@ -92,18 +92,18 @@ function validatePassword()
     */
     var passwordField = document.getElementById("password");
     var trimmedPassword = passwordField.value.trim();
-    var passwordRegEx = /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[\W_]).{8,}$/; 
+    var passwordRegEx = /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[\W_]).{8,}$/;
     var valid = passwordRegEx.test(trimmedPassword);
 
-    if(trimmedPassword === "") 
+    if(trimmedPassword === "")
     {
         passwordField.style.borderColor = "#ccc";
     }
-    else if(valid == false) 
+    else if(valid == false)
     {
         passwordField.style.borderColor = "red";
     }
-    else 
+    else
     {
         passwordField.style.borderColor = "#ccc";
     }
@@ -111,7 +111,7 @@ function validatePassword()
     return valid;
 }
 
-function setCookie(cname, cvalue, ex) 
+function setCookie(cname, cvalue, ex)
 {
     /*
         Sets a cookie with the given name, value, and expiration in days.
@@ -136,18 +136,18 @@ window.onload = function()
     var submitButton = document.getElementById("submit");
     submitButton.disabled = true;
 
-    function validateInput() 
+    function validateInput()
     {
         var nameValid = validateName();
         var surnameValid = validateSurname();
         var emailValid = validateEmail();
         var passwordValid = validatePassword();
 
-        if(nameValid && surnameValid && emailValid && passwordValid) 
+        if(nameValid && surnameValid && emailValid && passwordValid)
         {
             submitButton.disabled = false;
-        } 
-        else 
+        }
+        else
         {
             submitButton.disabled = true;
         }
@@ -158,52 +158,52 @@ window.onload = function()
     emailField.addEventListener("input", validateInput);
     passwordField.addEventListener("input", validateInput);
 
-    nameField.addEventListener("blur", function() 
+    nameField.addEventListener("blur", function()
     {
         if (nameField.value.trim() !== "")
         {
             validateName();
-        } 
+        }
         else
         {
             nameField.style.borderColor = "#ccc";
         }
     });
-    surnameField.addEventListener("blur", function() 
+    surnameField.addEventListener("blur", function()
     {
         if (surnameField.value.trim() !== "")
         {
             validateSurname();
-        } 
+        }
         else
         {
             surnameField.style.borderColor = "#ccc";
         }
     });
-    emailField.addEventListener("blur", function() 
+    emailField.addEventListener("blur", function()
     {
         if (emailField.value.trim() !== "")
         {
             validateEmail();
-        } 
+        }
         else
         {
             emailField.style.borderColor = "#ccc";
         }
     });
-    passwordField.addEventListener("blur", function() 
+    passwordField.addEventListener("blur", function()
     {
         if (passwordField.value.trim() !== "")
         {
             validatePassword();
-        } 
+        }
         else
         {
             passwordField.style.borderColor = "#ccc";
         }
     });
 
-    document.getElementById('signupForm').addEventListener('submit', function(event) 
+    document.getElementById('signupForm').addEventListener('submit', function(event)
     {
         event.preventDefault();
 
@@ -224,7 +224,7 @@ window.onload = function()
             }
         */
 
-        var data = 
+        var data =
         {
             type: "Register",
             name: nameField.value,
@@ -234,29 +234,34 @@ window.onload = function()
         };
 
         var xhr = new XMLHttpRequest();
-        xhr.open("POST", "", true);
+        xhr.open("POST", "../../api/api.php", true);
         xhr.setRequestHeader("Content-Type", "application/json");
 
-        xhr.onreadystatechange = function() 
+        xhr.onreadystatechange = function()
         {
-            if (xhr.readyState == 4) 
-            { 
-                try 
+          console.log("Raw response:", JSON.parse(xhr.responseText));
+
+            if (xhr.readyState == 4)
+            {
+              console.error("Response: ", xhr.responseText);
+
+                try
                 {
                     var response = JSON.parse(xhr.responseText);
+                    console.log("response:", response ) ;
 
-                    if (response.status == "success") 
+                    if (response.status == "success")
                     {
                         setCookie("APIKey", response.data.apikey, 7);
                         // window.location.href = <redirect the page to Customer/Administrator/Retailer view>
-                    } 
-                    else 
+                    }
+                    else
                     {
                         alert("Something went wrong...");
                         console.error("Response: ", xhr.responseText);
                     }
-                } 
-                catch (e) 
+                }
+                catch (e)
                 {
                     console.error("Parsing error:", e);
                 }
