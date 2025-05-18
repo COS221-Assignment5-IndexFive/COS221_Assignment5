@@ -1,0 +1,71 @@
+/* add_user.css */
+
+/* Card container styling to match user_details dimensions */
+.add-user {
+  max-width: 700px;
+  margin: 2rem auto;
+}
+
+/* Layout grid for add user form */
+.add-user form {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 1.5rem 2rem;
+  align-items: start;
+  width: 100%;
+}
+
+/* Form group styling */
+.add-user .form-group {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 1rem;
+}
+
+.add-user .form-group label {
+  font-weight: 500;
+  margin-bottom: 0.5rem;
+  color: var(--text-dark);
+}
+
+.add-user .form-group input {
+  padding: 0.5rem 0.75rem;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  border-radius: 4px;
+  background: rgba(255, 255, 255, 0.6);
+  font-size: 1rem;
+}
+
+/* Form actions */
+.add-user .form-actions {
+  grid-column: 1 / -1;
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+
+/* Primary and secondary buttons */
+.add-user .btn {
+  font-size: 0.875rem;
+}
+
+.add-user .btn-primary {
+  background: var(--primary-gradient);
+  color: #fff;
+  border: none;
+}
+
+.add-user .btn-primary:hover {
+  filter: brightness(1.1);
+}
+
+.add-user .btn-secondary {
+  background: rgba(0, 0, 0, 0.1);
+  color: var(--text-dark);
+  border: none;
+}
+
+.add-user .btn-secondary:hover {
+  background: rgba(0, 0, 0, 0.2);
+}

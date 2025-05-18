@@ -1,0 +1,100 @@
+/* retailer_detail.css */
+
+/* Layout grid for retailer detail form */
+.retailer-detail form {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 1.5rem 2rem; /* Increased vertical spacing between fields */
+  align-items: start;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+/* Form group styling */
+.form-group {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 1rem; /* Extra spacing between each form field */
+}
+
+.form-group label {
+  font-weight: 500;
+  margin-bottom: 0.5rem;
+  color: var(--text-dark);
+}
+
+.form-group input {
+  padding: 0.5rem 0.75rem;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  border-radius: 4px;
+  background: rgba(255, 255, 255, 0.6);
+  font-size: 1rem;
+}
+
+.form-group input[readonly] {
+  background: rgba(255, 255, 255, 0.4);
+  cursor: not-allowed;
+}
+
+/* Error message styling */
+.error-message {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: rgba(244, 67, 54, 0.1);
+  border: 1px solid #f44336;
+  color: #b71c1c;
+  border-radius: 4px;
+  padding: 0.75rem 1rem;
+  margin-bottom: 1.5rem;
+}
+
+/* Hidden/visible toggles */
+.hidden {
+  display: none !important;
+}
+.visible {
+  display: flex !important;
+}
+
+/* Action buttons row */
+.form-actions {
+  grid-column: 1 / -1;
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+
+/* Total products count display */
+.count-display {
+  margin: 1.5rem auto 1rem;
+  max-width: 800px;
+  font-weight: 500;
+  color: var(--text-dark);
+}
+
+/* Condensed table within retailer detail */
+.retailer-detail .data-table {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.data-table tbody tr {
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.data-table tbody tr:hover {
+  background: rgba(0, 0, 0, 0.05);
+}
+
+/* Panel container width */
+.retailer-detail {
+  margin: 2rem auto;
+  max-width: 900px;
+}
+
+/* Buttons inside form maintain style */
+.form-actions .btn {
+  font-size: 0.875rem;
+}

@@ -1,0 +1,71 @@
+/* add_product.css */
+
+/* Container width matching detail pages */
+.add-product {
+  max-width: 700px;
+  margin: 2rem auto;
+}
+
+/* Grid layout for add product form */
+.add-product form {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 1.5rem 2rem;
+  align-items: start;
+  width: 100%;
+}
+
+/* Form group styling */
+.add-product .form-group {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 1rem;
+}
+
+.add-product .form-group label {
+  font-weight: 500;
+  margin-bottom: 0.5rem;
+  color: var(--text-dark);
+}
+
+.add-product .form-group input {
+  padding: 0.5rem 0.75rem;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  border-radius: 4px;
+  background: rgba(255, 255, 255, 0.6);
+  font-size: 1rem;
+}
+
+/* Form actions styling */
+.add-product .form-actions {
+  grid-column: 1 / -1;
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+
+/* Button styles */
+.add-product .btn {
+  font-size: 0.875rem;
+}
+
+.add-product .btn-primary {
+  background: var(--primary-gradient);
+  color: #fff;
+  border: none;
+}
+
+.add-product .btn-primary:hover {
+  filter: brightness(1.1);
+}
+
+.add-product .btn-secondary {
+  background: rgba(0, 0, 0, 0.1);
+  color: var(--text-dark);
+  border: none;
+}
+
+.add-product .btn-secondary:hover {
+  background: rgba(0, 0, 0, 0.2);
+}
