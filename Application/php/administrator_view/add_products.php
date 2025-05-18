@@ -14,20 +14,7 @@
   <link rel="stylesheet" href="../../css/administrator_view/add_products.css" />
 </head>
 <body>
-  <!-- Sidebar -->
-  <aside class="sidebar glass-card">
-    <div class="brand">
-      <span class="material-icons">dashboard</span>
-      <h1>CompareIt Admin</h1>
-    </div>
-    <nav>
-      <ul>
-        <li><a href="user_view.html"><span class="material-icons">person</span> Users</a></li>
-        <li><a href="product_view.html" class="active"><span class="material-icons">inventory_2</span> Products</a></li>
-        <li><a href="retailer_list.html"><span class="material-icons">storefront</span> Retailers</a></li>
-      </ul>
-    </nav>
-  </aside>
+  <?php include 'sidebar.php';?>
 
   <!-- Main Content -->
   <main class="content">
@@ -74,7 +61,7 @@
         </div>
         <div class="form-actions">
           <button type="submit" class="btn btn-primary"><span class="material-icons">add_shopping_cart</span> Add Product</button>
-          <button type="button" class="btn btn-secondary" onclick="window.location.href='index.html'"><span class="material-icons">cancel</span> Cancel</button>
+          <button type="button" class="btn btn-secondary" onclick="window.location.href='index.php'"><span class="material-icons">cancel</span> Cancel</button>
         </div>
       </form>
     </section>

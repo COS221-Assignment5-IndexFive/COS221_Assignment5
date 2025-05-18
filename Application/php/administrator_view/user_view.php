@@ -13,20 +13,7 @@
   <link rel="stylesheet" href="../../css/administrator_view/main.css" />
 </head>
 <body>
-  <!-- Sidebar -->
-  <aside class="sidebar glass-card">
-    <div class="brand">
-      <span class="material-icons">dashboard</span>
-      <h1>CompareIt Admin</h1>
-    </div>
-    <nav>
-      <ul>
-        <li><a href="user_view.html" class="active"><span class="material-icons">person</span> Users</a></li>
-        <li><a href="product_view.html"><span class="material-icons">inventory_2</span> Products</a></li>
-        <li><a href="retailer_view.html"><span class="material-icons">storefront</span> Retailers</a></li>
-      </ul>
-    </nav>
-  </aside>
+  <?php include 'sidebar.php';?>
 
   <!-- Main Content -->
   <main class="content">
@@ -35,7 +22,7 @@
         <h2>Users</h2>
         <div class="panel-actions">
           <input class="search-input" type="text" placeholder="Search users..." />
-          <button class="btn btn-primary" onclick="window.location.href='add_user.html'"><span class="material-icons">person_add</span> Add User</button>
+          <button class="btn btn-primary" onclick="window.location.href='add_user.php'"><span class="material-icons">person_add</span> Add User</button>
         </div>
       </div>
       <table class="data-table">

@@ -14,20 +14,7 @@
   <link rel="stylesheet" href="../../css/administrator_view/user_detail.css" />
 </head>
 <body>
-  <!-- Sidebar -->
-  <aside class="sidebar glass-card">
-    <div class="brand">
-      <span class="material-icons">dashboard</span>
-      <h1>CompareIt Admin</h1>
-    </div>
-    <nav>
-      <ul>
-        <li><a href="user_view.html" class="active"><span class="material-icons">person</span> Users</a></li>
-        <li><a href="product_view.html"><span class="material-icons">inventory_2</span> Products</a></li>
-        <li><a href="retailer_list.html"><span class="material-icons">storefront</span> Retailers</a></li>
-      </ul>
-    </nav>
-  </aside>
+  <?php include 'sidebar.php';?>
 
  <!-- Main Content -->
   <main class="content">
