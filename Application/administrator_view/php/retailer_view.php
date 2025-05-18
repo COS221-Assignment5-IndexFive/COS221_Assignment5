@@ -10,7 +10,7 @@
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
 
   <!-- Main Stylesheet -->
-  <link rel="stylesheet" href="../../css/administrator_view/main.css" />
+  <link rel="stylesheet" href="../css/main.css" />
 </head>
 <body>
   <?php include 'sidebar.php';?>
@@ -46,6 +46,6 @@
       </table>
     </section>
   </main>
-  <script src="../../js/administrator_view/index.js"></script>
+  <script src="../js/index.js"></script>
 </body>
 </html>

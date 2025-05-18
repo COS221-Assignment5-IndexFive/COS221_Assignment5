@@ -10,8 +10,8 @@
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
 
   <!-- Main Stylesheet -->
-  <link rel="stylesheet" href="../../css/administrator_view/main.css" />
-  <link rel="stylesheet" href="../../css/administrator_view/user_detail.css" />
+  <link rel="stylesheet" href="../css/main.css" />
+  <link rel="stylesheet" href="../css/user_detail.css" />
 </head>
 <body>
   <?php include 'sidebar.php';?>
@@ -57,6 +57,6 @@
       </form>
     </section>
   </main>
-  <script src="../../js/administrator_view/single_user_view.js"></script>
+  <script src="../js/single_user_view.js"></script>
 </body>
 </html>

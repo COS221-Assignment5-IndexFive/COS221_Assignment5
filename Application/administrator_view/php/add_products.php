@@ -10,8 +10,8 @@
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
 
   <!-- Stylesheets -->
-  <link rel="stylesheet" href="../../css/administrator_view/main.css" />
-  <link rel="stylesheet" href="../../css/administrator_view/add_products.css" />
+  <link rel="stylesheet" href="../css/main.css" />
+  <link rel="stylesheet" href="../css/add_products.css" />
 </head>
 <body>
   <?php include 'sidebar.php';?>

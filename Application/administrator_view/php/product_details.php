@@ -10,8 +10,8 @@
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
 
   <!-- Main Stylesheets -->
-  <link rel="stylesheet" href="../../css/administrator_view/main.css" />
-  <link rel="stylesheet" href="../../css/administrator_view/product_details.css" />
+  <link rel="stylesheet" href="../css/main.css" />
+  <link rel="stylesheet" href="../css/product_details.css" />
 </head>
 <body>
   <?php include 'sidebar.php';?>
@@ -82,7 +82,7 @@
       </form>
     </section>
   </main>
-  <script src="../../js/administrator_view/product_details.js"></script>
+  <script src="../js/product_details.js"></script>
 </body>
 </html>
 
