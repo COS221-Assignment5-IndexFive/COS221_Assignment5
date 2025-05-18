@@ -8,6 +8,9 @@
 
         <form id="signupForm">
             <div class="input-container">
+                <div class="header">
+                    <span class="logo">CompareIt</span>
+                </div>
                 <h1>Sign Up</h1>
                 <input id="name" type="text" name="name" placeholder="Name" required>
                 <input id="surname" type="text" name="surname" placeholder="Surname" required>

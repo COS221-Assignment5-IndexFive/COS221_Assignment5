@@ -7,6 +7,9 @@
 
          <form id="loginForm">
             <div class=input-container>
+                <div class="header">
+                    <span class="logo">CompareIt</span>
+                </div>
                 <h1>Login</h1>
                 <input id="email" type="email" name="email" placeholder="Email" required>
                 <input id="password" type="password" name="password" placeholder="Password" required>
