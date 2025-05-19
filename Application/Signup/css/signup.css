@@ -32,7 +32,7 @@ h1
 
 input[type="text"],
 input[type="email"],
-input[type="password"] 
+input[type="password"]
 {
     width: 250px;
     padding: 13px 16px;
@@ -72,4 +72,41 @@ button[type="submit"]:hover
 {
     background: linear-gradient(90deg, #4f46e5 0%, #2563eb 100%);
     box-shadow: 0 4px 16px rgba(99,102,241,0.15);
+}
+
+.logo
+{
+    color: #2a2a3f;
+}
+
+.header 
+{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 36px;
+    font-family: 'Segoe UI', Arial, Helvetica, sans-serif;
+    font-size: 38px;
+    font-weight: 800;
+    letter-spacing: 2px;
+    user-select: none;
+}
+
+select#userType 
+{
+    width: 285px;
+    padding: 13px 16px;
+    margin-bottom: 18px;
+    border: 1.5px solid #bfc9d9;
+    border-radius: 8px;
+    font-size: 16px;
+    background: #f8fafc;
+    transition: border-color 0.2s;
+    color: #22223b;
+}
+
+select#userType:focus 
+{
+    border-color: #6366f1;
+    outline: none;
 }

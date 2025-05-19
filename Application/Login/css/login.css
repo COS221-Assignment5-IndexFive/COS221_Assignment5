@@ -73,3 +73,21 @@ button[type="submit"]:hover
     background: linear-gradient(90deg, #4f46e5 0%, #2563eb 100%);
     box-shadow: 0 4px 16px rgba(99,102,241,0.15);
 }
+
+.logo
+{
+    color: #2a2a3f;
+}
+
+.header
+{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 36px;
+    font-family: 'Segoe UI', Arial, Helvetica, sans-serif;
+    font-size: 38px;
+    font-weight: 800;
+    letter-spacing: 2px;
+    user-select: none;
+}

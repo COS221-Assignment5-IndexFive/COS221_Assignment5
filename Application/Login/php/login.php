@@ -1,11 +1,14 @@
-<?php 
-    $pageTitle = "Login";
-    // include 'header.php'; 
-?>
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Login</title> 
         <link rel = "stylesheet" type = "text/css" href = "../css/login.css">
         <script type = "text/javascript" src = "../js/login.js"></script>
-
-         <form id="loginForm">
+    </head>
+    
+    <body>
+        <form id="loginForm">
             <div class=input-container>
                 <div class="header">
                     <span class="logo">CompareIt</span>

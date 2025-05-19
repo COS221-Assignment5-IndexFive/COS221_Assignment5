@@ -26,7 +26,6 @@ function validateEmail()
     return valid;
 }
 
-
 function validatePassword()
 {
     /*
@@ -54,6 +53,22 @@ function validatePassword()
     }
 
     return valid;
+}
+
+function determineView(type)
+{
+    /*
+        Determines the location the user is sent to after registration (Customer/ Retailer view).
+        Sends the user to that location.
+    */
+    if(type == "customer")
+    {
+        window.location.href = "../../CustomerView/customer.php";
+    }
+    else if(type == "retailer")
+    {
+        window.location.href = "../../RetailerView/retailer.php";
+    }
 }
 
 function setCookie(cname, cvalue, ex) 
@@ -122,31 +137,16 @@ window.onload = function()
     document.getElementById('loginForm').addEventListener('submit', function(event)
     {
         event.preventDefault();
-
-        /*
-            Expected request structure:
-            {
-                type: "Login",
-                email: emailField.value,
-                password: passwordField.value,
-            };
-
-            Expected response structure
-            {
-                status: <status message>
-                data: [apikey: <user's apikey>]
-            }
-        */
     
         var data = 
         {
-            type: "Login",
-            email: emailField.value,
+            action: "login",
+            email_address: emailField.value,
             password: passwordField.value,
         };
     
         var xhr = new XMLHttpRequest();
-        xhr.open("POST", "", true);
+        xhr.open("POST", "../../api/api.php", true);
         xhr.setRequestHeader("Content-Type", "application/json");
     
         xhr.onreadystatechange = function() 
@@ -157,15 +157,10 @@ window.onload = function()
                 {
                     var response = JSON.parse(xhr.responseText);
     
-                    if (response.status == "success") 
+                    if (response.success == true) 
                     {
                         setCookie("APIKey", response.data.apikey, 7);
-                        // window.location.href = <redirect the page to Customer/Administrator/Retailer view>
-                    } 
-                    else 
-                    {
-                        alert("Something went wrong...");
-                        console.error("Response: ", xhr.responseText);
+                        determineView(response.data.user_type);
                     }
                 } 
                 catch (e) 
@@ -174,7 +169,7 @@ window.onload = function()
                 }
             }
         };
-    
+         
         xhr.send(JSON.stringify(data));
     });
 }
