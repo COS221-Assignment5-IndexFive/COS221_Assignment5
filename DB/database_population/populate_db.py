@@ -32,11 +32,11 @@ def get_existing_tuples(cursor):
     cursor.execute("""
         SELECT
           rating, title, image_url, product_link,
-          price, discount_price, nr_reviews, category
+          price, discount_price, nr_reviews, category, retailer
         FROM products
     """)
     seen = set()
-    for rating, title, img, link, price, dprice, revs, cat in cursor:
+    for rating, title, img, link, price, dprice, revs, cat, ret in cursor:
         seen.add((
             float(rating) if rating is not None else None,
             title,
@@ -46,8 +46,21 @@ def get_existing_tuples(cursor):
             float(dprice)  if dprice  is not None else None,
             revs,
             cat,
+            ret
         ))
     return seen
+
+def price(p):
+    if (p.get('extracted_old_price')):
+        return float(p.get('extracted_old_price'))
+    if (p.get('extracted_price')):
+        return float(p.get('extracted_price'))
+    return None
+
+def discountedPrice(p):
+    if (p.get('extracted_old_price')):
+        return float(p.get('extracted_price'))
+    return None
 
 def main():
     # 1) Load & flatten JSON
@@ -73,22 +86,38 @@ def main():
     insert_sql = """
     INSERT INTO products
       (rating, title, image_url, product_link,
-       price, discount_price, nr_reviews, category)
-    VALUES (%s, %s, %s, %s, %s, %s, %s, %s)
+       price, discount_price, nr_reviews, category, retailer)
+    VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)
     """
 
     added = 0
+    allowed_categories = [
+        "Laptops",
+        "Desktop Computers",
+        "Tablets",
+        "Smartphones",
+        "Monitors",
+        "Keyboards & Computer Mice",
+        "Headphones & Earbuds",
+    ]
+
+    most_recent_category = allowed_categories[0]
     for p in products:
         tup = (
-            float(p.get('rating'))              if p.get('rating')             is not None else None,
+            float(p.get('rating')) if p.get('rating') is not None else None,
             p.get('title'),
             p.get('thumbnail'),
             p.get('product_link'),
-            float(p.get('extracted_price'))     if p.get('extracted_price')     is not None else None,
-            float(p.get('extracted_old_price')) if p.get('extracted_old_price') is not None else None,
+            price(p),
+            discountedPrice(p),
             p.get('reviews'),
-            p.get('category'),
+            p.get('category') if p.get('category') in allowed_categories else most_recent_category,
+            p.get('source').split('-')[0].rstrip()
         )
+
+        if (p.get('category') in allowed_categories and p.get('category') != most_recent_category):
+            most_recent_category = p.get('category')
+            print(f'Moving on to new category: {most_recent_category}')
 
         if tup in existing:
             continue
