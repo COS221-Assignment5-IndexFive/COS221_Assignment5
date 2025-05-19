@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Add New Product</title>
+
+  <!-- Google Fonts and Material Icons -->
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="../css/retailer.css" />
+  <link rel="stylesheet" href="../css/add_products.css" />
+</head>
+<body>
+
+  <!-- Main Content -->
+  <main class="content">
+    <section class="panel glass-card add-product">
+      <div class="panel-header">
+        <h2>Add New Product</h2>
+      </div>
+      <form class="form-grid">
+        <div class="form-group">
+          <label for="title">Title</label>
+          <input type="text" id="title" name="title" placeholder="Enter product title" />
+        </div>
+        <div class="form-group">
+          <label for="price">Price</label>
+          <input type="number" step="0.01" id="price" name="price" placeholder="Enter price" />
+        </div>
+        <div class="form-group">
+          <label for="discounted-price">Discounted Price</label>
+          <input type="number" step="0.01" id="discounted-price" name="discounted-price" placeholder="Enter discounted price or leave blank" />
+        </div>
+        <div class="form-group">
+          <label for="image-url">Image URL</label>
+          <input type="url" id="image-url" name="image-url" placeholder="Enter image URL" />
+        </div>
+        <div class="form-group">
+          <label for="rating">Rating</label>
+          <input type="number" step="0.1" id="rating" name="rating" placeholder="Enter rating (e.g., 4.5)" />
+        </div>
+        <div class="form-group">
+          <label for="product-link">Product Link</label>
+          <input type="url" id="product-link" name="product-link" placeholder="Enter product link" />
+        </div>
+        <div class="form-group">
+          <label for="num-reviews">Number of Reviews</label>
+          <input type="number" id="num-reviews" name="num-reviews" placeholder="Enter number of reviews" />
+        </div>
+        <div class="form-group">
+          <label for="category">Category</label>
+          <input type="text" id="category" name="category" placeholder="Enter product category" />
+        </div>
+        <div class="form-group">
+          <label for="retailer">Retailer</label>
+          <input type="text" id="retailer" name="retailer" placeholder="Enter retailer name" />
+        </div>
+        <div class="form-actions">
+          <button type="submit" class="btn btn-primary"><span class="material-icons">add_shopping_cart</span> Add Product</button>
+          <button type="button" class="btn btn-secondary" onclick="window.location.href='index.php'"><span class="material-icons">cancel</span> Cancel</button>
+        </div>
+      </form>
+    </section>
+  </main>
+</body>
+</html>
