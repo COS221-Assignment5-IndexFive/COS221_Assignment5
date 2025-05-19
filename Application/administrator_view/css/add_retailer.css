@@ -66,3 +66,34 @@
 .add-retailer .btn-secondary:hover {
   background: rgba(0, 0, 0, 0.2);
 }
+
+/* Ensure each group is the reference for its error-message */
+.add-retailer .form-group {
+  position: relative;
+  margin-bottom: 1.5rem; /* space for error message overlay */
+}
+
+/* Base styles for the error message (hidden) */
+.add-retailer .error-message {
+  position: absolute;
+  left: 0;
+  bottom: -1.2rem;            /* just below the input */
+  font-size: 0.875rem;
+  color: #e74c3c;
+  line-height: 1;
+  visibility: hidden;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+  pointer-events: none;
+}
+
+/* Red border on invalid input */
+.add-retailer .form-group.has-error input {
+  border: 1px solid #e74c3c;
+}
+
+/* Show error message when has-error is set */
+.add-retailer .form-group.has-error .error-message {
+  visibility: visible;
+  opacity: 1;
+}
