@@ -22,22 +22,29 @@
       <div class="panel-header">
         <h2>Add New User</h2>
       </div>
-      <form class="form-grid">
-        <div class="form-group">
+      <form class="form-grid" id="add-user-form">
+        <div class="form-group has-error" id="fg-first-name">
           <label for="first-name">First Name</label>
-          <input type="text" id="first-name" name="first-name" placeholder="Enter first name" />
+          <input type="text" id="first-name" name="first-name" placeholder="Enter first name" required />
+          <div class="error-message">
+            Please enter a valid first name.
+          </div>
         </div>
         <div class="form-group">
           <label for="last-name">Last Name</label>
-          <input type="text" id="last-name" name="last-name" placeholder="Enter last name" />
+          <input type="text" id="last-name" name="last-name" placeholder="Enter last name" required />
         </div>
         <div class="form-group">
           <label for="email">Email</label>
-          <input type="email" id="email" name="email" placeholder="Enter email address" />
+          <input type="email" id="email" name="email" placeholder="Enter email address" required />
         </div>
         <div class="form-group">
           <label for="phone">Phone Number</label>
-          <input type="tel" id="phone" name="phone" placeholder="Enter phone number" />
+          <input type="tel" id="phone" name="phone" placeholder="Enter phone number" required />
+        </div>
+        <div class="form-group">
+          <label for="passwd">Password</label>
+          <input type="password" id="passwd" name="passwd" placeholder="Enter user password" required />
         </div>
         <div class="form-actions">
           <button type="submit" class="btn btn-primary"><span class="material-icons">person_add</span> Add User</button>
@@ -46,5 +53,6 @@
       </form>
     </section>
   </main>
+  <script src="../js/add_user.js"></script>
 </body>
 </html>
