@@ -176,13 +176,13 @@ function displayWatchlist(products)
             card.innerHTML = 
             `
                 <div class="product-image">
-                    <img src="${product.image}" alt="${product.title}">
+                    <img src="${product.image_url}" alt="${product.title}">
                 </div>
                 <div class="product-info">
                     <span class="product-title">${product.title}</span>
                     <span class="product-retailer">${product.retailer}</span>
                 </div>
-                <button class="remove-watchlist-btn" title="Remove from Watchlist" data-product-id="${product.id}">
+                <button class="remove-watchlist-btn" title="Remove from Watchlist" data-product-id="${product.product_id}">
                     <span class="remove-icon">🗙</span>
                 </button>
                 <div class="product-price-bar">
@@ -203,6 +203,12 @@ function displayWatchlist(products)
                 {
                     noResults.style.display = "block";
                 }
+            });
+
+            const imageDiv = item.querySelector('.product-image');
+            imageDiv.addEventListener('click', function() 
+            {
+                window.location.href = `../../ProductView/product.php?id=${product.product_id}`;
             });
         }
     }
