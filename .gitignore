@@ -1,2 +1,6 @@
 .env
 .git
+.gitignore
+vendor/
+ollama/
+DBDumps/
