@@ -19,7 +19,7 @@ api/
 ### expects:
 ```json
 {
-  "action": 
+  "action":
 }
 
 ```
@@ -30,47 +30,36 @@ users login, the user type is determined by the login endpoint in the following 
 * the current user_id is compared to the administator table to see if one can find a matching user_id therefore the user is an admisnistrator and has specific privledges priveledges
 * the current user_id is compared to the retailer table to see if one can find a matching retailer_id therefore the user is an retaioler and has specific privledges priveledges
 ### SIGNUP  Endpoint
-#### expects:
-```json
+```js
+
+// Expected request structure:
 {
-  "action": "signup", // tells the api which endpoint to go to
-  "first_name": "John",
-  "last_name": "Doe",
-  "cell_number": "1234567890",
-  "email_address": "john@example.com",
-  "password": "secret123" // will be hashed in the DB
+    type: "Signup",
+    name: nameField.value,
+    surname: surnameField.value,
+    email: emailField.value,
+    password: passwordField.value,
+};
+// Expected response structure
+{
+    status: <status message>
+    data: [apikey: <user's apikey>]
 }
 
+```
 
-```
-#### successful return
-```json
-{
-  "success": true,
-  "message": "User registered successfully.",
-  "data": null
-}
-```
 ### LOGIN  Endpoint
-#### expects:
-```json
+```js
+// Expected request structure:
 {
-  "action": "login",
-  "email_address": "john@example.com",
-  "password": "secret123"
-}
-
-```
-#### successful return
-```json
+    type: "Login",
+    email: emailField.value,
+    password: passwordField.value,
+};
+// Expected response structure
 {
-    "success": true,
-    "statusCode": 200,
-    "message": "Login successful.",
-    "data": {
-        "user_id": 1,
-        "user_type": "user" // 'user_type' is stored in the $_SESSION[] - controls privledges of logged in users
-    }
+    status: <status message>
+    data: [apikey: <user's apikey>]
 }
 ```
 
