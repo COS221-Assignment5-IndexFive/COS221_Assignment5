@@ -17,7 +17,7 @@
 
   <!-- Main Content -->
   <main class="content">
-    <section class="panel glass-card">
+    <section id="users" class="panel glass-card">
       <div class="panel-header">
         <h2>Users</h2>
         <div class="panel-actions">
@@ -25,7 +25,7 @@
           <button class="btn btn-primary" onclick="window.location.href='add_user.php'"><span class="material-icons">person_add</span> Add User</button>
         </div>
       </div>
-      <table class="data-table">
+      <table id="dt-users" class="data-table">
         <colgroup>
           <col style="width: 10%;">
           <col style="width: 45%;">
@@ -49,6 +49,7 @@
       </table>
     </section>
   </main>
+  <script src="../js/populate_tables.js"></script>
   <script src="../js/index.js"></script>
 </body>
 </html>

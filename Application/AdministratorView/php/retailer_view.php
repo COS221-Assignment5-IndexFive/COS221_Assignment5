@@ -17,7 +17,7 @@
 
   <!-- Main Content -->
   <main class="content">
-    <section class="panel glass-card">
+    <section id="retailers" class="panel glass-card">
       <div class="panel-header">
         <h2>Retailers</h2>
         <div class="panel-actions">
@@ -25,7 +25,7 @@
           <button class="btn btn-primary" onclick="window.location.href='add_retailer.php'"><span class="material-icons">storefront</span> Add Retailer</button>
         </div>
       </div>
-      <table class="data-table">
+      <table id="dt-retailers" class="data-table">
         <colgroup>
           <col style="width: 10%;">
           <col style="width: 90%;">
@@ -46,6 +46,7 @@
       </table>
     </section>
   </main>
+  <script src="../js/populate_tables.js"></script>
   <script src="../js/index.js"></script>
 </body>
 </html>

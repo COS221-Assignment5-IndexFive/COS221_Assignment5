@@ -25,7 +25,7 @@
           <button class="btn btn-primary" onclick="window.location.href='add_user.php'"><span class="material-icons">person_add</span> Add User</button>
         </div>
       </div>
-      <table class="data-table">
+      <table class="data-table" id="dt-users">
         <colgroup>
           <col style="width: 10%;">
           <col style="width: 45%;">
@@ -54,7 +54,7 @@
           <button class="btn btn-primary" onclick="window.location.href='add_products.php'"><span class="material-icons">add_shopping_cart</span> Add Product</button>
         </div>
       </div>
-      <table class="data-table">
+      <table class="data-table" id="dt-products">
         <colgroup>
           <col style="width: 10%;">
           <col style="width: 45%;">
@@ -83,7 +83,7 @@
           <button class="btn btn-primary" onclick="window.location.href='add_retailer.php'"><span class="material-icons">storefront</span> Add Retailer</button>
         </div>
       </div>
-      <table class="data-table">
+      <table class="data-table" id="dt-retailers">
         <colgroup>
           <col style="width: 10%;">
           <col style="width: 90%;">
@@ -101,6 +101,7 @@
       </table>
     </section>
   </main>
+  <script src="../js/populate_tables.js"></script>
   <script src="../js/index.js"></script>
 </body>
 </html>
