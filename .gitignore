@@ -1,5 +1,2 @@
 .env
 .git
-.gitignore
-ollama/
-DBDumps/
