@@ -69,6 +69,10 @@ function determineView(type)
     {
         window.location.href = "../../RetailerView/retailer.php";
     }
+    else if(type == "admin")
+    {
+        window.location.href = "../../AdministratorView/index.php";
+    }
 }
 
 function setCookie(cname, cvalue, ex) 
