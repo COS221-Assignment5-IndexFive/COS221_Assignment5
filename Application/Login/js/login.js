@@ -10,15 +10,15 @@ function validateEmail()
     var emailRegEx = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     var valid = emailRegEx.test(trimmedEmail);
 
-    if(trimmedEmail === "") 
+    if(trimmedEmail === "")
     {
         emailField.style.borderColor = "#ccc";
     }
-    else if(valid == false) 
+    else if(valid == false)
     {
         emailField.style.borderColor = "red";
     }
-    else 
+    else
     {
         emailField.style.borderColor = "#ccc";
     }
@@ -36,18 +36,18 @@ function validatePassword()
     */
     var passwordField = document.getElementById("password");
     var trimmedPassword = passwordField.value.trim();
-    var passwordRegEx = /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[\W_]).{8,}$/; 
+    var passwordRegEx = /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[\W_]).{8,}$/;
     var valid = passwordRegEx.test(trimmedPassword);
 
-    if(trimmedPassword === "") 
+    if(trimmedPassword === "")
     {
         passwordField.style.borderColor = "#ccc";
     }
-    else if(valid == false) 
+    else if(valid == false)
     {
         passwordField.style.borderColor = "red";
     }
-    else 
+    else
     {
         passwordField.style.borderColor = "#ccc";
     }
@@ -75,7 +75,7 @@ function determineView(type)
     }
 }
 
-function setCookie(cname, cvalue, ex) 
+function setCookie(cname, cvalue, ex)
 {
     /*
         Sets a cookie with the given name, value, and expiration in days.
@@ -97,16 +97,16 @@ window.onload = function()
     var passwordField = document.getElementById("password");
     var submitButton = document.getElementById("submit");
 
-    function validateInput() 
+    function validateInput()
     {
         var emailValid = validateEmail();
         var passwordValid = validatePassword();
 
-        if(emailValid && passwordValid) 
+        if(emailValid && passwordValid)
         {
             submitButton.disabled = false;
-        } 
-        else 
+        }
+        else
         {
             submitButton.disabled = true;
         }
@@ -115,24 +115,24 @@ window.onload = function()
     emailField.addEventListener("input", validateInput);
     passwordField.addEventListener("input", validateInput);
 
-    emailField.addEventListener("blur", function() 
+    emailField.addEventListener("blur", function()
     {
-        if (emailField.value.trim() !== "") 
+        if (emailField.value.trim() !== "")
         {
             validateEmail();
         }
-        else 
+        else
         {
             emailField.style.borderColor = "#ccc";
         }
     });
-    passwordField.addEventListener("blur", function() 
+    passwordField.addEventListener("blur", function()
     {
-        if (passwordField.value.trim() !== "") 
+        if (passwordField.value.trim() !== "")
         {
             validatePassword();
         }
-        else 
+        else
         {
             passwordField.style.borderColor = "#ccc";
         }
@@ -141,39 +141,43 @@ window.onload = function()
     document.getElementById('loginForm').addEventListener('submit', function(event)
     {
         event.preventDefault();
-    
-        var data = 
+
+        var data =
         {
             type: "Login",
             email: emailField.value,
             password: passwordField.value,
         };
-    
+
         var xhr = new XMLHttpRequest();
-        xhr.open("POST", "../../api/api.php", true);
+        xhr.open("POST", "../../../api/api.php", true);
         xhr.setRequestHeader("Content-Type", "application/json");
-    
-        xhr.onreadystatechange = function() 
+
+        xhr.onreadystatechange = function()
         {
-            if (xhr.readyState == 4) 
+            if (xhr.readyState == 4)
             {
-                try 
+                try
                 {
                     var response = JSON.parse(xhr.responseText);
-    
-                    if (response.success == true) 
+                    console.log("API response:", response);
+
+                    if (response.success == true)
                     {
+                      console.log("Login success!, response.data.user_type): ", response.data.user_type);
                         setCookie("apikey", response.data.apikey, 7);
                         determineView(response.data.user_type);
                     }
-                } 
-                catch (e) 
+                }
+                catch (e)
                 {
-                    console.error("Parsing error:", e);
+                  console.error("Parsing error:", e.message);      // shows error message only
+                  console.error("Full error object:", e);          // shows full error details
+                  console.error("Response text was:", xhr.responseText);  // show raw response causing error
                 }
             }
         };
-         
+
         xhr.send(JSON.stringify(data));
     });
 }

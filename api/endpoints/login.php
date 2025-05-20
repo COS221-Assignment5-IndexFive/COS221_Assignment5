@@ -1,9 +1,6 @@
 <?php
+ob_start();
 session_start();
-
-
-
-
 function register($connection, $data)
 {
 
@@ -54,6 +51,7 @@ function login($connection, $data)
     $stmt = $connection->prepare("SELECT user_id, password_hash, apikey FROM users WHERE email_address = ?");
     if (!$stmt) {
         sendResponse(false, null, 'Preparation failed: ' . $connection->error, 500);
+        ob_end_flush();
     }
 
     $stmt->bind_param("s", $email);
@@ -78,7 +76,7 @@ function login($connection, $data)
             $_SESSION['user_id'] = $user_id;
             $_SESSION['user_type'] = $user_type;
 
-            sendResponse($success=true, $data=['apikey' => $result['apikey'], 'user_type' => $user_type],  $message='Login successful.', $statusCode=200);
+            sendResponse(true, ['apikey' => $row['apikey'], 'user_type' => $user_type], 'Login successful.', 200);
         } else {
             sendResponse(false, null, 'Invalid password.', 401);
         }
@@ -112,6 +110,11 @@ function isRetailer($connection, $user_id)
 function sendResponse($success, $data = null, $message = '', $statusCode = 200)
 {
     http_response_code($statusCode);
+
+    if (ob_get_length()) {
+        ob_clean();
+    }
+
     header('Content-Type: application/json');
     echo json_encode([
         'success' => $success,
@@ -121,6 +124,3 @@ function sendResponse($success, $data = null, $message = '', $statusCode = 200)
     ]);
     exit;
 }
-
-
-?>

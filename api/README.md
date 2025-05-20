@@ -39,6 +39,7 @@ users login, the user type is determined by the login endpoint in the following 
     surname: surnameField.value,
     email: emailField.value,
     password: passwordField.value,
+    cell_number: cellPhoneField.value,
 };
 // Expected response structure
 {
