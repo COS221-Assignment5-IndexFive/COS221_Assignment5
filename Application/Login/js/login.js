@@ -144,8 +144,8 @@ window.onload = function()
     
         var data = 
         {
-            action: "login",
-            email_address: emailField.value,
+            type: "Login",
+            email: emailField.value,
             password: passwordField.value,
         };
     
@@ -163,7 +163,7 @@ window.onload = function()
     
                     if (response.success == true) 
                     {
-                        setCookie("APIKey", response.data.apikey, 7);
+                        setCookie("apikey", response.data.apikey, 7);
                         determineView(response.data.user_type);
                     }
                 } 

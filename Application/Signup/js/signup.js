@@ -291,11 +291,11 @@ window.onload = function()
 
         var data = 
         {
-            action: "signup",
-            first_name: nameField.value,
-            last_name: surnameField.value,
+            type: "Signup",
+            name: nameField.value,
+            surname: surnameField.value,
             cell_number: cellPhoneField.value,
-            email_address: emailField.value,
+            email: emailField.value,
             password: passwordField.value,
         };
 
@@ -309,12 +309,11 @@ window.onload = function()
             { 
                 try 
                 {
-                    console.log("Response: ", xhr.responseText);
                     var response = JSON.parse(xhr.responseText);
 
                     if(response.success == true) 
                     {
-                        setCookie("APIKey", response.data.apikey, 7);
+                        setCookie("apikey", response.data.apikey, 7);
                         determineView(userTypeField.value);
                     }
                 } 
@@ -324,7 +323,7 @@ window.onload = function()
                 }
             }
         };
-        console.log("Sending: ", data);
+
         xhr.send(JSON.stringify(data));
     });
 }
