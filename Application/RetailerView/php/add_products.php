@@ -12,11 +12,17 @@
   <!-- Stylesheets -->
   <link rel="stylesheet" href="../css/retailer.css" />
   <link rel="stylesheet" href="../css/add_products.css" />
+  <link rel="stylesheet" href="../../AdministratorView/css/messages.css" />
+
 </head>
 <body>
 
   <!-- Main Content -->
   <main class="content">
+    <div class="alert-container">
+      <?php include "../../AdministratorView/php/add_alerts.php"?>
+    </div>
+
     <section class="panel glass-card add-product">
       <div class="panel-header">
         <h2>Add New Product</h2>
@@ -57,33 +63,11 @@
             Please enter a valid product link.
           </div>
         </div>
-        <!-- <div class="form-group" id="fg-num-reviews">
-          <label for="num-reviews">Number of Reviews</label>
-          <input type="number" id="num-reviews" name="num-reviews" placeholder="Enter number of reviews" />
-          <div class="error-message">
-            Please enter a valid number of reviews.
-          </div>
-        </div>  -->
-        <!-- <div class="form-group" id="fg-rating">
-          <label for="rating">Average Rating</label>
-          <input type="number" step="0.1" id="rating" name="rating" placeholder="Enter rating (e.g., 4.5)" />
-          <div class="error-message">
-            Please enter a valid rating.
-          </div>
-        </div> -->
         <div class="form-group" id="fg-category">
         <label for="category-select">Category</label>
 
         <select id="category-select" name="category">
           <option value="" disabled selected>Select a category</option>
-          <option value="Laptops">Laptops</option>
-          <option value="Desktop Computers">Desktop Computers</option>
-          <option value="Tablets">Tablets</option>
-          <option value="Smartphones">Smartphones</option>
-          <option value="Monitors">Monitors</option>
-          <option value="Keyboards & Computer Mice">Keyboards & Computer Mice</option>
-          <option value="Headphones & Earbuds">Headphones & Earbuds</option>
-          <option value="add_new">Add new category</option>
         </select>
 
         <!-- Hidden until "Add new category" is chosen -->
@@ -99,7 +83,6 @@
           Please enter a valid product category.
         </div>
 
-      </div>
         
         <div class="form-actions">
           <button type="submit" class="btn btn-primary"><span class="material-icons">add_shopping_cart</span> Add Product</button>
@@ -108,6 +91,6 @@
       </form>
     </section>
   </main>
-  <script src="../js/add_product.js"></script>
+  <script type="module" src="../js/add_product.js"></script>
 </body>
 </html>

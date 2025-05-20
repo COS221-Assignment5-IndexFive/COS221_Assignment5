@@ -11,10 +11,14 @@
 
   <!-- Main Stylesheets -->
   <link rel="stylesheet" href="../css/retailer.css" />
+  <link rel="stylesheet" href="../../AdministratorView/css/messages.css" />
   <link rel="stylesheet" href="../css/product_details.css" />
 </head>
 <body>
-
+  <div class="alert-container">
+    <?php include "../../AdministratorView/php/update_alerts.php"?>
+    <?php include "../../AdministratorView/php/delete_alerts.php"?>
+  </div>
   <!-- Main Content -->
   <main class="content">
     <section class="panel glass-card product-detail">
@@ -45,7 +49,7 @@
         </div>
         <div class="form-group" id="fg-discount-price">
           <label for="discounted-price">Discounted Price</label>
-          <input type="number" step="0.01" id="discounted-price" name="discounted-price" placeholder="Enter discounted price or leave empty" />
+          <input type="number" step="0.01" id="discounted-price" name="discounted-price" placeholder="Enter discount price or leave empty" />
           <div class="error-message">
             Please enter a valid price.
           </div>
@@ -63,6 +67,10 @@
             Please enter a image URL.
           </div>
         </div>
+        <div class="form-group" id="fg-rating">
+          <label for="rating">Rating</label>
+          <input type="number" step="0.1" id="rating" name="rating" value="4.5" disabled />
+        </div>
         <div class="form-group" id="fg-product-link">
           <label for="product-link">Product Link</label>
           <input type="url" id="product-link" name="product-link" value="https://example.com/mouse" />
@@ -70,18 +78,14 @@
             Please enter a valid product link.
           </div>
         </div>
+        <div class="form-group" id="fg-num-reviews">
+          <label for="num-reviews">Number of Reviews</label>
+          <input type="number" id="num-reviews" name="num-reviews" value="120" disabled />
+        </div>
         <div class="form-group" id="fg-category">
           <label for="category-select">Category</label>
         <select id="category-select" name="category">
           <option value="" disabled selected>Select a category</option>
-          <option value="Laptops">Laptops</option>
-          <option value="Desktop Computers">Desktop Computers</option>
-          <option value="Tablets">Tablets</option>
-          <option value="Smartphones">Smartphones</option>
-          <option value="Monitors">Monitors</option>
-          <option value="Keyboards & Computer Mice">Keyboards & Computer Mice</option>
-          <option value="Headphones & Earbuds">Headphones & Earbuds</option>
-          <option value="add_new">Add new category</option>
         </select>
 
         <!-- Hidden until "Add new category" is chosen -->
@@ -99,11 +103,11 @@
 
         <div class="form-actions">
           <button type="submit" class="btn btn-primary"><span class="material-icons">save</span> Save Changes</button>
-          <button type="button" class="btn btn-danger"><span class="material-icons">delete</span> Delete Product</button>
+          <button type="button" class="btn btn-danger" id="delete-btn"><span class="material-icons">delete</span> Delete Product</button>
         </div>
       </form>
     </section>
   </main>
-  <script src="../js/product_details.js"></script>
+  <script type="module" src="../js/product_details.js"></script>
 </body>
 </html>
