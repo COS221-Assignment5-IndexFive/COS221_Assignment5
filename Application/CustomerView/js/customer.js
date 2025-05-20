@@ -345,7 +345,7 @@ function displayProducts(products)
             </div>
             <div class="product-price-bar">
                 ${priceHTML}
-                <button class="watchlist-btn" title="Add to Watchlist" data-product-id="${product.id}">
+                <button class="watchlist-btn" title="Add to Watchlist" data-product-id="${product.product_id}">
                     <span class="watchlist-icon">🔎</span>
                 </button>
             </div>
@@ -356,7 +356,7 @@ function displayProducts(products)
         const imageDiv = item.querySelector('.product-image');
         imageDiv.addEventListener('click', function() 
         {
-            window.location.href = `../../ProductView/product.php?id=${product.id}`;
+            window.location.href = `../../ProductView/product.php?id=${product.product_id}`;
         });
     }
 
