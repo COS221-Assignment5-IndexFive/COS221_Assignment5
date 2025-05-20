@@ -34,7 +34,7 @@
 }
 
 /* Error message styling */
-.error-message {
+.error-message-id {
   display: flex;
   align-items: center;
   gap: 0.5rem;
@@ -73,3 +73,35 @@
 .form-actions .btn {
   font-size: 0.875rem;
 }
+
+/* Ensure each group is the reference for its error-message */
+.form-group {
+  position: relative;
+  margin-bottom: 1.5rem; 
+}
+
+/* Base styles for the error message (hidden) */
+.error-message {
+  position: absolute;
+  left: 0;
+  bottom: -1.2rem;            
+  font-size: 0.875rem;
+  color: #e74c3c;
+  line-height: 1;
+  visibility: hidden;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+  pointer-events: none;
+}
+
+/* Red border on invalid input */
+.form-group.has-error input {
+  border: 1px solid #e74c3c;
+}
+
+/* Show error message when has-error is set */
+.form-group.has-error .error-message {
+  visibility: visible;
+  opacity: 1;
+}
+
