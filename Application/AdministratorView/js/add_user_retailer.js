@@ -34,9 +34,11 @@ document.getElementById("add-user-form").addEventListener("submit", function(eve
     var password = document.getElementById("passwd").value;
     auv.validationHandler("fg-passwd", auv.validatePassword(password));
 
+    var type = document.getElementById("add-type").value;
+
     var retailer = document.getElementById("retailer-name");
-    if (retailer !== null && retailer !== "") {
-        auv.validationHandler("fg-retailer", auv.validateRetailer(retailer.value));
+    if (type === "retailer") {
+        auv.validationHandler("fg-retailer", auv.validateRetailer(retailer.value) && retailer.value !== "");
     }
 
     if (!auv.valid) {
@@ -44,17 +46,36 @@ document.getElementById("add-user-form").addEventListener("submit", function(eve
     }
 
     // Validation successful, call API endpoint
-    var type = document.getElementById("add-type").value;
+    
+    console.log(type);
     if (type === "user") {
+
         console.log("Simulated add user endpoint");
     } else if (type === "retailer") {
-        console.log("Simulated add retailer endpoint");
+        var request = new XMLHttpRequest();
+
+        request.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+                var successMessage = new AlertUtilities(document.getElementById("add-success"), email);
+                successMessage.showAndDismissAlert();
+            } else if (this.readyState == 4) {
+                var errorMessage = new AlertUtilities(document.getElementById("add-error"), email);
+                errorMessage.showAndDismissAlert();
+            }
+        }
+
+        request.open("POST", "http://localhost/COS221_Assignment5/api/api.php", true);
+        request.send(JSON.stringify({
+            "type": "addRetailer",
+            "name": retailer
+        }));
+        // console.log("Simulated add retailer endpoint");
     }
 
 
-    var successAlert = new AlertUtilities(document.getElementById("add-success"));
-    successAlert.showAndDismissAlert();
-    clearForm();
+    // var successAlert = new AlertUtilities(document.getElementById("add-success"), "Added user " + firstName + " " + lastName);
+    // successAlert.showAndDismissAlert();
+    // clearForm();
 
 });
 

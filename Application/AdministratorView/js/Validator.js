@@ -47,7 +47,7 @@ export class Validator {
     }
 
     validateRetailer(retailer) {
-        const retailerPattern = /^(?![ .&'-])[a-zA-Z0-9 .&'-]{0,48}(?<![ .&'-])$/;
+        const retailerPattern = /^(?![ .&'-])[a-zA-Z0-9 .&'-]{1,48}(?<![ .&'-])$/;
         return retailerPattern.test(retailer);
     }
 

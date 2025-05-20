@@ -164,20 +164,48 @@ document.getElementById("change-product-form").addEventListener("submit", functi
 });
 
 // Delete section
-document.getElementById("delete-btn").addEventListener("click", function() {
-  var confirmDelete = new AlertUtilities(document.getElementById("delete-confirm"));
+function deleteProduct() {
+  var deleted = false;
+
+  var request = new XMLHttpRequest();
+  request.onreadystatechange = function () {
+    if (request.onreadystatechange == 4 && request.status == 200) {
+      deleted = true;
+    } else if (request.onreadystatechange == 4) {
+      console.log("Failed to delete user " + id + ", status code: " + request.status);
+    }
+  }
+
+  request.open("POST", "http://localhost/COS221_Assignment5/api/api.php", false);
+  request.send(JSON.stringify({
+    "type": "removeRetailer",
+    "id": id
+  }));
+
+  return deleted;
+}
+
+var deleteSuccessMessage = new AlertUtilities(document.getElementById("delete-success"), "Product " + id);
+var deleteErrorMessage = new AlertUtilities(document.getElementById("delete-error"), "Product " + id);
+var confirmDelete = new AlertUtilities(document.getElementById("delete-confirm"), "Product " + id);
+
+document.getElementById("delete-btn").addEventListener("click", function () {
   confirmDelete.showAlert();
 
-  document.getElementById("confirm-yes").addEventListener("click", function() {
+  document.getElementById("confirm-yes").addEventListener("click", function () {
     confirmDelete.dismissAlert(0);
-    var deleteSuccess = new AlertUtilities(document.getElementById("delete-success"));
-    deleteSuccess.showAndDismissAlert();
-    setTimeout(() => {
-      window.location.href = "index.php";
-    }, 1000)
+    if (deleteProduct()) {
+      deleteSuccessMessage.showAndDismissAlert();
+      setTimeout(() => {
+        window.location.href = "index.php";
+      }, 1000);
+    } else {
+      deleteErrorMessage.showAndDismissAlert();
+    }
+
   });
 
-  document.getElementById("confirm-no").addEventListener("click", function() {
+  document.getElementById("confirm-no").addEventListener("click", function () {
     confirmDelete.dismissAlert(0);
   });
 });

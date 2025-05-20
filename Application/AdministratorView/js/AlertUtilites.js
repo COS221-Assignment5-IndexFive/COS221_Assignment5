@@ -1,6 +1,34 @@
 export class AlertUtilities {
-    constructor(alertEl, message="Alert") {
+    constructor(alertEl, itemName = "") {
         this.alertEl = alertEl;
+        switch (alertEl.id) {
+            case "add-success":
+                this.message = "Added " + itemName;
+                break;
+            case "add-error":
+                this.message = "Failed to add " + itemName;
+                break;
+            case "delete-confirm":
+                var pMessage = document.createElement("p");
+                pMessage.innerText = "Are you sure you want to delete " + itemName + "?";
+                this.alertEl.prepend(pMessage);
+                return;
+            case "delete-success":
+                this.message = "Deleted " + itemName;
+                break;
+            case "delete-error":
+                this.message = "Failed to delete " + itemName;
+                break;
+            case "update-success":
+                this.message = "Updated " + itemName;
+                break;
+            case "update-error":
+                this.message = "Failed to update " + itemName;
+                break;
+        }
+        var messageSpan = document.createElement("span");
+        messageSpan.innerText = this.message;
+        this.alertEl.appendChild(messageSpan);
     }
 
     dismissAlert(duration = 3000) {

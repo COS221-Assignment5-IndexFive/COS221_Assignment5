@@ -71,7 +71,7 @@
             Please enter a valid password.
           </div>
         </div>
-        <input type="hidden" id="add-type" name="type" value="retailer"> 
+        <input type="hidden" id="add-type" name="type" value="retailer" /> 
         <div class="form-actions">
           <button type="submit" class="btn btn-primary">
             <span class="material-icons">storefront</span> Add Retailer

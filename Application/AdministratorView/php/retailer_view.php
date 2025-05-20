@@ -38,8 +38,6 @@
         </thead>
         <tbody>
           <tr class="clickable-row-retailer" data-href="#">
-            <td>201</td>
-            <td>Retail Co.</td>
           </tr>
           <!-- Repeat rows dynamically -->
         </tbody>

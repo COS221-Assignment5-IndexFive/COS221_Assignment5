@@ -194,183 +194,115 @@ var products = [
   }
 ];
 
-var retailers = [
-  {
-    "id": 201,
-    "firstname": "John",
-    "lastname": "Smith",
-    "email": "john.smith@retailer.com",
-    "phone": "1234567890",
-    "retailer_name": "Retail Co."
-  },
-  {
-    "id": 202,
-    "firstname": "Linda",
-    "lastname": "Brown",
-    "email": "linda.brown@techhub.com",
-    "phone": "2345678901",
-    "retailer_name": "TechHub"
-  },
-  {
-    "id": 203,
-    "firstname": "Michael",
-    "lastname": "Nguyen",
-    "email": "michael.nguyen@shopzone.net",
-    "phone": "3456789012",
-    "retailer_name": "ShopZone"
-  },
-  {
-    "id": 204,
-    "firstname": "Sophia",
-    "lastname": "Lee",
-    "email": "sophia.lee@digitstore.org",
-    "phone": "4567890123",
-    "retailer_name": "DigitStore"
-  },
-  {
-    "id": 205,
-    "firstname": "David",
-    "lastname": "Miller",
-    "email": "david.miller@geardeck.com",
-    "phone": "5678901234",
-    "retailer_name": "GearDeck"
-  },
-  {
-    "id": 206,
-    "firstname": "Emma",
-    "lastname": "Garcia",
-    "email": "emma.garcia@bytecart.io",
-    "phone": "6789012345",
-    "retailer_name": "ByteCart"
-  },
-  {
-    "id": 207,
-    "firstname": "James",
-    "lastname": "Wilson",
-    "email": "james.wilson@fastbuy.co",
-    "phone": "7890123456",
-    "retailer_name": "FastBuy"
-  },
-  {
-    "id": 208,
-    "firstname": "Olivia",
-    "lastname": "Martinez",
-    "email": "olivia.martinez@trendytech.com",
-    "phone": "8901234567",
-    "retailer_name": "TrendyTech"
-  },
-  {
-    "id": 209,
-    "firstname": "William",
-    "lastname": "Clark",
-    "email": "william.clark@electroline.net",
-    "phone": "9012345678",
-    "retailer_name": "ElectroLine"
-  },
-  {
-    "id": 210,
-    "firstname": "Ava",
-    "lastname": "Lopez",
-    "email": "ava.lopez@megashop.biz",
-    "phone": "0123456789",
-    "retailer_name": "MegaShop"
-  }
-];
-
 function populateUsers() {
-    // Send API request to fetch all users
-    var table = document.querySelector("#dt-users tbody");
-    for (var i = 0; i < users.length; i++) {
-        var newRow = document.createElement("tr");
-        newRow.classList.add("clickable-row-user");
+  // Send API request to fetch all users
+  var table = document.querySelector("#dt-users tbody");
+  for (var i = 0; i < users.length; i++) {
+    var newRow = document.createElement("tr");
+    newRow.classList.add("clickable-row-user");
 
-        var id = users[i]["id"];
-        var name = users[i]["firstname"] + " " + users[i]["lastname"];
-        var email = users[i]["email"];
+    var id = users[i]["id"];
+    var name = users[i]["firstname"] + " " + users[i]["lastname"];
+    var email = users[i]["email"];
 
-        // Validation?
+    // Validation?
 
-        var tdID = document.createElement("td");
-        var tdName = document.createElement("td");
-        var tdEmail = document.createElement("td");
+    var tdID = document.createElement("td");
+    var tdName = document.createElement("td");
+    var tdEmail = document.createElement("td");
 
-        tdID.innerText = id;
-        tdName.innerText = name;
-        tdEmail.innerText = email;
+    tdID.innerText = id;
+    tdName.innerText = name;
+    tdEmail.innerText = email;
 
-        newRow.appendChild(tdID);
-        newRow.appendChild(tdName);
-        newRow.appendChild(tdEmail);
+    newRow.appendChild(tdID);
+    newRow.appendChild(tdName);
+    newRow.appendChild(tdEmail);
 
-        table.appendChild(newRow);
-    }
+    table.appendChild(newRow);
+  }
 }
 
 function populateProducts() {
-    // Send API request to fetch products
-    var table = document.querySelector("#dt-products tbody");
-    for (var i = 0; i < products.length; i++) {
-        var newRow = document.createElement("tr");
-        newRow.classList.add("clickable-row-product");
+  // Send API request to fetch products
+  var table = document.querySelector("#dt-products tbody");
+  for (var i = 0; i < products.length; i++) {
+    var newRow = document.createElement("tr");
+    newRow.classList.add("clickable-row-product");
 
-        var id = products[i]["id"];
-        var title = products[i]["title"]
-        var price = "$" + products[i]["price"];
+    var id = products[i]["id"];
+    var title = products[i]["title"]
+    var price = "$" + products[i]["price"];
 
-        // Validation?
+    // Validation?
 
-        var tdID = document.createElement("td");
-        var tdTitle = document.createElement("td");
-        var tdPrice = document.createElement("td");
+    var tdID = document.createElement("td");
+    var tdTitle = document.createElement("td");
+    var tdPrice = document.createElement("td");
 
-        tdID.innerText = id;
-        tdTitle.innerText = title;
-        tdPrice.innerText = price;
+    tdID.innerText = id;
+    tdTitle.innerText = title;
+    tdPrice.innerText = price;
 
-        newRow.appendChild(tdID);
-        newRow.appendChild(tdTitle);
-        newRow.appendChild(tdPrice);
+    newRow.appendChild(tdID);
+    newRow.appendChild(tdTitle);
+    newRow.appendChild(tdPrice);
 
-        table.appendChild(newRow);
-    }
+    table.appendChild(newRow);
+  }
 }
 
 function populateRetailers() {
-    var table = document.querySelector("#dt-retailers tbody");
-    for (var i = 0; i < retailers.length; i++) {
-        var newRow = document.createElement("tr");
-        newRow.classList.add("clickable-row-retailer");
 
-        var id = retailers[i]["id"];
-        var name = retailers[i]["retailer_name"];
+  var retailers = [];
 
-        // Validation?
+  var request = new XMLHttpRequest();
 
-        var tdID = document.createElement("td");
-        var tdName = document.createElement("td");
-
-        tdID.innerText = id;
-        tdName.innerText = name;
-
-        newRow.appendChild(tdID);
-        newRow.appendChild(tdName);
-
-        table.appendChild(newRow);
+  request.onreadystatechange = function () {
+    if (this.readyState == 4 && this.status == 200) {
+      var response = JSON.parse(this.responseText);
+      retailers = response.data;
+    } else if (this.readyState == 4) {
+      console.log("Failed to fetch retailers, status code: " + this.status);
     }
+  }
+
+  request.open("POST", "http://localhost/COS221_Assignment5/api/api.php", false);
+  request.send(JSON.stringify({ "type": "getAllRetailers" }));
+
+  var table = document.querySelector("#dt-retailers tbody");
+  for (var i = 0; i < retailers.length; i++) {
+    var newRow = document.createElement("tr");
+    newRow.classList.add("clickable-row-retailer");
+
+    var id = retailers[i]["retailer_id"];
+    var name = retailers[i]["retailer_name"];
+
+    var tdID = document.createElement("td");
+    var tdName = document.createElement("td");
+
+    tdID.innerText = id;
+    tdName.innerText = name;
+
+    newRow.appendChild(tdID);
+    newRow.appendChild(tdName);
+
+    table.appendChild(newRow);
+  }
 }
 
 if (document.getElementById("users") != null) {
-    // Populate users
-    populateUsers();
+  // Populate users
+  populateUsers();
 }
 
 if (document.getElementById("products") != null) {
-    // Populate products
-    populateProducts();
+  // Populate products
+  populateProducts();
 }
 
 if (document.getElementById("retailers") != null) {
-    // Populate retailers
-    populateRetailers();
+  // Populate retailers
+  populateRetailers();
 }
 
