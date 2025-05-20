@@ -10,9 +10,6 @@
     <body>
         <form id="productFilterForm">
             <div class="input-container">
-                <div class="header">
-                    <span class="logo">CompareIt</span>
-                </div>
                 <h1>Find Products</h1>
                 <div class="filters-row">
                     <input class="search-bar" type="text" id="search" name="search" placeholder="Search for products...">
@@ -33,7 +30,6 @@
                         <option value="rating">Rating</option>
                     </select>
                     <label><input class="filter-checkbox" type="checkbox" name="onSale" id="onSale">On Sale</label>
-                    
                 </div>
                 <button id="submit" type="submit">Show Products</button>
             </div>

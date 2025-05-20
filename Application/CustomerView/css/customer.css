@@ -119,24 +119,6 @@ button[type="submit"]:hover
     box-shadow: 0 4px 16px rgba(99,102,241,0.15);
 }
 
-.header 
-{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-bottom: 36px;
-    font-family: 'Segoe UI', Arial, Helvetica, sans-serif;
-    font-size: 38px;
-    font-weight: 800;
-    letter-spacing: 2px;
-    user-select: none;
-}
-
-.logo
-{
-    color: #2a2a3f;
-}
-
 .results-container 
 {
     margin-top: 36px;
