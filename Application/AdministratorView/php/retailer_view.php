@@ -11,10 +11,10 @@
 
   <!-- Main Stylesheet -->
   <link rel="stylesheet" href="../css/main.css" />
+
 </head>
 <body>
   <?php include 'sidebar.php';?>
-
   <!-- Main Content -->
   <main class="content">
     <section id="retailers" class="panel glass-card">

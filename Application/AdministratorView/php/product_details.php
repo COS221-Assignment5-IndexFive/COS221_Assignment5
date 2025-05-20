@@ -11,11 +11,15 @@
 
   <!-- Main Stylesheets -->
   <link rel="stylesheet" href="../css/main.css" />
+  <link rel="stylesheet" href="../css/messages.css" />
   <link rel="stylesheet" href="../css/product_details.css" />
 </head>
 <body>
   <?php include 'sidebar.php';?>
-
+  <div class="alert-container">
+    <?php include "update_alerts.php"?>
+    <?php include "delete_alerts.php"?>
+  </div>
   <!-- Main Content -->
   <main class="content">
     <section class="panel glass-card product-detail">
@@ -89,14 +93,6 @@
           <label for="category-select">Category</label>
         <select id="category-select" name="category">
           <option value="" disabled selected>Select a category</option>
-          <option value="Laptops">Laptops</option>
-          <option value="Desktop Computers">Desktop Computers</option>
-          <option value="Tablets">Tablets</option>
-          <option value="Smartphones">Smartphones</option>
-          <option value="Monitors">Monitors</option>
-          <option value="Keyboards & Computer Mice">Keyboards & Computer Mice</option>
-          <option value="Headphones & Earbuds">Headphones & Earbuds</option>
-          <option value="add_new">Add new category</option>
         </select>
 
         <!-- Hidden until "Add new category" is chosen -->
@@ -115,9 +111,6 @@
           <label for="retailer-select">Retailer</label>
           <select id="retailer-select" name="retailer">
             <option value="" disabled selected>Select a retailer</option>
-            <option value="Retailer A">Retailer A</option>
-            <option value="Retailer B">Retailer B</option>
-            <option value="Retailer C">Retailer C</option>
           </select>
           <div class="error-message">
             Please select a retailer.
@@ -126,12 +119,12 @@
 
         <div class="form-actions">
           <button type="submit" class="btn btn-primary"><span class="material-icons">save</span> Save Changes</button>
-          <button type="button" class="btn btn-danger"><span class="material-icons">delete</span> Delete Product</button>
+          <button type="button" class="btn btn-danger" id="delete-btn"><span class="material-icons">delete</span> Delete Product</button>
         </div>
       </form>
     </section>
   </main>
-  <script src="../js/product_details.js"></script>
+  <script type="module" src="../js/product_details.js"></script>
 </body>
 </html>
 

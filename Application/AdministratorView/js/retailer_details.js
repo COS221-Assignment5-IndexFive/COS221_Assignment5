@@ -1,3 +1,6 @@
+import { Validator } from "./Validator.js";
+import { AlertUtilities } from "./AlertUtilites.js";
+
 function displayError() {
     document.getElementsByClassName("retailer-form")[0].classList.add("hidden");
     document.getElementsByClassName("count-display")[0].classList.add("hidden");
@@ -34,61 +37,43 @@ console.log(id);
 
 document.getElementById("change-retailer-form").addEventListener("submit", function(event) {
     event.preventDefault();
-    var valid = true;
+    const rdv = new Validator();
 
     var firstName = document.getElementById("first-name").value;
-    validationHandler("fg-first-name", validateFirstAndLastName(firstName));
+    rdv.rdv.validationHandler("fg-first-name", rdv.validateFirstAndLastName(firstName));
 
     var lastName = document.getElementById("last-name").value;
-    validationHandler("fg-last-name", validateFirstAndLastName(lastName));
+    rdv.validationHandler("fg-last-name", rdv.validateFirstAndLastName(lastName));
 
     var email = document.getElementById("email").value;
-    validationHandler("fg-email", validateEmail(email));
+    rdv.validationHandler("fg-email", rdv.validateEmail(email));
 
     var phoneNum = document.getElementById("phone").value;
-    validationHandler("fg-phone", validatePhoneNum(phoneNum));
+    rdv.validationHandler("fg-phone", rdv.validatePhoneNum(phoneNum));
 
     var retailer = document.getElementById("retailer-name").value;
-    validationHandler("fg-retailer", validateRetailer(retailer));
+    rdv.validationHandler("fg-retailer", rdv.validateRetailer(retailer));
 
-    if (!valid) {
+    if (!rdv.valid) {
         return;
     }
 });
 
-// Generic error display helpers
-function validationHandler(formGroupId, validation) {
-    var formGroup = document.getElementById(formGroupId);
-    if (!validation) {
-        formGroup.classList.add("has-error");
-        valid = false;
-    } else if (formGroup.classList.contains("has-error")) {
-        formGroup.classList.remove("has-error");
-    }
-}
+// Delete section
+document.getElementById("delete-btn").addEventListener("click", function() {
+  var confirmDelete = new AlertUtilities(document.getElementById("delete-confirm"));
+  confirmDelete.showAlert();
 
-// Validation functions
-function validateFirstAndLastName(name) {
-    /* First and last name can consist of:
-       - A-Z or a-z, whitespace, "," (comma) "'" (single quote), "-" (dash)
-    */
-    const namePattern = /^[a-z ,.'-]+$/i;
-    return namePattern.test(name);
-}
+  document.getElementById("confirm-yes").addEventListener("click", function() {
+    confirmDelete.dismissAlert(0);
+    var deleteSuccess = new AlertUtilities(document.getElementById("delete-success"));
+    deleteSuccess.showAndDismissAlert();
+    setTimeout(() => {
+      window.location.href = "index.php";
+    }, 1000)
+  });
 
-function validateEmail(email) {
-    // Used this regex: https://www.regular-expressions.info/email.html
-    const emailPattern = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
-    return emailPattern.test(email);
-}
-
-function validatePhoneNum(phoneNum) {
-    // Matches either +27 (for example) number or regular 10 digit number
-    const phonePattern = /^\+?\d{11}$|^\d{10}$/;
-    return phonePattern.test(phoneNum);
-}
-
-function validateRetailer(retailer) {
-    const retailerPattern = /^(?![ .&'-])[a-zA-Z0-9 .&'-]{0,48}(?<![ .&'-])$/;
-    return retailerPattern.test(retailer);
-}
+  document.getElementById("confirm-no").addEventListener("click", function() {
+    confirmDelete.dismissAlert(0);
+  });
+});

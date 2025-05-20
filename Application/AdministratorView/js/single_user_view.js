@@ -1,3 +1,80 @@
+import { Validator } from "./Validator.js";
+import { AlertUtilities } from "./AlertUtilites.js";
+
+var users = [
+  {
+    "id": 1,
+    "firstname": "Alice",
+    "lastname": "Johnson",
+    "email": "alice.johnson@example.com",
+    "phone": "1234567890"
+  },
+  {
+    "id": 2,
+    "firstname": "Brian",
+    "lastname": "Smith",
+    "email": "brian.smith@example.com",
+    "phone": "2345678901"
+  },
+  {
+    "id": 3,
+    "firstname": "Catherine",
+    "lastname": "Lee",
+    "email": "catherine.lee@example.com",
+    "phone": "3456789012"
+  },
+  {
+    "id": 4,
+    "firstname": "Daniel",
+    "lastname": "Thompson",
+    "email": "daniel.thompson@example.com",
+    "phone": "4567890123"
+  },
+  {
+    "id": 5,
+    "firstname": "Emily",
+    "lastname": "Davis",
+    "email": "emily.davis@example.com",
+    "phone": "5678901234"
+  },
+  {
+    "id": 6,
+    "firstname": "Frank",
+    "lastname": "Martin",
+    "email": "frank.martin@example.com",
+    "phone": "6789012345"
+  },
+  {
+    "id": 7,
+    "firstname": "Grace",
+    "lastname": "Chen",
+    "email": "grace.chen@example.com",
+    "phone": "7890123456"
+  },
+  {
+    "id": 8,
+    "firstname": "Henry",
+    "lastname": "Wilson",
+    "email": "henry.wilson@example.com",
+    "phone": "8901234567"
+  },
+  {
+    "id": 9,
+    "firstname": "Isabella",
+    "lastname": "Moore",
+    "email": "isabella.moore@example.com",
+    "phone": "9012345678"
+  },
+  {
+    "id": 10,
+    "firstname": "Jack",
+    "lastname": "Taylor",
+    "email": "jack.taylor@example.com",
+    "phone": "0123456789"
+  }
+];
+
+
 function displayError() {
     document.getElementsByClassName("user-form")[0].classList.add("hidden");
     document.getElementsByClassName("error-message-id")[0].classList.remove("hidden");
@@ -5,6 +82,14 @@ function displayError() {
 
 function isNumericString(value) {
     return !isNaN(value) && value.trim() !== "";
+}
+
+function populateFormFields(index) {
+    document.getElementById("user-id").value = users[index].id;
+    document.getElementById("first-name").value = users[index].firstname;
+    document.getElementById("last-name").value = users[index].lastname;
+    document.getElementById("email").value = users[index].email;
+    document.getElementById("phone").value = users[index].phone;
 }
 
 const queryParams = Object.fromEntries(new URLSearchParams(window.location.search));
@@ -28,57 +113,62 @@ if (!isNumericString(id)) {
     throw new Error("ID has to be a number");
 }
 
+var index = -1;
+for (var i = 0; i < users.length; i++) {
+    if (users[i].id == id) {
+        index = i;
+        break;
+    }
+}
+
+if (index < 0) {
+    displayError();
+    throw new Error("User does not exist");
+}
+
+populateFormFields(index);
+
 console.log(id);
 
 document.getElementById("change-user-form").addEventListener("submit", function(event) {
     event.preventDefault();
-    var valid = true;
+    const suv = new Validator();
 
     var firstName = document.getElementById("first-name").value;
-    validationHandler("fg-first-name", validateFirstAndLastName(firstName));
+    suv.validationHandler("fg-first-name", suv.validateFirstAndLastName(firstName));
 
     var lastName = document.getElementById("last-name").value;
-    validationHandler("fg-last-name", validateFirstAndLastName(lastName));
+    suv.validationHandler("fg-last-name", suv.validateFirstAndLastName(lastName));
 
     var email = document.getElementById("email").value;
-    validationHandler("fg-email", validateEmail(email));
+    suv.validationHandler("fg-email", suv.validateEmail(email));
 
     var phoneNum = document.getElementById("phone").value;
-    validationHandler("fg-phone", validatePhoneNum(phoneNum));
+    suv.validationHandler("fg-phone", suv.validatePhoneNum(phoneNum));
 
-    if (!valid) {
+    if (!suv.valid) {
         return;
     }
+
+    var updateSuccess = new AlertUtilities(document.getElementById("update-success"));
+    updateSuccess.showAndDismissAlert();
 });
 
-// Generic error display helpers
-function validationHandler(formGroupId, validation) {
-    var formGroup = document.getElementById(formGroupId);
-    if (!validation) {
-        formGroup.classList.add("has-error");
-        valid = false;
-    } else if (formGroup.classList.contains("has-error")) {
-        formGroup.classList.remove("has-error");
-    }
-}
+// Delete section
+document.getElementById("delete-btn").addEventListener("click", function() {
+  var confirmDelete = new AlertUtilities(document.getElementById("delete-confirm"));
+  confirmDelete.showAlert();
 
-// Validation functions
-function validateFirstAndLastName(name) {
-    /* First and last name can consist of:
-       - A-Z or a-z, whitespace, "," (comma) "'" (single quote), "-" (dash)
-    */
-    const namePattern = /^[a-z ,.'-]+$/i;
-    return namePattern.test(name);
-}
+  document.getElementById("confirm-yes").addEventListener("click", function() {
+    confirmDelete.dismissAlert(0);
+    var deleteSuccess = new AlertUtilities(document.getElementById("delete-success"));
+    deleteSuccess.showAndDismissAlert();
+    setTimeout(() => {
+      window.location.href = "index.php";
+    }, 1000)
+  });
 
-function validateEmail(email) {
-    // Used this regex: https://www.regular-expressions.info/email.html
-    const emailPattern = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
-    return emailPattern.test(email);
-}
-
-function validatePhoneNum(phoneNum) {
-    // Matches either +27 (for example) number or regular 10 digit number
-    const phonePattern = /^\+?\d{11}$|^\d{10}$/;
-    return phonePattern.test(phoneNum);
-}
+  document.getElementById("confirm-no").addEventListener("click", function() {
+    confirmDelete.dismissAlert(0);
+  });
+});

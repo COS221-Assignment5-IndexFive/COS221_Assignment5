@@ -39,11 +39,6 @@
           </tr>
         </thead>
         <tbody>
-          <tr class="clickable-row-user" data-href="#">
-            <td>1</td>
-            <td>Jane Doe</td>
-            <td>jane@example.com</td>
-          </tr>
           <!-- Repeat rows dynamically -->
         </tbody>
       </table>

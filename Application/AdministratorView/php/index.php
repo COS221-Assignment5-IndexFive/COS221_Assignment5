@@ -11,6 +11,8 @@
 
   <!-- Main Stylesheet -->
   <link rel="stylesheet" href="../css/main.css" />
+  <link rel="stylesheet" href="../css/messages.css" />
+
 </head>
 <body>
   <?php include 'sidebar.php';?>

@@ -12,12 +12,18 @@
   <!-- Stylesheets -->
   <link rel="stylesheet" href="../css/main.css" />
   <link rel="stylesheet" href="../css/add_products.css" />
+  <link rel="stylesheet" href="../css/messages.css" />
+
 </head>
 <body>
   <?php include 'sidebar.php';?>
 
   <!-- Main Content -->
   <main class="content">
+    <div class="alert-container">
+      <?php include "add_alerts.php"?>
+    </div>
+
     <section class="panel glass-card add-product">
       <div class="panel-header">
         <h2>Add New Product</h2>
@@ -77,14 +83,6 @@
 
         <select id="category-select" name="category">
           <option value="" disabled selected>Select a category</option>
-          <option value="Laptops">Laptops</option>
-          <option value="Desktop Computers">Desktop Computers</option>
-          <option value="Tablets">Tablets</option>
-          <option value="Smartphones">Smartphones</option>
-          <option value="Monitors">Monitors</option>
-          <option value="Keyboards & Computer Mice">Keyboards & Computer Mice</option>
-          <option value="Headphones & Earbuds">Headphones & Earbuds</option>
-          <option value="add_new">Add new category</option>
         </select>
 
         <!-- Hidden until "Add new category" is chosen -->
@@ -105,9 +103,6 @@
           <label for="retailer-select">Retailer</label>
           <select id="retailer-select" name="retailer">
             <option value="" disabled selected>Select a retailer</option>
-            <option value="Retailer A">Retailer A</option>
-            <option value="Retailer B">Retailer B</option>
-            <option value="Retailer C">Retailer C</option>
           </select>
           <div class="error-message">
             Please select a retailer.
@@ -121,6 +116,6 @@
       </form>
     </section>
   </main>
-  <script src="../js/add_product.js"></script>
+  <script type="module" src="../js/add_product.js"></script>
 </body>
 </html>

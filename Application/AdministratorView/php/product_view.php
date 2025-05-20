@@ -40,11 +40,6 @@
           </tr>
         </thead>
         <tbody>
-          <tr class="clickable-row-product" data-href="#">
-            <td>101</td>
-            <td>Wireless Mouse</td>
-            <td>$29.99</td>
-          </tr>
           <!-- Repeat rows dynamically -->
         </tbody>
       </table>

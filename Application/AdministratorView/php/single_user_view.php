@@ -12,11 +12,17 @@
   <!-- Main Stylesheet -->
   <link rel="stylesheet" href="../css/main.css" />
   <link rel="stylesheet" href="../css/user_detail.css" />
+  <link rel="stylesheet" href="../css/messages.css" />
+
 </head>
 <body>
   <?php include 'sidebar.php';?>
 
  <!-- Main Content -->
+  <div class="alert-container">
+    <?php include "update_alerts.php"?>
+    <?php include "delete_alerts.php"?>
+  </div>
   <main class="content">
     <section class="panel glass-card user-detail">
       <div class="panel-header">
@@ -67,11 +73,11 @@
         </div>
         <div class="form-actions">
           <button type="submit" class="btn btn-primary"><span class="material-icons">save</span> Save Changes</button>
-          <button type="button" class="btn btn-danger"><span class="material-icons">delete</span> Delete User</button>
+          <button type="button" class="btn btn-danger" id="delete-btn"><span class="material-icons">delete</span> Delete User</button>
         </div>
       </form>
     </section>
   </main>
-  <script src="../js/single_user_view.js"></script>
+  <script type="module" src="../js/single_user_view.js"></script>
 </body>
 </html>
