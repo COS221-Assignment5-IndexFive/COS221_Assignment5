@@ -84,7 +84,7 @@ def compile_out(queries, output_file="shopping_data.json"):
         print(parent_item["shopping_results"][1]["title"])
         requests_made += 1
         # print(parent_item)
-        for i in range(0, 11):
+        for i in range(10, 21):
             print(f"Iteration {i} for {q}")
             record = {}
             try:
