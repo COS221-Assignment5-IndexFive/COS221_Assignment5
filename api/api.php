@@ -37,7 +37,7 @@ class API {
 		}
 
 		switch ($action) {
-      case 'Register':
+      case 'Signup':
 				register($this->conn,  $input);
         break;
       case 'Login':

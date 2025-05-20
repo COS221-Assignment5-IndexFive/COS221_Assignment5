@@ -48,7 +48,7 @@ function register($connection, $data)
 // function login($connection, $data): check the email and password against the what is stored in the database
 function login($connection, $data)
 {
-    $email = $data['email_address'];
+    $email = $data['email'];
     $password = $data['password'];
 
     $stmt = $connection->prepare("SELECT user_id, password_hash, apikey FROM users WHERE email_address = ?");
