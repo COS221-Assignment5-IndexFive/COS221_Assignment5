@@ -60,8 +60,47 @@ document.getElementById("add-user-form").addEventListener("submit", function(eve
     var type = document.getElementById("add-type").value;
     if (type === "user") {
         console.log("Simulated add user endpoint");
+        /* When adding a user :
+
+        */
     } else if (type === "retailer") {
         console.log("Simulated add retailer endpoint");
+
+        /*
+        When adding a retailer API Expects :
+        {
+          "type": "addRetailer",
+          "retailer_name": "New Retailer Name"
+        }
+
+        When adding a retailer API RETURNS :
+        {
+          "success": true,
+          "statusCode": 201,
+          "message": "Retailer added successfully.",
+          "data": {
+            "retailer_id": 15  // the new retailer's ID
+          }
+        }
+        */
+
+       // Similarly
+
+        /*
+        When REMOVING a retailer API Expects :
+        {
+          "type": "removeRetailer",
+          "retailer_id": <some integar value>
+        }
+
+        When REMOVING a retailer API RETUNS :
+        {
+          "success": true,
+          "statusCode": 200,
+          "message": "Retailer removed successfully."
+        }
+
+        */
     }
 });
 

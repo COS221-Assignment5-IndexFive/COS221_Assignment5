@@ -10,7 +10,7 @@ api/
     ├── products.php # Admin & reailers can add / remove products Users can sort/filter/search products & add to watchlist
     ├── retailers.php # retailers can add / remove products they're sellring
     ├── watchlist.php # users add / remove from their watchlist
-    └── dashboard.php # return top rated products from watchlist table
+    └── administrator.php
 ```
 
 
@@ -65,75 +65,114 @@ users login, the user type is determined by the login endpoint in the following 
 ```
 
 ### products.php
-#### expects:
-```json
+Functionality the products endpoint executes. <br>
+_This endpoint handles the following functions_ <br>
+* adding a product from the products table
+* removing a product from the products table
+* This endpoint controls the following queries:
+  * returning ALL products currently in the table
+  * returing products of a specific rating (a filter from the users)
+  * returing products of a specific price range (a filter from the users)
+  * returing products of a specific / specified category(s) (a filter from the users)
+  * etc
+#### adding a product
+NOTE: only admin and retailers can preform these actions
 
-```
-#### returns
-```json
+#### removing a product
+NOTE: only admin and retailers can preform these actions
 
-```
+#### retuning all product(s)
+
 
 ### retailers.php
-#### expects:
-```json
+Functionality the retailers endpoint executes. <br>
+_This endpoint handles the following functions_ <br>
+* adding a retailer from the products table
+* removing a retailer from the products table
+* returning ALL retialers currently in the table
 
+#### adding a retialer
+NOTE: only admin can preform these actions
+
+```json
+{
+  "type": "addRetailer",
+  "retailer_name": "New Retailer Name"
+}
 ```
-#### returns
-```json
 
+**Success Response:**
+```json
+{
+  "success": true,
+  "statusCode": 201,
+  "message": "Retailer added successfully.",
+  "data": {
+    "retailer_id": 15
+  }
+}
+```
+
+#### removing a retailer
+NOTE: only admin can preform these actions
+
+**Request Format:**
+```json
+{
+  "type": "removeRetailer",
+  "retailer_id": 12
+}
+```
+
+**Success Response:**
+```json
+{
+  "success": true,
+  "statusCode": 200,
+  "message": "Retailer removed successfully."
+}
+```
+
+#### retuning all retailers
+
+**Request Format:**
+```json
+{
+  "type": "getAllRetailers"
+}
+```
+
+**Success Response:**
+```json
+{
+  "success": true,
+  "statusCode": 200,
+  "message": "Retailers retrieved successfully.",
+  "data": [
+    {
+      "retailer_id": 1,
+      "retailer_name": "Retailer A",
+      "num_products": 5
+    },
+    {
+      "retailer_id": 2,
+      "retailer_name": "Retailer B",
+      "num_products": 8
+    }
+  ]
+}
 ```
 
 
 ### watchlist.php
-#### expects:
-```json
+Functionality the watchlist endpoint executes. <br>
+_This endpoint handles the following functions_ <br>
+* addign products to the watchlist
+* removing products from the watchlist
+* retunring all producst in the watchlist
 
-```
-#### returns
-```json
+#### adding to watchlist
 
-```
+#### removing to watchlist
 
-
-### dashboard.php
-#### expects:
-```json
-
-```
-#### returns
-```json
-
-```
-
-
-
-# Schemas:
-### Users Table Schema
-
-| #  | Column Name     | Type          | Collation            | Attributes      | Null | Default | Extra           | Notes             |
-|----|------------------|---------------|-----------------------|------------------|------|---------|------------------|--------------------|
-| 1  | `user_id`        | `int(11)`      |                       |                  | No   | None    | AUTO_INCREMENT  | Primary Key        |
-| 2  | `password_hash`  | `varchar(255)` | `utf8mb4_general_ci`  |                  | No   | None    |                  | Hashed password    |
-| 3  | `first_name`     | `varchar(50)`  | `utf8mb4_general_ci`  |                  | No   | None    |                  |                    |
-| 4  | `last_name`      | `varchar(50)`  | `utf8mb4_general_ci`  |                  | Yes  | NULL    |                  | Optional           |
-| 5  | `cell_number`    | `char(10)`     | `utf8mb4_general_ci`  |                  | No   | None    |                  |                    |
-| 6  | `email_address`  | `varchar(150)` | `utf8mb4_general_ci`  |                  | Yes  | NULL    |                  | Indexedm           |
-
-
-### Admin Table Schema
-
-| #  | Name            | Type      | Collation           | Attributes | Null | Default | Extra          |
-|----|-----------------|-----------|---------------------|------------|------|---------|----------------|
-| 1  | `user_id`       | int(11)   | —                   | —          | No   | None    | AUTO_INCREMENT |
-| 2  | `privilege_level` | int(11) | —                   | —          | Yes  | 0       | —              |
-
-
-### Retailer Table Schema:
-### 🏪 Retailers Table Schema
-
-| #  | Name           | Type         | Collation           | Attributes | Null | Default | Extra          |
-|----|----------------|--------------|----------------------|------------|------|---------|----------------|
-| 1  | `retailer_id`   | int(11)      | —                    | —          | No   | None    | AUTO_INCREMENT |
-| 2  | `retailer_name` | varchar(200) | utf8mb4_general_ci   | —          | No   | None    | —              |
-| 3  | `num_products`  | int(11)      | —                    | —          | Yes  | -1      | —              |
+#### retuning all products in watchlist

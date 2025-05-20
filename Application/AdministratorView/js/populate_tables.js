@@ -336,6 +336,33 @@ function populateProducts() {
 }
 
 function populateRetailers() {
+  // Send API request to fetch ALL Reatilers
+  /* When requesting for all retailers api EXPECTS:
+    {
+    "type": "getAllRetailers"
+    }
+
+    When requesting for all retailers api RETURNS:
+    {
+      "success": true,
+      "statusCode": 200,
+      "message": "Retailers retrieved successfully.",
+      "data": [
+        {
+          "retailer_id": 1,
+          "retailer_name": "Retailer A",
+          "num_products": 10
+        },
+        {
+          "retailer_id": 2,
+          "retailer_name": "Retailer B",
+          "num_products": 5
+        }
+        ...
+      ]
+    }
+
+  */
     var table = document.querySelector("#dt-retailers tbody");
     for (var i = 0; i < retailers.length; i++) {
         var newRow = document.createElement("tr");
@@ -373,4 +400,3 @@ if (document.getElementById("retailers") != null) {
     // Populate retailers
     populateRetailers();
 }
-

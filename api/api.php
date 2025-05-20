@@ -1,7 +1,9 @@
 <?php
 header('Content-Type: application/json');
-
+session_start();
+require_once 'utils.php';
 require_once 'endpoints/login.php';
+require_once 'endpoints/retailers.php';
 
 class API {
 
@@ -43,6 +45,19 @@ class API {
       case 'Login':
 				login($this->conn,  $input);
         break;
+
+      case 'addRetailer':
+        addRetailer($this->conn, $input);
+        break;
+
+      case 'removeRetailer':
+        removeRetailer($this->conn, $input);
+        break;
+
+      case 'getAllRetailers':
+        getAllRetailers($this->conn);
+        break;
+
 			default:
         sendResponse($success=false, $data = null, $message = 'Invalid action', $statusCode = 400) ;
 				break;
