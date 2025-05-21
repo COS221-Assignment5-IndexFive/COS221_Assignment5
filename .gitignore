@@ -1,1 +1,6 @@
 .env
+/api
+Application/AdministratorView/
+DB/
+Documentation/
+README.md
