@@ -7,7 +7,8 @@ api/
 ├── .env # make git ignore this == password for DB
 └── endpoints/
     ├── login.php
-    ├── products.php # Admin & reailers can add / remove products Users can sort/filter/search products & add to watchlist
+    ├── products.php # All users can sort/filter/search products & add to watchlist (done in wishlist)
+    ├── productsHandler.php # ONLY Admin & reailers can add / remove products 
     ├── retailers.php # retailers can add / remove products they're sellring
     ├── watchlist.php # users add / remove from their watchlist
     └── dashboard.php # return top rated products from watchlist table
@@ -63,9 +64,114 @@ users login, the user type is determined by the login endpoint in the following 
 }
 ```
 
-### products.php
+### addProducts
 #### expects:
 ```json
+{
+  "type": "add",
+  "rating": 4.8,
+  "title": "Samsung Galaxy S24 Ultra",
+  "image_url": "https://example.com/s24.jpg",
+  "product_link": "https://example.com/s24-shop",
+  "price": 29999.99,
+  "discount_price": 27999.99,
+  "nr_reviews": 1520,
+  "category": "Smartphones"
+}
+
+```
+#### returns
+```json
+
+```
+
+### update products
+#### expects:
+```json
+{
+  "type": "update",
+  "product_id": 1,
+  "rating": 4.6,
+  "title": "Samsung Galaxy S24 Ultra (Updated)",
+  "image_url": "https://example.com/s24-updated.jpg",
+  "product_link": "https://example.com/s24-shop",
+  "price": 28999.99,
+  "discount_price": 26999.99,
+  "nr_reviews": 1600,
+  "category": "Smartphones"
+}
+
+```
+#### returns
+```json
+
+```
+
+### deleteProducts
+#### expects:
+```json
+{
+  "type": "delete",
+  "product_id": 1
+}
+
+```
+#### returns
+```json
+
+```
+//gives all the products
+### getProducts
+#### expects:
+```json
+{
+  "type": "getAll"
+}
+
+```
+#### returns
+```json
+
+```
+//this is for the filtering and sorting
+### getProducts
+#### expects:
+```json
+{
+  "type": "getAll",
+  "category": "Smartphones",
+  "min_price": 500,
+  "max_price": 1500,
+  "sort_by": "price",
+  "order": "ASC"
+}
+
+```
+#### returns
+```json
+
+```
+
+### getProductByID
+#### expects:
+```json
+{
+  "type": "getOne",
+  "product_id": 2
+}
+
+```
+#### returns
+```json
+
+```
+
+### getAllCategories
+#### expects:
+```json
+{
+  "type": "getCategories"
+}
 
 ```
 #### returns

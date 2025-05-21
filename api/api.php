@@ -29,23 +29,32 @@ class API {
     $input = json_decode(file_get_contents("php://input"), true);
     echo json_encode(['input' => $input]);
 
-		$action = $input['type'] ?? $_POST['type'] ?? $_GET['type'] ?? null;
+	$action = $input['type'] ?? $_POST['type'] ?? $_GET['type'] ?? null;
 
-		if (!$action) {
-			sendResponse($success=false, $data = null, $message = 'No action specified.', $statusCode = 400) ;
-			exit;
-		}
+	if (!$action) {
+		sendResponse($success=false, $data = null, $message = 'No action specified.', $statusCode = 400) ;
+		exit;
+	}
 
-		switch ($action) {
-      case 'Register':
-				register($this->conn,  $input);
-        break;
-      case 'Login':
-				login($this->conn,  $input);
-        break;
-			default:
-        sendResponse($success=false, $data = null, $message = 'Invalid action', $statusCode = 400) ;
-				break;
+	switch ($action) {
+		case 'Register':
+			register($this->conn,  $input);
+			break;
+		case 'Login':
+			login($this->conn,  $input);
+			break;
+		case 'add':
+			addProduct($this->conn,$input);
+			break;
+		case 'delete':
+			deleteProduct($this->conn,$input);
+			break;
+		case 'update':
+			updateProduct($this->conn,$input);
+			break;
+		default:
+			sendResponse($success=false, $data = null, $message = 'Invalid action', $statusCode = 400) ;
+			break;
 		}
 	}
 }
