@@ -1,6 +1,1 @@
 .env
-vendor/
-api/
-ollama/
-DB/
-DBDumps/

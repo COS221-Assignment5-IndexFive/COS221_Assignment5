@@ -166,13 +166,13 @@ function determineView(type)
         Determines the location the user is sent to after registration (Customer/ Retailer view).
         Sends the user to that location.
     */
-    if(type == "customer")
+    if(type == "user")
     {
-        window.location.href = "../../CustomerView/customer.php";
+        window.location.href = "../../CustomerView/php/customer.php";
     }
     else if(type == "retailer")
     {
-        window.location.href = "../../RetailerView/retailer.php";
+        window.location.href = "../../RetailerView/php/retailer.php";
     }
 }
 
@@ -236,7 +236,7 @@ window.onload = function()
             validateName();
         } 
         else
-        {
+        {   
             nameField.style.borderColor = "#ccc";
         }
     });
