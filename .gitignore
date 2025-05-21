@@ -1,5 +1,6 @@
 .env
-.git
 DB/
 Documentation/
+Application/Login/
+Application/Signup/
 README.md
