@@ -50,7 +50,7 @@ document.getElementById("change-retailer-form").addEventListener("submit", funct
   rdv.validationHandler("fg-phone", rdv.validatePhoneNum(phoneNum));
 
   var retailer = document.getElementById("retailer-name").value;
-  rdv.validationHandler("fg-retailer", rdv.validateRetailer(retailer));
+  rdv.validationHandler("fg-retailer", retailer != "" && rdv.validateRetailer(retailer));
 
   if (!rdv.valid) {
     return;

@@ -194,6 +194,10 @@ var products = [
   }
 ];
 
+function toggleLoadingScreen() {
+  document.getElementById("spinner").classList.toggle("hidden");
+}
+
 function populateUsers() {
   // Send API request to fetch all users
   var table = document.querySelector("#dt-users tbody");
@@ -252,43 +256,53 @@ function populateProducts() {
   }
 }
 
-function populateRetailers() {
+function getRetailers() {
+  toggleLoadingScreen();
+  return new Promise((resolve, reject) => {
+    var retailers = [];
+    var request = new XMLHttpRequest();
 
-  var retailers = [];
-
-  var request = new XMLHttpRequest();
-
-  request.onreadystatechange = function () {
-    if (this.readyState == 4 && this.status == 200) {
-      var response = JSON.parse(this.responseText);
-      retailers = response.data;
-    } else if (this.readyState == 4) {
-      console.log("Failed to fetch retailers, status code: " + this.status);
+    request.onreadystatechange = function () {
+      if (this.readyState == 4 && this.status == 200) {
+        var response = JSON.parse(this.responseText);
+        retailers = response.data;
+        resolve(retailers);
+      } else if (this.readyState == 4) {
+        reject("Failed to fetch retailers, status code: " + this.status);
+      }
     }
-  }
 
-  request.open("POST", "http://localhost/COS221_Assignment5/api/api.php", false);
-  request.send(JSON.stringify({ "type": "getAllRetailers" }));
+    request.open("POST", "http://localhost/COS221_Assignment5/api/api.php", true);
+    request.send(JSON.stringify({ "type": "getAllRetailers" }));
+  });
+}
 
-  var table = document.querySelector("#dt-retailers tbody");
-  for (var i = 0; i < retailers.length; i++) {
-    var newRow = document.createElement("tr");
-    newRow.classList.add("clickable-row-retailer");
+function populateRetailers() {
+  getRetailers()
+    .then((retailers) => {
+      var table = document.querySelector("#dt-retailers tbody");
+      for (var i = 0; i < retailers.length; i++) {
+        var newRow = document.createElement("tr");
+        newRow.classList.add("clickable-row-retailer");
 
-    var id = retailers[i]["retailer_id"];
-    var name = retailers[i]["retailer_name"];
+        var id = retailers[i]["retailer_id"];
+        var name = retailers[i]["retailer_name"];
 
-    var tdID = document.createElement("td");
-    var tdName = document.createElement("td");
+        var tdID = document.createElement("td");
+        var tdName = document.createElement("td");
 
-    tdID.innerText = id;
-    tdName.innerText = name;
+        tdID.innerText = id;
+        tdName.innerText = name;
 
-    newRow.appendChild(tdID);
-    newRow.appendChild(tdName);
-
-    table.appendChild(newRow);
-  }
+        newRow.appendChild(tdID);
+        newRow.appendChild(tdName);
+        table.appendChild(newRow);
+      }
+      toggleLoadingScreen();
+    })
+    .catch((error) => {
+      console.log(error);
+    });
 }
 
 if (document.getElementById("users") != null) {

@@ -195,3 +195,22 @@ a {
 .btn {
   cursor: pointer;
 }
+
+.spinner-section {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.5); /* dimming overlay */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  fill: #fff;              /* ensure it’s on top */
+}
+
+/* Optional: prevent scrolling while spinner is visible */
+body.loading {
+  overflow: hidden;
+}

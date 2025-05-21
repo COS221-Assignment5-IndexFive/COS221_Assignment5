@@ -15,8 +15,8 @@
 
 </head>
 <body>
-  <?php include 'sidebar.php';?>
-
+  <?php include "sidebar.php";?>
+  <?php include "spinner.php";?>
   <main class="content">
     <!-- Users Section -->
     <section id="users" class="panel glass-card">
@@ -94,10 +94,6 @@
           <tr><th>ID</th><th>Name</th></tr>
         </thead>
         <tbody>
-          <tr class="clickable-row-retailer" data-href="#">
-            <td>201</td>
-            <td>Retail Co.</td>
-          </tr>
           <!-- Repeat rows dynamically -->
         </tbody>
       </table>
