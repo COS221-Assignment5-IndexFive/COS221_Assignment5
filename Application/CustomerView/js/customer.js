@@ -30,7 +30,25 @@ function getCookie(cname)
     return "";
 }
 
-function getProducts() 
+function showLoadingScreen() 
+{
+    /*
+        Shows the loading spinner overlay.
+    */
+    document.getElementById("spinner").classList.remove("hidden");
+    document.getElementById("spinner").classList.add("visible");
+}
+
+function hideLoadingScreen() 
+{
+    /*
+        Hides the loading spinner overlay.
+    */
+    document.getElementById("spinner").classList.remove("visible");
+    document.getElementById("spinner").classList.add("hidden");
+}
+
+function getProducts(isInitialLoad = false) 
 {
     /*
         Sends a request to fetch products from the server using the user's API key.
@@ -58,6 +76,8 @@ function getProducts()
         apiKey: userAPI
     };
 
+    showLoadingScreen();
+
     var req = new XMLHttpRequest();
     req.open("POST", "../../api/api.php", true);
     req.setRequestHeader("Content-Type", "application/json");
@@ -66,6 +86,8 @@ function getProducts()
     {
         if (req.readyState == 4) 
         {
+            hideLoadingScreen();
+
             try
             {
                 var response = JSON.parse(req.responseText);
@@ -73,7 +95,16 @@ function getProducts()
                 if (response.success == true) 
                 {
                     allProducts = response.data;
-                    applyAllFilters();
+
+                    if(isInitialLoad == true)
+                    {
+                        let topRated = getTopRated(allProducts);
+                        displayProducts(topRated, true);
+                    }
+                    else
+                    {
+                        applyAllFilters();
+                    }
                 } 
             }
             catch(e)
@@ -84,6 +115,37 @@ function getProducts()
     };
 
     req.send(JSON.stringify(reqData));
+}
+
+function getTopRated(products) 
+{
+    /*
+        Returns the top 8 products sorted by rating (highest first) using bubble sort.
+    */
+    let arr = products.slice();
+    let n = arr.length;
+    let swapped = true;
+
+    while (swapped) 
+    {
+        swapped = false;
+        for (let i = 1; i < n; i++) 
+        {
+            let ratingA = arr[i - 1].rating || 0;
+            let ratingB = arr[i].rating || 0;
+            if (ratingA < ratingB) 
+            {
+                let temp = arr[i - 1];
+                arr[i - 1] = arr[i];
+                arr[i] = temp;
+                swapped = true;
+            }
+        }
+
+        n--;
+    }
+
+    return arr.slice(0, 8);
 }
 
 function extractNumericPrice(priceStr) 
@@ -200,7 +262,7 @@ function applyAllFilters()
             match = false;
         }
 
-        if (onSaleChecked && !product.onSale)
+        if (onSaleChecked && !(product.discount_price && product.discount_price !== product.price))
         {
             match = false;
         }
@@ -213,7 +275,7 @@ function applyAllFilters()
 
     filtered = sortProducts(filtered, sortValue);
 
-    displayProducts(filtered);
+    displayProducts(filtered, false);
 
     let noResults = document.getElementById("noResults");
 
@@ -294,7 +356,7 @@ function addWatchlist(productId)
     req.send(JSON.stringify(reqData));
 }
 
-function displayProducts(products) 
+function displayProducts(products, isTopRated = true) 
 {
     /*
         Renders the given products array into the product list section of the page.
@@ -302,16 +364,24 @@ function displayProducts(products)
     */
     const resultsContainer = document.getElementById('results-container');
     const productList = document.getElementById('product-list');
+    const heading = document.getElementById('productsHeading');
     productList.innerHTML = "";
+
+    if(isTopRated == true)
+    {
+        heading.textContent = "Top Rated Products";
+    }
+    else
+    {
+        heading.textContent = "Browse Products";
+    }
 
     for (var i = 0; i < products.length; i++) 
     {
         const product = products[i];
         const item = document.createElement('div');
         item.className = "product-card";
-        item.setAttribute('data-category', product.category);
-        item.setAttribute('data-onsale', product.onSale ? "true" : "false");
-
+        
         let priceHTML = "";
         if (product.discount_price && product.discount_price !== product.price)
         {
@@ -330,23 +400,31 @@ function displayProducts(products)
             priceHTML = `<span class="product-price">$${product.price}</span>`;
         }
 
+        let displayTitle = product.title;
+        const maxTitleLength = 25;
+
+        if (displayTitle.length > maxTitleLength) 
+        {
+            displayTitle = displayTitle.substring(0, maxTitleLength - 3) + '...';
+        }
+
         item.innerHTML = 
         `
             <div class="product-rating">
                 <span class="star-icon">⭐</span>
-                <span class="rating-value">${product.rating}</span>
+                <span class="rating-value">${product.rating || '--'}</span>
             </div>
             <div class="product-image">
                 <img src="${product.image_url}" alt="${product.title}">
             </div>
             <div class="product-info">
-                <span class="product-title">${product.title}</span>
+                <span class="product-title">${displayTitle}</span>
                 <span class="product-retailer">${product.retailer}</span>
             </div>
             <div class="product-price-bar">
                 ${priceHTML}
                 <button class="watchlist-btn" title="Add to Watchlist" data-product-id="${product.product_id}">
-                    <span class="watchlist-icon">🔎</span>
+                    <span class="watchlist-icon">➕</span>
                 </button>
             </div>
         `;
@@ -356,7 +434,7 @@ function displayProducts(products)
         const imageDiv = item.querySelector('.product-image');
         imageDiv.addEventListener('click', function() 
         {
-            window.location.href = `../../ProductView/product.php?id=${product.product_id}`;
+            window.location.href = `../../ProductView/php/product.php?id=${product.product_id}`;
         });
     }
 
@@ -372,8 +450,6 @@ function displayProducts(products)
     });
 
     resultsContainer.style.display = "block";
-    document.querySelector('.input-container').classList.add('form-top');
-    document.body.classList.add('form-transition');
 }
 
 window.onload = function() 
@@ -381,17 +457,8 @@ window.onload = function()
     document.getElementById('productFilterForm').addEventListener('submit', function(event) 
     {
         event.preventDefault();
-        getProducts();
-
-        document.getElementById('search').addEventListener('input', applyAllFilters);
-        document.getElementById('category').addEventListener('change', applyAllFilters);
-        document.getElementById('onSale').addEventListener('change', applyAllFilters);
-        document.getElementById('sort').addEventListener('change', applyAllFilters);
-
-        const submitButton = document.getElementById('submit');
-        if (submitButton) 
-        {
-            submitButton.parentNode.removeChild(submitButton);
-        }
+        applyAllFilters();
     });
+
+    getProducts(true);
 }
