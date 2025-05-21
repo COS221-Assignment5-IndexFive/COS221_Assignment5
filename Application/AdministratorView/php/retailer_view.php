@@ -15,6 +15,8 @@
 </head>
 <body>
   <?php include 'sidebar.php';?>
+  <?php include "spinner.php";?>
+
   <!-- Main Content -->
   <main class="content">
     <section id="retailers" class="panel glass-card">

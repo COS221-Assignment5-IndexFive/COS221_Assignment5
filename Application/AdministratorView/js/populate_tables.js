@@ -196,6 +196,7 @@ var products = [
 
 function toggleLoadingScreen() {
   document.getElementById("spinner").classList.toggle("hidden");
+  document.getElementById("spinner").classList.toggle("visible");
 }
 
 function populateUsers() {
@@ -299,6 +300,7 @@ function populateRetailers() {
         table.appendChild(newRow);
       }
       toggleLoadingScreen();
+      console.log("ABC");
     })
     .catch((error) => {
       console.log(error);

@@ -214,3 +214,6 @@ a {
 body.loading {
   overflow: hidden;
 }
+
+.hidden { display: none !important; }
+.visible { display: flex !important; }
