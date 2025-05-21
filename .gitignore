@@ -1,5 +1,8 @@
 .env
 .git
 .gitignore
+api/vendor/
+Application/
 ollama/
 DBDumps/
+DB/
