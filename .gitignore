@@ -1,6 +1,5 @@
 .env
-/api
-Application/AdministratorView/
+.git
 DB/
 Documentation/
 README.md
