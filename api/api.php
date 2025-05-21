@@ -4,6 +4,7 @@ session_start();
 require_once 'utils.php';
 require_once 'endpoints/login.php';
 require_once 'endpoints/retailers.php';
+require_once 'endpoints/users.php';
 
 class API {
 
@@ -39,6 +40,7 @@ class API {
 		}
 
 		switch ($action) {
+
       case 'Signup':
 				register($this->conn,  $input);
         break;
@@ -46,17 +48,31 @@ class API {
 				login($this->conn,  $input);
         break;
 
+
+
       case 'addRetailer':
         addRetailer($this->conn, $input);
         break;
-
       case 'removeRetailer':
         removeRetailer($this->conn, $input);
         break;
-
       case 'getAllRetailers':
         getAllRetailers($this->conn);
         break;
+
+
+
+      case 'addUser':
+        addUser($this->conn, $input);
+        break;
+      case 'removeUser':
+        removeUser($this->conn, $input);
+        break;
+      case 'getAllUsers':
+        getAllUsers($this->conn);
+        break;
+
+
 
 			default:
         sendResponse($success=false, $data = null, $message = 'Invalid action', $statusCode = 400) ;

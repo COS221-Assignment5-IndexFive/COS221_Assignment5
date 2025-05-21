@@ -7,7 +7,7 @@ api/
 ├── .env # make git ignore this == password for DB
 └── endpoints/
     ├── login.php
-    ├── products.php # Admin & reailers can add / remove products Users can sort/filter/search products & add to watchlist
+    ├── products.php # Admin & reailers can add / remove products Users can sort/filter/search roducts & add to watchlist
     ├── retailers.php # retailers can add / remove products they're sellring
     ├── watchlist.php # users add / remove from their watchlist
     └── administrator.php
@@ -21,7 +21,6 @@ api/
 {
   "action":
 }
-
 ```
 
 ## login.php
@@ -31,7 +30,6 @@ users login, the user type is determined by the login endpoint in the following 
 * the current user_id is compared to the retailer table to see if one can find a matching retailer_id therefore the user is an retaioler and has specific privledges priveledges
 ### SIGNUP  Endpoint
 ```js
-
 // Expected request structure:
 {
     type: "Signup",
@@ -134,7 +132,6 @@ NOTE: only admin can preform these actions
 ```
 
 #### retuning all retailers
-
 **Request Format:**
 ```json
 {
