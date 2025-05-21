@@ -208,7 +208,7 @@ function displayWatchlist(products)
             const imageDiv = item.querySelector('.product-image');
             imageDiv.addEventListener('click', function() 
             {
-                window.location.href = `../../ProductView/product.php?id=${product.product_id}`;
+                window.location.href = `../../ProductView/php/product.php?id=${product.product_id}`;
             });
         }
     }
@@ -221,6 +221,6 @@ window.onload = function()
     const lookupBtn = document.getElementById('goto-lookup-btn');
     lookupBtn.addEventListener("click", function()
     {
-        window.location.href = "../../CustomerView/customer.php";
+        window.location.href = "../../CustomerView/php/customer.php";
     });
 };
