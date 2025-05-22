@@ -47,7 +47,7 @@ function getWatchlist()
     var reqData = 
     {
         type: "GetWatchlist",
-        apiKey: userAPI
+        apikey: userAPI
     };
 
     var req = new XMLHttpRequest();
@@ -101,7 +101,7 @@ function deleteWatchlist(productId)
     var reqData = 
     {
         type: "DeleteWatchlist",
-        apiKey: userAPI,
+        apikey: userAPI,
         product_id: productId
     };
 
@@ -173,13 +173,21 @@ function displayWatchlist(products)
                 priceHTML = `<span class="product-price">$${product.price}</span>`;
             }
 
+            let displayTitle = product.title;
+            const maxTitleLength = 25;
+
+            if (displayTitle.length > maxTitleLength) 
+            {
+                displayTitle = displayTitle.substring(0, maxTitleLength - 3) + '...';
+            }
+
             card.innerHTML = 
             `
                 <div class="product-image">
                     <img src="${product.image_url}" alt="${product.title}">
                 </div>
                 <div class="product-info">
-                    <span class="product-title">${product.title}</span>
+                    <span class="product-title">${displayTitle}</span>
                     <span class="product-retailer">${product.retailer}</span>
                 </div>
                 <button class="remove-watchlist-btn" title="Remove from Watchlist" data-product-id="${product.product_id}">
@@ -205,7 +213,7 @@ function displayWatchlist(products)
                 }
             });
 
-            const imageDiv = item.querySelector('.product-image');
+            const imageDiv = card.querySelector('.product-image');
             imageDiv.addEventListener('click', function() 
             {
                 window.location.href = `../../ProductView/php/product.php?id=${product.product_id}`;
