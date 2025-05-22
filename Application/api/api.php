@@ -1,0 +1,111 @@
+<?php
+header('Content-Type: application/json');
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+require_once 'utils.php';
+require_once 'endpoints/login.php';
+require_once 'endpoints/retailers.php';
+
+class API {
+
+  private $conn;
+
+	public static function instance() {
+		static $instance = null;
+		if ($instance === null)
+			$instance = new API();
+		return $instance;
+	}
+
+	private function __construct() {
+    require_once 'config.php';
+		$this->conn = $connection;
+		$this->conn->select_db($_ENV['DB_NAME']);
+	}
+
+	public function __destruct() {
+		$this->conn->close();
+	}
+
+	public function handleRequest() {
+
+    $input = json_decode(file_get_contents("php://input"), true);
+    // echo json_encode(['input' => $input]);
+
+		$action = $input['type'] ?? $_POST['type'] ?? $_GET['type'] ?? null;
+
+		if (!$action) {
+			sendResponse($success=false, $data = null, $message = 'No action specified.', $statusCode = 400) ;
+			exit;
+		}
+
+		switch ($action) {
+      case 'Signup':
+				register($this->conn,  $input);
+        break;
+      case 'Login':
+				login($this->conn,  $input);
+        break;
+
+      case 'addRetailer':
+        addRetailer($this->conn, $input);
+        break;
+
+      case 'removeRetailer':
+        removeRetailer($this->conn, $input);
+        break;
+
+      case 'getAllRetailers':
+        getAllRetailers($this->conn);
+        break;
+    // @g3rard-j used for testing
+	  // case 'getUsers':
+		// $this->getUsers($input);
+		// break;
+		// case 'getProducts':
+		// 	$this->getProducts($input);
+		// 	break;
+
+			default:
+        sendResponse($success=false, $data = null, $message = 'Invalid action', $statusCode = 400) ;
+				break;
+		}
+	}
+
+  // @g3rard-j used for testing
+	// private function getUsers($data) {
+	// 	$query = "SELECT * FROM users";
+	// 	$stmt = $this->conn->prepare($query);
+
+	// 	$stmt->execute();
+	// 	$results = $stmt->get_result();
+	// 	$users = [];
+	// 	while ($row = $results->fetch_assoc()) {
+	// 		$users[] = $row;
+	// 	}
+
+	// 	echo json_encode([
+	// 		"data" => $users
+	// 	]);
+	// }
+
+	// private function getProducts($data) {
+	// 	$query = "SELECT * FROM products";
+	// 	$stmt = $this->conn->prepare($query);
+
+	// 	$stmt->execute();
+	// 	$results = $stmt->get_result();
+	// 	$products = [];
+	// 	while ($row = $results->fetch_assoc()) {
+	// 		$products[] = $row;
+	// 	}
+
+	// 	echo json_encode([
+	// 		"data" => $products
+	// 	]);
+	
+}
+
+API::instance()->handleRequest();
+?>
