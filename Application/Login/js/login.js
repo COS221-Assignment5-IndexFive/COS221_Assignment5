@@ -150,7 +150,7 @@ window.onload = function()
         };
 
         var xhr = new XMLHttpRequest();
-        xhr.open("POST", "../../../api/api.php", true);
+        xhr.open("POST", "../../api/api.php", true);
         xhr.setRequestHeader("Content-Type", "application/json");
 
         xhr.onreadystatechange = function()

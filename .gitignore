@@ -1,6 +1,7 @@
 .env
 .git
 .gitignore
+config.php
 api/vendor/
 Application/
 ollama/

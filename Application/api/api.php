@@ -1,10 +1,12 @@
 <?php
 header('Content-Type: application/json');
 session_start();
-require_once 'utils.php';
+require_once 'utils.php'; // helper isAdmin & isRetailer & sendResponse
 require_once 'endpoints/login.php';
 require_once 'endpoints/retailers.php';
 require_once 'endpoints/users.php';
+require_once 'endpoints/products.php';
+require_once 'endpoints/productsHandler.php';
 
 class API {
 
@@ -73,6 +75,33 @@ class API {
         break;
 
 
+      // only administrators or retails can use these
+      case 'addProduct':
+        addProduct($this->conn, $input);
+        break;
+      case 'deleteProduct':
+        deleteProduct($this->conn, $input);
+        break;
+      case 'updateProduct':
+        updateProduct($this->conn, $input);
+        break;
+
+      // everyone can use these
+      case 'GetProducts': // retuns all products in the products table
+        getProducts($this->conn, $input);
+        break;
+      case 'getProductByID': // retunrs details about a specific product (Id)
+        getProductByID($this->conn, $input);
+        break;
+      case 'getCategories': // retunrs all unique categories currently in the products table
+        getCategories($this->conn, $input);
+        break;
+
+
+      // addoing to watch list :
+      case 'AddWatchlist': 
+        addToWatchlist($this->conn, $input);
+        break;
 
 			default:
         sendResponse($success=false, $data = null, $message = 'Invalid action', $statusCode = 400) ;

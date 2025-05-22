@@ -1,6 +1,9 @@
 <?php
 ob_start();
 session_start();
+
+
+
 function register($connection, $data)
 {
 
@@ -51,7 +54,6 @@ function login($connection, $data)
     $stmt = $connection->prepare("SELECT user_id, password_hash, apikey FROM users WHERE email_address = ?");
     if (!$stmt) {
         sendResponse(false, null, 'Preparation failed: ' . $connection->error, 500);
-        ob_end_flush();
     }
 
     $stmt->bind_param("s", $email);
@@ -84,4 +86,3 @@ function login($connection, $data)
         sendResponse(false, null, 'User not found.', 404);
     }
 }
-
