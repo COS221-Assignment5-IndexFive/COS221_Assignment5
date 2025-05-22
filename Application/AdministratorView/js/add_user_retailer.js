@@ -1,5 +1,5 @@
-import { Validator } from "./Validator.js";
-import { AlertUtilities } from "./AlertUtilites.js";
+import { Validator } from "../../Utils/Validator.js";
+import { AlertUtilities } from "../../Utils/AlertUtilites.js";
 
 // Reset form
 function clearForm() {

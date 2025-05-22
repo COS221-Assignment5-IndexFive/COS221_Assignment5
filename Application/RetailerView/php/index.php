@@ -14,14 +14,14 @@
   <link rel="stylesheet" href="../css/retailer_dashboard.css" />
 </head>
 <body>
-
+  <?php include '../../Utils/spinner.php' ?>
   <!-- Main Content -->
   <main class="content">
     <section id="products" class="panel glass-card retailer-dashboard">
       <div class="panel-header">
         <h2>My Products</h2>
         <div class="panel-actions">
-          <input class="search-input" type="text" placeholder="Search products..." />
+          <input class="search-input" type="text" placeholder="Search products..." id="product-search" />
           <button class="btn btn-primary" id="add-product-btn" onclick="window.location.href='add_products.php'">
             <span class="material-icons">add</span> Add Product
           </button>
@@ -54,6 +54,6 @@
       </table>
     </section>
   </main>
-    <script src="../js/index.js"></script>
+    <script type="module" src="../js/index.js"></script>
 </body>
 </html>

@@ -1,5 +1,5 @@
-import { Validator } from "../../AdministratorView/js/Validator.js";
-import { AlertUtilities } from "../../AdministratorView/js/AlertUtilites.js";
+import { Validator } from "../../Utils/Validator.js";
+import { AlertUtilities } from "../../Utils/AlertUtilites.js";
 
 function getCategories() {
     // Query API for categories
