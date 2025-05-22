@@ -297,6 +297,7 @@ window.onload = function()
             cell_number: cellPhoneField.value,
             email: emailField.value,
             password: passwordField.value,
+            user_type: userTypeField.value
         };
 
         var xhr = new XMLHttpRequest();
