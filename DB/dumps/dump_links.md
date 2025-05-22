@@ -1,2 +1,3 @@
-[V1](https://drive.google.com/file/d/161D6UzYp1SKFcqvaItbsb0S3uoXaj1k8/view?usp=drive_link)
-[V2](https://drive.google.com/file/d/1xPfrsD57Wl_vPkWSZo7UNa11byej0Tcj/view?usp=drive_link) (newest), removed `compares` table, added `watchlist` table, added more data
+- [V1](https://drive.google.com/file/d/161D6UzYp1SKFcqvaItbsb0S3uoXaj1k8/view?usp=drive_link)<br>
+- [V2](https://drive.google.com/file/d/1xPfrsD57Wl_vPkWSZo7UNa11byej0Tcj/view?usp=drive_link), removed `compares` table, added `watchlist` table, added more data<br>
+- [V3](https://drive.google.com/file/d/1FN9ENBzHqsMJflXP5iyMEYrfxulXciRh/view?usp=drive_link) (newest) fixed user api column key issue 
