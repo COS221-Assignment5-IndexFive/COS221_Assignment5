@@ -1,4 +1,3 @@
-Absolutely! Here's the clean and simple version for your documentation or testing notes:
 
 ---
 
