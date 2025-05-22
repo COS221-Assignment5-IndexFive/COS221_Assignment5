@@ -16,11 +16,6 @@
                 <input id="phone" type="text" name="phone" placeholder="Phone number" required>
                 <input id="email" type="email" name="email" placeholder="Email" required>
                 <input id="password" type="password" name="password" placeholder="Password" required>
-                <select id="userType" name="userType" required>
-                    <option value="" disabled selected>Select user type</option>
-                    <option value="customer">Customer</option>
-                    <option value="retailer">Retailer</option>
-                </select>
                 <button id="submit" type="submit">Sign Up</button>
             </div>
         </form>
