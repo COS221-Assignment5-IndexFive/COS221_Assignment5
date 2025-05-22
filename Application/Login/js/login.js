@@ -61,17 +61,17 @@ function determineView(type)
         Determines the location the user is sent to after registration (Customer/ Retailer view).
         Sends the user to that location.
     */
-    if(type == "customer")
+    if(type == "user")
     {
-        window.location.href = "../../CustomerView/customer.php";
+        window.location.href = "../../CustomerView/php/customer.php";
     }
     else if(type == "retailer")
     {
-        window.location.href = "../../RetailerView/retailer.php";
+        window.location.href = "../../RetailerView/php/retailer.php";
     }
     else if(type == "admin")
     {
-        window.location.href = "../../AdministratorView/index.php";
+        window.location.href = "../../AdministratorView/php/index.php";
     }
 }
 
@@ -168,8 +168,19 @@ window.onload = function()
                         setCookie("apikey", response.data.apikey, 7);
                         determineView(response.data.user_type);
                     }
+<<<<<<< HEAD
                 }
                 catch (e)
+=======
+                    else
+                    {
+                        var errorDiv = document.getElementById("loginError");
+                        errorDiv.textContent = response.message || "Incorrect email or password.";
+                        errorDiv.style.display = "block";
+                    }
+                } 
+                catch (e) 
+>>>>>>> main
                 {
                   console.error("Parsing error:", e.message);      // shows error message only
                   console.error("Full error object:", e);          // shows full error details

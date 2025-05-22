@@ -139,44 +139,7 @@ function validatePassword()
     return valid;
 }
 
-function validateUserType()
-{
-    /*
-        Validates the user type dropdown.
-        Ensures a user type is selected (not the default empty value).
-        Sets the border color to red if invalid, default if valid.
-    */
-    var userTypeField = document.getElementById("userType");
-
-    if(userTypeField.valid !== "")
-    {
-        var valid = true;
-    }
-    else
-    {
-        var valid = false;
-    }
-
-    return valid;
-}
-
-function determineView(type)
-{
-    /*
-        Determines the location the user is sent to after registration (Customer/ Retailer view).
-        Sends the user to that location.
-    */
-    if(type == "customer")
-    {
-        window.location.href = "../../CustomerView/customer.php";
-    }
-    else if(type == "retailer")
-    {
-        window.location.href = "../../RetailerView/retailer.php";
-    }
-}
-
-function setCookie(cname, cvalue, ex)
+function setCookie(cname, cvalue, ex) 
 {
     /*
         Sets a cookie with the given name, value, and expiration in days.
@@ -200,7 +163,6 @@ window.onload = function()
     var passwordField = document.getElementById("password");
     var cellPhoneField = document.getElementById("phone")
     var submitButton = document.getElementById("submit");
-    var userTypeField = document.getElementById("userType");
     submitButton.disabled = true;
 
     function validateInput()
@@ -210,9 +172,8 @@ window.onload = function()
         var phoneValid = validatePhone();
         var emailValid = validateEmail();
         var passwordValid = validatePassword();
-        var userTypeValid = validateUserType();
 
-        if(nameValid && surnameValid && emailValid && passwordValid && userTypeValid && phoneValid)
+        if(nameValid && surnameValid && emailValid && passwordValid && phoneValid) 
         {
             submitButton.disabled = false;
         }
@@ -227,7 +188,6 @@ window.onload = function()
     emailField.addEventListener("input", validateInput);
     cellPhoneField.addEventListener("input", validateInput);
     passwordField.addEventListener("input", validateInput);
-    userTypeField.addEventListener("change", validateInput);
 
     nameField.addEventListener("blur", function()
     {
@@ -236,7 +196,7 @@ window.onload = function()
             validateName();
         }
         else
-        {
+        {   
             nameField.style.borderColor = "#ccc";
         }
     });
@@ -296,7 +256,7 @@ window.onload = function()
             surname: surnameField.value,
             cell_number: cellPhoneField.value,
             email: emailField.value,
-            password: passwordField.value,
+            password: passwordField.value
         };
 
         var xhr = new XMLHttpRequest();
@@ -319,7 +279,7 @@ window.onload = function()
                     if(response.success == true)
                     {
                         setCookie("apikey", response.data.apikey, 7);
-                        determineView(userTypeField.value);
+                        window.location.href = "../../CustomerView/php/customer.php";
                     }
                 }
                 catch (e)

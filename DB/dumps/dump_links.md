@@ -1,1 +1,4 @@
-[Google Drive Link](https://drive.google.com/file/d/161D6UzYp1SKFcqvaItbsb0S3uoXaj1k8/view?usp=drive_link)
+- [V1](https://drive.google.com/file/d/161D6UzYp1SKFcqvaItbsb0S3uoXaj1k8/view?usp=drive_link)<br>
+- [V2](https://drive.google.com/file/d/1xPfrsD57Wl_vPkWSZo7UNa11byej0Tcj/view?usp=drive_link), removed `compares` table, added `watchlist` table, added more data<br>
+- [V3](https://drive.google.com/file/d/1FN9ENBzHqsMJflXP5iyMEYrfxulXciRh/view?usp=drive_link) fixed user api column key issue<br>
+- [V4](https://drive.google.com/file/d/1C2d0xVkJajaf4C-zaoTv81yg4br2FfBg/view?usp=drive_link) (newest) was able to remove all duplicates

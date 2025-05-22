@@ -1,9 +1,1 @@
 .env
-.git
-.gitignore
-config.php
-api/vendor/
-Application/
-ollama/
-DBDumps/
-DB/

@@ -1,9 +1,6 @@
 <?php
 ob_start();
 session_start();
-
-
-
 function register($connection, $data)
 {
 
