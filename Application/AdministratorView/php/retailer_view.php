@@ -46,7 +46,7 @@
       </table>
     </section>
   </main>
-  <script src="../js/populate_tables.js"></script>
+  <script type="module" src="../js/populate_tables.js"></script>
   <script src="../js/index.js"></script>
 </body>
 </html>

@@ -23,7 +23,7 @@
       <div class="panel-header">
         <h2>Users</h2>
         <div class="panel-actions">
-          <input class="search-input" type="text" placeholder="Search users..." />
+          <input class="search-input" type="text" placeholder="Search users..." id="user-search" />
           <button class="btn btn-primary" onclick="window.location.href='add_user.php'"><span class="material-icons">person_add</span> Add User</button>
         </div>
       </div>
@@ -37,11 +37,6 @@
           <tr><th>ID</th><th>Name</th><th>Email</th></tr>
         </thead>
         <tbody>
-          <tr class="clickable-row-user">
-            <td>1</td>
-            <td>Jane Doe</td>
-            <td>jane@example.com</td>
-          </tr>
           <!-- Repeat rows dynamically -->
         </tbody>
       </table>
@@ -52,7 +47,7 @@
       <div class="panel-header">
         <h2>Products</h2>
         <div class="panel-actions">
-          <input class="search-input" type="text" placeholder="Search products..." />
+          <input class="search-input" type="text" placeholder="Search products..." id="product-search" />
           <button class="btn btn-primary" onclick="window.location.href='add_products.php'"><span class="material-icons">add_shopping_cart</span> Add Product</button>
         </div>
       </div>
@@ -66,11 +61,6 @@
           <tr><th>ID</th><th>Title</th><th>Price</th></tr>
         </thead>
         <tbody>
-          <tr class="clickable-row-product" data-href="#">
-            <td>101</td>
-            <td>Wireless Mouse</td>
-            <td>$29.99</td>
-          </tr>
           <!-- Repeat rows dynamically -->
         </tbody>
       </table>
@@ -81,7 +71,7 @@
       <div class="panel-header">
         <h2>Retailers</h2>
         <div class="panel-actions">
-          <input class="search-input" type="text" placeholder="Search retailers..." />
+          <input class="search-input" type="text" placeholder="Search retailers..." id="retailer-search" />
           <button class="btn btn-primary" onclick="window.location.href='add_retailer.php'"><span class="material-icons">storefront</span> Add Retailer</button>
         </div>
       </div>
@@ -99,7 +89,7 @@
       </table>
     </section>
   </main>
-  <script src="../js/populate_tables.js"></script>
+  <script type="module" src="../js/populate_tables.js"></script>
   <script src="../js/index.js"></script>
 </body>
 </html>
