@@ -59,12 +59,13 @@ class API {
       case 'getAllRetailers':
         getAllRetailers($this->conn);
         break;
-	  case 'getUsers':
-		$this->getUsers($input);
-		break;
-		case 'getProducts':
-			$this->getProducts($input);
-			break;
+    // @g3rard-j used for testing
+	  // case 'getUsers':
+		// $this->getUsers($input);
+		// break;
+		// case 'getProducts':
+		// 	$this->getProducts($input);
+		// 	break;
 
 			default:
         sendResponse($success=false, $data = null, $message = 'Invalid action', $statusCode = 400) ;
@@ -72,37 +73,38 @@ class API {
 		}
 	}
 
-	private function getUsers($data) {
-		$query = "SELECT * FROM users";
-		$stmt = $this->conn->prepare($query);
+  // @g3rard-j used for testing
+	// private function getUsers($data) {
+	// 	$query = "SELECT * FROM users";
+	// 	$stmt = $this->conn->prepare($query);
 
-		$stmt->execute();
-		$results = $stmt->get_result();
-		$users = [];
-		while ($row = $results->fetch_assoc()) {
-			$users[] = $row;
-		}
+	// 	$stmt->execute();
+	// 	$results = $stmt->get_result();
+	// 	$users = [];
+	// 	while ($row = $results->fetch_assoc()) {
+	// 		$users[] = $row;
+	// 	}
 
-		echo json_encode([
-			"data" => $users
-		]);
-	}
+	// 	echo json_encode([
+	// 		"data" => $users
+	// 	]);
+	// }
 
-	private function getProducts($data) {
-		$query = "SELECT * FROM products";
-		$stmt = $this->conn->prepare($query);
+	// private function getProducts($data) {
+	// 	$query = "SELECT * FROM products";
+	// 	$stmt = $this->conn->prepare($query);
 
-		$stmt->execute();
-		$results = $stmt->get_result();
-		$products = [];
-		while ($row = $results->fetch_assoc()) {
-			$products[] = $row;
-		}
+	// 	$stmt->execute();
+	// 	$results = $stmt->get_result();
+	// 	$products = [];
+	// 	while ($row = $results->fetch_assoc()) {
+	// 		$products[] = $row;
+	// 	}
 
-		echo json_encode([
-			"data" => $products
-		]);
-	}
+	// 	echo json_encode([
+	// 		"data" => $products
+	// 	]);
+	
 }
 
 API::instance()->handleRequest();
