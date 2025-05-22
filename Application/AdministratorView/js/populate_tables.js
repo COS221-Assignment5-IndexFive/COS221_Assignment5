@@ -1,4 +1,4 @@
-import { ApiUtils } from "./ApiUtils.js";
+import { ApiUtils } from "../../Utils/ApiUtils.js";
 
 // Loading Spinner
 function toggleLoadingScreen() {
@@ -117,7 +117,6 @@ function populateProducts() {
         resolve(1);
       })
   })
-
 }
 
 var utils = new ApiUtils();
