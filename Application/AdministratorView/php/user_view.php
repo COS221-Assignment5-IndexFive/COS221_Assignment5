@@ -22,7 +22,7 @@
       <div class="panel-header">
         <h2>Users</h2>
         <div class="panel-actions">
-          <input class="search-input" type="text" placeholder="Search users..." />
+          <input class="search-input" type="text" placeholder="Search users..." id="user-search" />
           <button class="btn btn-primary" onclick="window.location.href='add_user.php'"><span class="material-icons">person_add</span> Add User</button>
         </div>
       </div>

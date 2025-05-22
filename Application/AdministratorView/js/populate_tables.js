@@ -63,23 +63,24 @@ function displayProducts(products) {
 
 function displayRetailers(retailers) {
   var table = document.querySelector("#dt-retailers tbody");
-        for (var i = 0; i < retailers.length; i++) {
-          var newRow = document.createElement("tr");
-          newRow.classList.add("clickable-row-retailer");
+  table.innerHTML = "";
+  for (var i = 0; i < retailers.length; i++) {
+    var newRow = document.createElement("tr");
+    newRow.classList.add("clickable-row-retailer");
 
-          var id = retailers[i]["retailer_id"];
-          var name = retailers[i]["retailer_name"];
+    var id = retailers[i]["retailer_id"];
+    var name = retailers[i]["retailer_name"];
 
-          var tdID = document.createElement("td");
-          var tdName = document.createElement("td");
+    var tdID = document.createElement("td");
+    var tdName = document.createElement("td");
 
-          tdID.innerText = id;
-          tdName.innerText = name;
+    tdID.innerText = id;
+    tdName.innerText = name;
 
-          newRow.appendChild(tdID);
-          newRow.appendChild(tdName);
-          table.appendChild(newRow);
-        }
+    newRow.appendChild(tdID);
+    newRow.appendChild(tdName);
+    table.appendChild(newRow);
+  }
 }
 
 var users;
@@ -176,8 +177,6 @@ countProducts();
 toggleLoadingScreen();
 
 // Search bars
-console.log(document.querySelector("#dt-users tbody tr").childNodes[1].innerHTML);
-
 const userSearch = document.getElementById("user-search");
 const productSearch = document.getElementById("product-search");
 const retailerSearch = document.getElementById("retailer-search");
@@ -185,7 +184,7 @@ const retailerSearch = document.getElementById("retailer-search");
 if (userSearch) {
   userSearch.addEventListener("input", (event) => {
     var searchTerm = event.target.value.toLowerCase();
-    displayUsers(products.filter(user => user.first_name.toLowerCase().includes(searchTerm) || user.last_name.toLowerCase().includes(searchTerm)));
+    displayUsers(users.filter(user => user.first_name.toLowerCase().includes(searchTerm) || user.last_name.toLowerCase().includes(searchTerm)));
   });
 }
 

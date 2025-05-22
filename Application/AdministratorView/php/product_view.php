@@ -23,7 +23,7 @@
         <h2>Products</h2>
         <div class="count-display">Total Products: <span id="product-count">0</span></div>
         <div class="panel-actions">
-          <input class="search-input" type="text" placeholder="Search products..." />
+          <input class="search-input" type="text" placeholder="Search products..." id="product-search" />
           <button class="btn btn-primary" onclick="window.location.href='add_products.php'"><span class="material-icons">add_shopping_cart</span> Add Product</button>
         </div>
       </div>

@@ -14,7 +14,7 @@ export class ApiUtils {
                 }
             }
 
-            request.open("POST", "http://localhost/COS221_Assignment5/api/api.php", true);
+            request.open("POST", "http://localhost/COS221_Assignment5/Application/api/api.php", true);
             request.send(JSON.stringify(requestObj));
         });
     }

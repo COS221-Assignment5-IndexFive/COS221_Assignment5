@@ -23,7 +23,7 @@
       <div class="panel-header">
         <h2>Retailers</h2>
         <div class="panel-actions">
-          <input class="search-input" type="text" placeholder="Search retailers..." />
+          <input class="search-input" type="text" placeholder="Search retailers..." id="retailer-search" />
           <button class="btn btn-primary" onclick="window.location.href='add_retailer.php'"><span class="material-icons">storefront</span> Add Retailer</button>
         </div>
       </div>
