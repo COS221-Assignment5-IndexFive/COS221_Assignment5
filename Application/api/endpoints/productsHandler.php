@@ -1,23 +1,22 @@
 <?php
 //only admin and retailers can do these
-// add / remove / updatin products
 session_start();
 
-// $user_id=$_SESSION['user_id'] ?? null;
-// if(!$user_id){
-//     sendResponse(false,null,"Unorthorised user :(",401);
-// }
+$user_id=$_SESSION['user_id'] ?? null;
+if(!$user_id){
+    sendResponse(false,null,"Unorthorised user :(",401);
+}
 
-// //gets at least 1 administrator or retailer
-// $check_user=$db->prepare("
-//     SELECT 1 FROM administrator WHERE user_id = ?
-//     UNION
-//     SELECT 1 FROM retailers WHERE retailer_id = ?
-// ");
-// $check_user->execute([$user_id,$user_id]);
-// if(!$check_user->fetchColumn()){
-//     sendResponse(false,null,"Access denied :(", 403);
-// }
+//gets at least 1 administrator or retailer
+$check_user=$db->prepare("
+    SELECT 1 FROM administrator WHERE user_id = ?
+    UNION
+    SELECT 1 FROM retailers WHERE retailer_id = ?
+");
+$check_user->execute([$user_id,$user_id]);
+if(!$check_user->fetchColumn()){
+    sendResponse(false,null,"Access denied :(", 403);
+}
 
 
 function addProduct($db,$input){
@@ -72,12 +71,24 @@ function updateProduct($db,$input){
             $input['category'],
             $input['product_id']
         ]);
-        sendResponse(true, $data=['product_id' => $input['product_id'] ],"Product: ". $input['product_id'] . " updated successfully.",200);
+        sendResponse(true, null,'Product updated successfully.',200);
     }catch(PDOException $e){
         sendResponse(false, null,'Product not added: ' . $e->getMessage(), 500);
     }
 }
 
-
+//stolen from @morgan
+function sendResponse($success, $data = null, $message = '', $statusCode = 200)
+{
+    http_response_code($statusCode);
+    header('Content-Type: application/json');
+    echo json_encode([
+        'success' => $success,
+        'statusCode' => $statusCode ,
+        'message' => $message,
+        'data' => $data
+    ]);
+    exit;
+}
 
 ?>
