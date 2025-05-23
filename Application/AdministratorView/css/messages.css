@@ -1,0 +1,53 @@
+/* messages.css */
+
+/* Container for all alerts, fixed to top-right */
+.alert-container {
+  position: fixed;
+  top: 1rem;
+  right: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  z-index: 1000;
+}
+
+/* Base alert styling */
+.alert {
+  padding: 1rem;
+  border-radius: 6px;
+  margin: 0;
+  font-family: 'Roboto', sans-serif;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  opacity: 0;
+  animation: fadeIn 0.3s forwards;
+}
+
+/* Hidden/Visible toggles */
+.hidden { display: none !important; }
+.visible { display: flex !important; }
+
+/* Alert Types */
+.alert.confirm       { background: rgba(255,193,7,0.2); border: 1px solid #FFC107; color: #795548; }
+.alert.success       { background: rgba(76,175,80,0.2); border: 1px solid #4CAF50; color: #2E7D32; }
+.alert.error         { background: rgba(244,67,54,0.2); border: 1px solid #F44336; color: #C62828; }
+.alert.add-success    { background: rgba(33,150,243,0.2); border: 1px solid #2196F3; color: #1565C0; }
+.alert.update-success { background: rgba(63,81,181,0.2); border: 1px solid #3F51B5; color: #283593; }
+
+/* Action buttons within alerts */
+.alert .alert-actions {
+  margin-left: auto;
+  display: flex;
+  gap: 0.5rem;
+}
+
+/* Fade in/out animations */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes fadeOut {
+  from { opacity: 1; }
+  to   { opacity: 0; }
+}
