@@ -6,6 +6,9 @@ if (session_status() === PHP_SESSION_NONE) {
 require_once 'utils.php';
 require_once 'endpoints/login.php';
 require_once 'endpoints/retailers.php';
+require_once 'endpoints/users.php';
+require_once 'endpoints/products.php';
+require_once 'endpoints/productsHandler.php';
 
 class API {
 
@@ -48,14 +51,14 @@ class API {
 				login($this->conn,  $input);
         break;
 
+
+
       case 'addRetailer':
         addRetailer($this->conn, $input);
         break;
-
       case 'removeRetailer':
         removeRetailer($this->conn, $input);
         break;
-
       case 'getAllRetailers':
         getAllRetailers($this->conn);
         break;
@@ -66,6 +69,47 @@ class API {
 		// case 'getProducts':
 		// 	$this->getProducts($input);
 		// 	break;
+
+
+
+      case 'addUser':
+        addUser($this->conn, $input);
+        break;
+      case 'removeUser':
+        removeUser($this->conn, $input);
+        break;
+      case 'getAllUsers':
+        getAllUsers($this->conn);
+        break;
+
+
+      // only administrators or retails can use these
+      case 'addProduct':
+        addProduct($this->conn, $input);
+        break;
+      case 'deleteProduct':
+        deleteProduct($this->conn, $input);
+        break;
+      case 'updateProduct':
+        updateProduct($this->conn, $input);
+        break;
+
+      // everyone can use these
+      case 'GetProducts': // retuns all products in the products table
+        getProducts($this->conn, $input);
+        break;
+      case 'getProductByID': // retunrs details about a specific product (Id)
+        getProductByID($this->conn, $input);
+        break;
+      case 'getCategories': // retunrs all unique categories currently in the products table
+        getCategories($this->conn, $input);
+        break;
+
+
+      // addoing to watch list :
+      case 'AddWatchlist': 
+        addToWatchlist($this->conn, $input);
+        break;
 
 			default:
         sendResponse($success=false, $data = null, $message = 'Invalid action', $statusCode = 400) ;

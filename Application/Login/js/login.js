@@ -166,7 +166,7 @@ window.onload = function()
                         setCookie("apikey", response.data.apikey, 7);
                         determineView(response.data.user_type);
                     }
-                    else
+                 else
                     {
                         var errorDiv = document.getElementById("loginError");
                         errorDiv.textContent = response.message || "Incorrect email or password.";
