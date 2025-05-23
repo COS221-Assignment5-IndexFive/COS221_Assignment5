@@ -11,9 +11,11 @@
 
   <!-- Main Stylesheet -->
   <link rel="stylesheet" href="../css/main.css" />
+
 </head>
 <body>
   <?php include 'sidebar.php';?>
+  <?php include "spinner.php";?>
 
   <!-- Main Content -->
   <main class="content">
@@ -21,7 +23,7 @@
       <div class="panel-header">
         <h2>Retailers</h2>
         <div class="panel-actions">
-          <input class="search-input" type="text" placeholder="Search retailers..." />
+          <input class="search-input" type="text" placeholder="Search retailers..." id="retailer-search" />
           <button class="btn btn-primary" onclick="window.location.href='add_retailer.php'"><span class="material-icons">storefront</span> Add Retailer</button>
         </div>
       </div>
@@ -38,15 +40,13 @@
         </thead>
         <tbody>
           <tr class="clickable-row-retailer" data-href="#">
-            <td>201</td>
-            <td>Retail Co.</td>
           </tr>
           <!-- Repeat rows dynamically -->
         </tbody>
       </table>
     </section>
   </main>
-  <script src="../js/populate_tables.js"></script>
+  <script type="module" src="../js/populate_tables.js"></script>
   <script src="../js/index.js"></script>
 </body>
 </html>

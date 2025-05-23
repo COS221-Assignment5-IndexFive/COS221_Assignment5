@@ -14,6 +14,7 @@
 </head>
 <body>
   <?php include 'sidebar.php';?>
+  <?php include "spinner.php";?>
 
   <!-- Main Content -->
   <main class="content">
@@ -21,7 +22,7 @@
       <div class="panel-header">
         <h2>Users</h2>
         <div class="panel-actions">
-          <input class="search-input" type="text" placeholder="Search users..." />
+          <input class="search-input" type="text" placeholder="Search users..." id="user-search" />
           <button class="btn btn-primary" onclick="window.location.href='add_user.php'"><span class="material-icons">person_add</span> Add User</button>
         </div>
       </div>
@@ -39,17 +40,12 @@
           </tr>
         </thead>
         <tbody>
-          <tr class="clickable-row-user" data-href="#">
-            <td>1</td>
-            <td>Jane Doe</td>
-            <td>jane@example.com</td>
-          </tr>
           <!-- Repeat rows dynamically -->
         </tbody>
       </table>
     </section>
   </main>
-  <script src="../js/populate_tables.js"></script>
+  <script type="module" src="../js/populate_tables.js"></script>
   <script src="../js/index.js"></script>
 </body>
 </html>

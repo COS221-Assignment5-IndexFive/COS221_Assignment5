@@ -14,6 +14,7 @@
 </head>
 <body>
   <?php include 'sidebar.php';?>
+  <?php include "spinner.php";?>
 
   <!-- Main Content -->
   <main class="content">
@@ -22,7 +23,7 @@
         <h2>Products</h2>
         <div class="count-display">Total Products: <span id="product-count">0</span></div>
         <div class="panel-actions">
-          <input class="search-input" type="text" placeholder="Search products..." />
+          <input class="search-input" type="text" placeholder="Search products..." id="product-search" />
           <button class="btn btn-primary" onclick="window.location.href='add_products.php'"><span class="material-icons">add_shopping_cart</span> Add Product</button>
         </div>
       </div>
@@ -40,17 +41,12 @@
           </tr>
         </thead>
         <tbody>
-          <tr class="clickable-row-product" data-href="#">
-            <td>101</td>
-            <td>Wireless Mouse</td>
-            <td>$29.99</td>
-          </tr>
           <!-- Repeat rows dynamically -->
         </tbody>
       </table>
     </section>
   </main>
-  <script src="../js/populate_tables.js"></script>
+  <script type="module" src="../js/populate_tables.js"></script>
   <script src="../js/index.js"></script>
 </body>
 </html>

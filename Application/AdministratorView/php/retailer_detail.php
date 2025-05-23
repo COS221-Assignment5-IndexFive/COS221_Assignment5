@@ -11,10 +11,15 @@
 
   <!-- Main Stylesheets -->
   <link rel="stylesheet" href="../css/main.css" />
+  <link rel="stylesheet" href="../css/messages.css" />
   <link rel="stylesheet" href="../css/retailer_detail.css" />
 </head>
 <body>
   <?php include 'sidebar.php';?>
+  <div class="alert-container">
+    <?php include "update_alerts.php"?>
+    <?php include "delete_alerts.php"?>
+  </div>
 
   <!-- Main Content -->
   <main class="content">
@@ -70,7 +75,7 @@
         </div>
         <div class="form-actions">
           <button type="submit" class="btn btn-primary"><span class="material-icons">save</span> Save Changes</button>
-          <button type="button" class="btn btn-danger"><span class="material-icons">delete</span> Delete Retailer</button>
+          <button type="button" class="btn btn-danger" id="delete-btn"><span class="material-icons">delete</span> Delete Retailer</button>
         </div>
       </form>
 
@@ -101,7 +106,7 @@
     </section>
   </main>
 
-  <script src="../js/retailer_details.js"></script>
+  <script type="module" src="../js/retailer_details.js"></script>
   <script src="../js/index.js"></script>
 </body>
 </html>

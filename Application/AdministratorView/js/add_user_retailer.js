@@ -1,107 +1,82 @@
+import { Validator } from "../../Utils/Validator.js";
+import { AlertUtilities } from "../../Utils/AlertUtilites.js";
+
+// Reset form
+function clearForm() {
+    document.getElementById("first-name").value = "";
+    document.getElementById("last-name").value = "";
+    document.getElementById("email").value = "";
+    document.getElementById("phone").value = "";
+    document.getElementById("passwd").value = "";
+    if (document.getElementById("retailer-name")) {
+        document.getElementById("retailer-name").value = "";
+    }
+}
+
+// Form validation + action
 document.getElementById("add-user-form").addEventListener("submit", function(event) {
     event.preventDefault();
-    var valid = true;
-
+    const auv = new Validator();
     var firstName = document.getElementById("first-name").value;
-    if (!validateFirstAndLastName(firstName)) {
-        displayError("fg-first-name");
-        valid = false;
-    } else {
-        hideError("fg-first-name");
-    }
+    auv.validationHandler("fg-first-name", auv.validateFirstAndLastName(firstName));
 
     var lastName = document.getElementById("last-name").value;
-    if (!validateFirstAndLastName(lastName)) {
-        displayError("fg-last-name");
-        valid = false;
-    } else {
-        hideError("fg-last-name");
-    }
+    auv.validationHandler("fg-last-name", auv.validateFirstAndLastName(lastName));
+
 
     var email = document.getElementById("email").value;
-    if (!validateEmail(email)) {
-        displayError("fg-email");
-        valid = false;
-    } else {
-        hideError("fg-email");
-    }
+    auv.validationHandler("fg-email", auv.validateEmail(email));
+
 
     var phoneNum = document.getElementById("phone").value;
-    if (!validatePhoneNum(phoneNum)) {
-        displayError("fg-phone");
-        valid = false;
-    } else {
-        hideError("fg-phone");
-    }
+    auv.validationHandler("fg-phone", auv.validatePhoneNum(phoneNum));
 
     var password = document.getElementById("passwd").value;
-    if (!validatePassword(password)) {
-        displayError("fg-passwd");
-        valid = false;
-    } else {
-        hideError("fg-passwd");
+    auv.validationHandler("fg-passwd", auv.validatePassword(password));
+
+    var type = document.getElementById("add-type").value;
+
+    var retailer = document.getElementById("retailer-name");
+    if (type === "retailer") {
+        auv.validationHandler("fg-retailer", auv.validateRetailer(retailer.value) && retailer.value !== "");
     }
 
-    var retailer = document.getElementById("retailer-name").value;
-    if (retailer !== undefined && retailer !== "") {
-        if (!validateRetailer(retailer)) {
-            displayError("fg-retailer");
-            valid = false;
-        } else {
-            hideError("fg-retailer");
-        }
-    }
-
-    if (!valid) {
+    if (!auv.valid) {
         return;
     }
 
     // Validation successful, call API endpoint
-    var type = document.getElementById("add-type").value;
+    
+    console.log(type);
     if (type === "user") {
+
         console.log("Simulated add user endpoint");
-        /* When adding a user :
-
-        */
     } else if (type === "retailer") {
-        console.log("Simulated add retailer endpoint");
+        var request = new XMLHttpRequest();
 
-        /*
-        When adding a retailer API Expects :
-        {
-          "type": "addRetailer",
-          "retailer_name": "New Retailer Name"
+        request.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+                var successMessage = new AlertUtilities(document.getElementById("add-success"), email);
+                successMessage.showAndDismissAlert();
+            } else if (this.readyState == 4) {
+                var errorMessage = new AlertUtilities(document.getElementById("add-error"), email);
+                errorMessage.showAndDismissAlert();
+            }
         }
 
-        When adding a retailer API RETURNS :
-        {
-          "success": true,
-          "statusCode": 201,
-          "message": "Retailer added successfully.",
-          "data": {
-            "retailer_id": 15  // the new retailer's ID
-          }
-        }
-        */
-
-       // Similarly
-
-        /*
-        When REMOVING a retailer API Expects :
-        {
-          "type": "removeRetailer",
-          "retailer_id": <some integar value>
-        }
-
-        When REMOVING a retailer API RETUNS :
-        {
-          "success": true,
-          "statusCode": 200,
-          "message": "Retailer removed successfully."
-        }
-
-        */
+        request.open("POST", "http://localhost/COS221_Assignment5/api/api.php", true);
+        request.send(JSON.stringify({
+            "type": "addRetailer",
+            "name": retailer
+        }));
+        // console.log("Simulated add retailer endpoint");
     }
+
+
+    // var successAlert = new AlertUtilities(document.getElementById("add-success"), "Added user " + firstName + " " + lastName);
+    // successAlert.showAndDismissAlert();
+    // clearForm();
+
 });
 
 // Generic error display helpers
@@ -114,35 +89,4 @@ function hideError(formGroupId) {
     if (formGroup.classList.contains("has-error")) {
         formGroup.classList.remove("has-error");
     }
-}
-
-// Validation functions
-function validateFirstAndLastName(name) {
-    /* First and last name can consist of:
-       - A-Z or a-z, whitespace, "," (comma) "'" (single quote), "-" (dash)
-    */
-    const namePattern = /^[a-z ,.'-]+$/i;
-    return namePattern.test(name);
-}
-
-function validateEmail(email) {
-    // Used this regex: https://www.regular-expressions.info/email.html
-    const emailPattern = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
-    return emailPattern.test(email);
-}
-
-function validatePhoneNum(phoneNum) {
-    // Matches either +27 (for example) number or regular 10 digit number
-    const phonePattern = /^\+?\d{11}$|^\d{10}$/;
-    return phonePattern.test(phoneNum);
-}
-
-function validatePassword(password) {
-    const passPattern = /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[\W_]).{8,}$/;
-    return passPattern.test(password);
-}
-
-function validateRetailer(retailer) {
-    const retailerPattern = /^(?![ .&'-])[a-zA-Z0-9 .&'-]{0,48}(?<![ .&'-])$/;
-    return retailerPattern.test(retailer);
 }

@@ -3,7 +3,7 @@
 function redirectOnRowClick(entityType, newURL) {
     document.querySelectorAll(`.clickable-row-${entityType}`).forEach(row => {
         row.addEventListener("click", () => {
-            var id = row.childNodes[1].innerHTML;
+            var id = row.childNodes[0].innerHTML;
             window.location.href = `${newURL}?id=${id}`;
         });
     });

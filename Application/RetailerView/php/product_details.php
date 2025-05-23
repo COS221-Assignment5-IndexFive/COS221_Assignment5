@@ -10,15 +10,14 @@
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
 
   <!-- Main Stylesheets -->
-  <link rel="stylesheet" href="../css/main.css" />
-  <link rel="stylesheet" href="../css/messages.css" />
+  <link rel="stylesheet" href="../css/retailer.css" />
+  <link rel="stylesheet" href="../../AdministratorView/css/messages.css" />
   <link rel="stylesheet" href="../css/product_details.css" />
 </head>
 <body>
-  <?php include 'sidebar.php';?>
   <div class="alert-container">
-    <?php include "update_alerts.php"?>
-    <?php include "delete_alerts.php"?>
+    <?php include "../../AdministratorView/php/update_alerts.php"?>
+    <?php include "../../AdministratorView/php/delete_alerts.php"?>
   </div>
   <!-- Main Content -->
   <main class="content">
@@ -70,10 +69,7 @@
         </div>
         <div class="form-group" id="fg-rating">
           <label for="rating">Rating</label>
-          <input type="number" step="0.1" id="rating" name="rating" value="4.5" />
-          <div class="error-message">
-            Please enter a valid rating.
-          </div>
+          <input type="number" step="0.1" id="rating" name="rating" value="4.5" disabled />
         </div>
         <div class="form-group" id="fg-product-link">
           <label for="product-link">Product Link</label>
@@ -84,10 +80,7 @@
         </div>
         <div class="form-group" id="fg-num-reviews">
           <label for="num-reviews">Number of Reviews</label>
-          <input type="number" id="num-reviews" name="num-reviews" value="120" />
-          <div class="error-message">
-            Please enter a valid number of reviews.
-          </div>
+          <input type="number" id="num-reviews" name="num-reviews" value="120" disabled />
         </div>
         <div class="form-group" id="fg-category">
           <label for="category-select">Category</label>
@@ -107,15 +100,6 @@
             Please select a category.
           </div>
 </div>
-        <div class="form-group" id="fg-retailer">
-          <label for="retailer-select">Retailer</label>
-          <select id="retailer-select" name="retailer">
-            <option value="" disabled selected>Select a retailer</option>
-          </select>
-          <div class="error-message">
-            Please select a retailer.
-          </div>
-        </div>
 
         <div class="form-actions">
           <button type="submit" class="btn btn-primary"><span class="material-icons">save</span> Save Changes</button>
@@ -127,4 +111,3 @@
   <script type="module" src="../js/product_details.js"></script>
 </body>
 </html>
-

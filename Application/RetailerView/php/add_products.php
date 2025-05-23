@@ -10,18 +10,17 @@
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
 
   <!-- Stylesheets -->
-  <link rel="stylesheet" href="../css/main.css" />
+  <link rel="stylesheet" href="../css/retailer.css" />
   <link rel="stylesheet" href="../css/add_products.css" />
-  <link rel="stylesheet" href="../css/messages.css" />
+  <link rel="stylesheet" href="../../AdministratorView/css/messages.css" />
 
 </head>
 <body>
-  <?php include 'sidebar.php';?>
 
   <!-- Main Content -->
   <main class="content">
     <div class="alert-container">
-      <?php include "add_alerts.php"?>
+      <?php include "../../AdministratorView/php/add_alerts.php"?>
     </div>
 
     <section class="panel glass-card add-product">
@@ -64,20 +63,6 @@
             Please enter a valid product link.
           </div>
         </div>
-        <div class="form-group" id="fg-num-reviews">
-          <label for="num-reviews">Number of Reviews</label>
-          <input type="number" id="num-reviews" name="num-reviews" placeholder="Enter number of reviews" />
-          <div class="error-message">
-            Please enter a valid number of reviews.
-          </div>
-        </div> 
-        <div class="form-group" id="fg-rating">
-          <label for="rating">Average Rating</label>
-          <input type="number" step="0.1" id="rating" name="rating" placeholder="Enter rating (e.g., 4.5)" />
-          <div class="error-message">
-            Please enter a valid rating.
-          </div>
-        </div>
         <div class="form-group" id="fg-category">
         <label for="category-select">Category</label>
 
@@ -98,16 +83,6 @@
           Please enter a valid product category.
         </div>
 
-      </div>
-        <div class="form-group" id="fg-retailer">
-          <label for="retailer-select">Retailer</label>
-          <select id="retailer-select" name="retailer">
-            <option value="" disabled selected>Select a retailer</option>
-          </select>
-          <div class="error-message">
-            Please select a retailer.
-          </div>
-        </div>
         
         <div class="form-actions">
           <button type="submit" class="btn btn-primary"><span class="material-icons">add_shopping_cart</span> Add Product</button>

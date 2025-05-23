@@ -1,7 +1,9 @@
 <?php
 header('Content-Type: application/json');
-session_start();
-require_once 'utils.php'; // helper isAdmin & isRetailer & sendResponse
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+require_once 'utils.php';
 require_once 'endpoints/login.php';
 require_once 'endpoints/retailers.php';
 require_once 'endpoints/users.php';
@@ -32,7 +34,7 @@ class API {
 	public function handleRequest() {
 
     $input = json_decode(file_get_contents("php://input"), true);
-    echo json_encode(['input' => $input]);
+    // echo json_encode(['input' => $input]);
 
 		$action = $input['type'] ?? $_POST['type'] ?? $_GET['type'] ?? null;
 
@@ -60,6 +62,13 @@ class API {
       case 'getAllRetailers':
         getAllRetailers($this->conn);
         break;
+    // @g3rard-j used for testing
+	  // case 'getUsers':
+		// $this->getUsers($input);
+		// break;
+		// case 'getProducts':
+		// 	$this->getProducts($input);
+		// 	break;
 
 
 
@@ -107,6 +116,39 @@ class API {
 				break;
 		}
 	}
+
+  // @g3rard-j used for testing
+	// private function getUsers($data) {
+	// 	$query = "SELECT * FROM users";
+	// 	$stmt = $this->conn->prepare($query);
+
+	// 	$stmt->execute();
+	// 	$results = $stmt->get_result();
+	// 	$users = [];
+	// 	while ($row = $results->fetch_assoc()) {
+	// 		$users[] = $row;
+	// 	}
+
+	// 	echo json_encode([
+	// 		"data" => $users
+	// 	]);
+	// }
+
+	// private function getProducts($data) {
+	// 	$query = "SELECT * FROM products";
+	// 	$stmt = $this->conn->prepare($query);
+
+	// 	$stmt->execute();
+	// 	$results = $stmt->get_result();
+	// 	$products = [];
+	// 	while ($row = $results->fetch_assoc()) {
+	// 		$products[] = $row;
+	// 	}
+
+	// 	echo json_encode([
+	// 		"data" => $products
+	// 	]);
+	
 }
 
 API::instance()->handleRequest();

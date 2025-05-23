@@ -12,10 +12,14 @@
   <!-- Stylesheets -->
   <link rel="stylesheet" href="../css/main.css" />
   <link rel="stylesheet" href="../css/add_user.css" />
+  <link rel="stylesheet" href="../css/messages.css" />
+
 </head>
 <body>
   <?php include 'sidebar.php';?>
-
+  <div class="alert-container">
+    <?php include "add_alerts.php"?>
+  </div>
   <!-- Main Content -->
   <main class="content">
     <section class="panel glass-card add-user">
@@ -66,6 +70,6 @@
       </form>
     </section>
   </main>
-  <script src="../js/add_user_retailer.js"></script>
+  <script type="module" src="../js/add_user_retailer.js"></script>
 </body>
 </html>

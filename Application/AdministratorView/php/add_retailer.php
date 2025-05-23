@@ -12,9 +12,15 @@
   <!-- Stylesheets -->
   <link rel="stylesheet" href="../css/main.css" />
   <link rel="stylesheet" href="../css/add_retailer.css" />
+  <link rel="stylesheet" href="../css/messages.css" />
+
 </head>
 <body>
   <?php include 'sidebar.php';?>
+
+  <div class="alert-container">
+    <?php include "add_alerts.php"?>
+  </div>
 
   <!-- Main Content -->
   <main class="content">
@@ -65,7 +71,7 @@
             Please enter a valid password.
           </div>
         </div>
-        <input type="hidden" id="add-type" name="type" value="retailer"> 
+        <input type="hidden" id="add-type" name="type" value="retailer" /> 
         <div class="form-actions">
           <button type="submit" class="btn btn-primary">
             <span class="material-icons">storefront</span> Add Retailer
@@ -77,6 +83,6 @@
       </form>
     </section>
   </main>
-  <script src="../js/add_user_retailer.js"></script>
+  <script type="module" src="../js/add_user_retailer.js"></script>
 </body>
 </html>
