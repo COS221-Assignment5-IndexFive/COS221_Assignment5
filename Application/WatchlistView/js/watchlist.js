@@ -24,31 +24,38 @@ function getCookie(cname)
     return "";
 }
 
+function showLoadingScreen() 
+{
+    /*
+        Shows the loading spinner overlay.
+    */
+    document.getElementById("spinner").classList.remove("hidden");
+    document.getElementById("spinner").classList.add("visible");
+}
+
+function hideLoadingScreen() 
+{
+    /*
+        Hides the loading spinner overlay.
+    */
+    document.getElementById("spinner").classList.remove("visible");
+    document.getElementById("spinner").classList.add("hidden");
+}
+
 function getWatchlist() 
 {
     /*
         Sends a request to the API to fetch the user's watchlist.
     */
     var userAPI = getCookie("apikey");
-    /*
-        Expected request structure:
-        {
-            type: "GetWatchlist",
-            apikey: userApI
-        };
 
-        Expected response structure:
-        {
-            success: <success indicator>
-            message: <message>
-            data: <JSON object of products>
-        }
-    */
     var reqData = 
     {
         type: "GetWatchlist",
         apikey: userAPI
     };
+
+    showLoadingScreen();
 
     var req = new XMLHttpRequest();
     req.open("POST", "../../api/api.php", true);
@@ -58,6 +65,8 @@ function getWatchlist()
     {
         if (req.readyState == 4) 
         {
+            hideLoadingScreen();
+
             try
             {
                 var response = JSON.parse(req.responseText);
@@ -83,21 +92,7 @@ function deleteWatchlist(productId)
         Sends a request to the API to delete a product from the user's watchlist.
     */
     var userAPI = getCookie("apikey");
-    /*
-        Expected request structure:
-        {
-            type: "DeleteWatchlist",
-            apikey: userApI,
-            product_id: productId
-        };
-
-        Expected response structure:
-        {
-            success: <success indicator>
-            message: <message>
-            data: null
-        }
-    */
+   
     var reqData = 
     {
         type: "DeleteWatchlist",

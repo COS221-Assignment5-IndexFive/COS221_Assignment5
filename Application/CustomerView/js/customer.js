@@ -55,20 +55,6 @@ function getProducts(isInitialLoad = false)
         On success, populates the allProducts array and applies filters to display products.
     */
     var userAPI = getCookie("apikey");
-    /*
-        Expected request structure:
-        {
-            type: "GetProducts",
-            apikey: userApI
-        };
-
-        Expected response structure:
-        {
-            success: <success indicator>
-            message: <message>
-            data: <JSON object of products>
-        }
-    */
 
     var reqData = 
     {
@@ -306,22 +292,6 @@ function addWatchlist(productId)
         Sends a request to the server to add the specified product to the user's watchlist.
     */
     var userAPI = getCookie("apikey");
-
-    /*
-        Expected request structure:
-        {
-            type: "AddWatchlist",
-            apikey: userApI,
-            product_id: productId
-        };
-
-        Expected response structure:
-        {
-            success: <success indicator>
-            message: <message>
-            data: null
-        }
-    */
 
     var reqData = 
     {
