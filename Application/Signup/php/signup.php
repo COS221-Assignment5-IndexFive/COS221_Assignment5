@@ -16,6 +16,7 @@
                 <input id="phone" type="text" name="phone" placeholder="Phone number" required>
                 <input id="email" type="email" name="email" placeholder="Email" required>
                 <input id="password" type="password" name="password" placeholder="Password" required>
+                <div id="loginError" class="signup-error"></div>
                 <button id="submit" type="submit">Sign Up</button>
             </div>
         </form>

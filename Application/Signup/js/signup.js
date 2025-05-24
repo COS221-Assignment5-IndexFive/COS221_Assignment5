@@ -276,6 +276,12 @@ window.onload = function()
                         setCookie("apikey", response.data.apikey, 7);
                         window.location.href = "../../CustomerView/php/customer.php";
                     }
+                    else
+                    {
+                        var errorDiv = document.getElementById("loginError");
+                        errorDiv.textContent = response.message || "Incorrect email or password.";
+                        errorDiv.style.display = "block";
+                    }
                 } 
                 catch (e) 
                 {
