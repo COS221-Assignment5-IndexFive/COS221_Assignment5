@@ -6,6 +6,16 @@ function toggleLoadingScreen() {
   document.getElementById("spinner").classList.toggle("visible");
 }
 
+// Make rows clickable
+function redirectOnRowClick(entityType, newURL) {
+  document.querySelectorAll(`.clickable-row-${entityType}`).forEach(row => {
+    row.addEventListener("click", () => {
+      var id = row.childNodes[0].innerHTML;
+      window.location.href = `${newURL}?id=${id}`;
+    });
+  });
+}
+
 // Define display functions
 function displayUsers(users) {
   var table = document.querySelector("#dt-users tbody");
@@ -32,6 +42,7 @@ function displayUsers(users) {
 
     table.appendChild(newRow);
   }
+  redirectOnRowClick("user", "single_user_view.php");
 }
 
 function displayProducts(products) {
@@ -59,6 +70,7 @@ function displayProducts(products) {
 
     table.appendChild(newRow);
   }
+  redirectOnRowClick("product", "product_details.php");
 }
 
 function displayRetailers(retailers) {
@@ -81,6 +93,7 @@ function displayRetailers(retailers) {
     newRow.appendChild(tdName);
     table.appendChild(newRow);
   }
+  redirectOnRowClick("retailer", "retailer_detail.php");
 }
 
 function getSessionItemJSON(itemKey) {
@@ -98,6 +111,8 @@ var users = getSessionItemJSON("users");
 var products = getSessionItemJSON("products");
 var retailers = getSessionItemJSON("retailers");
 
+var utils = new ApiUtils();
+
 // Populate tables
 function populateUsers() {
   // Send API request to fetch all users
@@ -106,10 +121,10 @@ function populateUsers() {
       displayUsers(users);
       resolve("Loaded users from storage");
     }
-    utils.getRequest({ "type": "getUsers" })
+    utils.getRequest({ "type": "getAllUsers" })
       .then((data) => {
         users = data;
-        sessionStorage.setItem("users", data);
+        sessionStorage.setItem("users", JSON.stringify(users));
         displayUsers(users);
       })
       .catch(() => {
@@ -131,6 +146,7 @@ function populateProducts() {
       .then((retProd) => {
         products = retProd;
         displayProducts(products);
+        sessionStorage.setItem("products", JSON.stringify(products));
       })
       .catch((error) => {
         reject("Error fetching products")
@@ -140,8 +156,6 @@ function populateProducts() {
       })
   })
 }
-
-var utils = new ApiUtils();
 
 function populateRetailers() {
   return new Promise((resolve, reject) => {
@@ -179,21 +193,6 @@ async function populateAll() {
   } catch (error) {
     console.log(error);
   }
-
-
-  // Make rows clickable
-  function redirectOnRowClick(entityType, newURL) {
-    document.querySelectorAll(`.clickable-row-${entityType}`).forEach(row => {
-      row.addEventListener("click", () => {
-        var id = row.childNodes[0].innerHTML;
-        window.location.href = `${newURL}?id=${id}`;
-      });
-    });
-  }
-
-  redirectOnRowClick("user", "single_user_view.php");
-  redirectOnRowClick("product", "product_details.php");
-  redirectOnRowClick("retailer", "retailer_detail.php");
 
   // Count total num of products displayed
   function countProducts() {
@@ -233,7 +232,6 @@ async function populateAll() {
     });
   }
 }
-
 
 populateAll();
 // Add refresh functionality

@@ -1,5 +1,18 @@
 import { Validator } from "../../Utils/Validator.js";
 import { AlertUtilities } from "../../Utils/AlertUtilites.js";
+import { ApiUtils } from "../../Utils/ApiUtils.js";
+
+// Generic error display helpers
+function displayError(formGroupId) {
+    document.getElementById(formGroupId).classList.add("has-error");
+}
+
+function hideError(formGroupId) {
+    var formGroup = document.getElementById(formGroupId);
+    if (formGroup.classList.contains("has-error")) {
+        formGroup.classList.remove("has-error");
+    }
+}
 
 // Reset form
 function clearForm() {
@@ -46,10 +59,31 @@ document.getElementById("add-user-form").addEventListener("submit", function(eve
     }
 
     // Validation successful, call API endpoint
-    
-    console.log(type);
-    if (type === "user") {
+    const utils = new ApiUtils();
 
+    var successMessage = new AlertUtilities(document.getElementById("add-success"), email);
+    var errorMessage = new AlertUtilities(document.getElementById("add-error"), email);
+
+    if (type === "user") {
+        var request = {
+            "type": "Signup",
+            "name": firstName,
+            "surname": lastName,
+            "email": email,
+            "password": password,
+            "cell_number": phoneNum
+        };
+
+        utils.getRequest(request)
+            .then((data) => {
+                successMessage.showAndDismissAlert();
+            })
+            .catch((error) => {
+                errorMessage.showAndDismissAlert();
+            })
+            .finally(() => {
+                clearForm();
+            })
         console.log("Simulated add user endpoint");
     } else if (type === "retailer") {
         var request = new XMLHttpRequest();
@@ -78,15 +112,3 @@ document.getElementById("add-user-form").addEventListener("submit", function(eve
     // clearForm();
 
 });
-
-// Generic error display helpers
-function displayError(formGroupId) {
-    document.getElementById(formGroupId).classList.add("has-error");
-}
-
-function hideError(formGroupId) {
-    var formGroup = document.getElementById(formGroupId);
-    if (formGroup.classList.contains("has-error")) {
-        formGroup.classList.remove("has-error");
-    }
-}
