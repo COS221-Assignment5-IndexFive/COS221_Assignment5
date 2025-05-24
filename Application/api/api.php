@@ -50,9 +50,6 @@ class API {
       case 'Login':
 				login($this->conn,  $input);
         break;
-
-
-
       case 'addRetailer':
         addRetailer($this->conn, $input);
         break;
@@ -62,16 +59,6 @@ class API {
       case 'getAllRetailers':
         getAllRetailers($this->conn);
         break;
-    // @g3rard-j used for testing
-	  // case 'getUsers':
-		// $this->getUsers($input);
-		// break;
-		// case 'getProducts':
-		// 	$this->getProducts($input);
-		// 	break;
-
-
-
       case 'addUser':
         addUser($this->conn, $input);
         break;
@@ -81,8 +68,6 @@ class API {
       case 'getAllUsers':
         getAllUsers($this->conn);
         break;
-
-
       // only administrators or retails can use these
       case 'addProduct':
         addProduct($this->conn, $input);
@@ -116,39 +101,6 @@ class API {
 				break;
 		}
 	}
-
-  // @g3rard-j used for testing
-	// private function getUsers($data) {
-	// 	$query = "SELECT * FROM users";
-	// 	$stmt = $this->conn->prepare($query);
-
-	// 	$stmt->execute();
-	// 	$results = $stmt->get_result();
-	// 	$users = [];
-	// 	while ($row = $results->fetch_assoc()) {
-	// 		$users[] = $row;
-	// 	}
-
-	// 	echo json_encode([
-	// 		"data" => $users
-	// 	]);
-	// }
-
-	// private function getProducts($data) {
-	// 	$query = "SELECT * FROM products";
-	// 	$stmt = $this->conn->prepare($query);
-
-	// 	$stmt->execute();
-	// 	$results = $stmt->get_result();
-	// 	$products = [];
-	// 	while ($row = $results->fetch_assoc()) {
-	// 		$products[] = $row;
-	// 	}
-
-	// 	echo json_encode([
-	// 		"data" => $products
-	// 	]);
-	
 }
 
 API::instance()->handleRequest();
