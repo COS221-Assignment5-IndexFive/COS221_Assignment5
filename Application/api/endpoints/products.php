@@ -2,7 +2,6 @@
 session_start();
 //any users can use these functions
 function getProducts($db,$input){
-    
     $query="SELECT * FROM products";
     $filters=[];
     $parameters=[];
@@ -48,7 +47,7 @@ function getProducts($db,$input){
 }
 
 function getProductByID($db,$input){
-    if(empty($input['prodict_id'])){//if there is no product id you cannot get the product
+    if(empty($input['product_id'])){//if there is no product id you cannot get the product
         sendResponse(false,null,"Product id is invalid",400);
     }
     
@@ -66,8 +65,7 @@ function getProductByID($db,$input){
 
 function getCategories($db,$input){
     
-    $query = $db->query("SELECT DISTINCT category FROM products ORDER BY category ASC");
-    $result = $db->query($query);
+    $result = $db->query("SELECT DISTINCT category FROM products ORDER BY category ASC");
     if($result){
         $categories=[];
         while($row=$result->fetch_assoc()){

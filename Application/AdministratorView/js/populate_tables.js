@@ -142,7 +142,7 @@ function populateProducts() {
       displayProducts(products);
       resolve("Loaded products from storage");
     }
-    utils.getRequest({ "type": "getProducts" })
+    utils.getRequest({ "type": "GetProducts" })
       .then((retProd) => {
         products = retProd;
         displayProducts(products);
@@ -203,7 +203,6 @@ async function populateAll() {
   }
 
   countProducts();
-  toggleLoadingScreen();
 
   // Search bars
   const userSearch = document.getElementById("user-search");
@@ -231,9 +230,14 @@ async function populateAll() {
       displayRetailers(retailers.filter(retailer => retailer.retailer_name.toLowerCase().includes(searchTerm)));
     });
   }
+
+  toggleLoadingScreen();
 }
 
+toggleLoadingScreen();
 populateAll();
+toggleLoadingScreen();
+
 // Add refresh functionality
 document.getElementById("refresh").addEventListener("click", (event) => {
   sessionStorage.clear();

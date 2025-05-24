@@ -11,23 +11,17 @@ function productAuth() {
 
 function addProduct($db,$input){
     #product id is auto incriment
-    productAuth();
+    // productAuth();
     try{
-        $stmt=$db->prepare("
-            INSERT INTO PRODUCTS
-            (rating, title, image_url, product_link, price, discount_price, nr_reviews, category)
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+        $stmt = $db->prepare("
+            INSERT INTO products
+            (rating, title, image_url, product_link, price, discount_price, nr_reviews, category, retailer)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
         ");
-        $stmt->execute([
-            $input['rating'],
-            $input['title'],
-            $input['image_url'],
-            $input['product_link'],
-            $input['price'],
-            $input['discount_price'],
-            $input['nr_reviews'],
-            $input['category']
-        ]);
+        $stmt->bind_param("dsssddiss", $input['rating'], $input['title'], $input['image_url'], $input['product_link'],
+        $input['price'], $input['discount_price'], $input['nr_reviews'], $input['category'], $input['retailer']);
+        $stmt->execute();
+        $stmt->close();
         sendResponse(true, null, 'Product added successfully.', 200);
     } catch (PDOException $e) {
         sendResponse(false, null, 'Product not added: ' . $e->getMessage(), 500);
@@ -47,11 +41,11 @@ function deleteProduct($db,$input){
 
 
 function updateProduct($db,$input){
-    productAuth();
+    // productAuth();
     try{
         $stmt=$db->prepare("
             UPDATE products
-            SET rating = ?, title = ?, image_url = ?, product_link = ?, price = ?, discount_price = ?, nr_reviews = ?, category = ?
+            SET rating = ?, title = ?, image_url = ?, product_link = ?, price = ?, discount_price = ?, nr_reviews = ?, category = ?, retailer = ?
             WHERE product_id = ?
         ");
         $stmt->execute([
@@ -63,7 +57,8 @@ function updateProduct($db,$input){
             $input['discount_price'],
             $input['nr_reviews'],
             $input['category'],
-            $input['product_id']
+            $input['product_id'],
+            $input['retailer']
         ]);
         sendResponse(true, null, 'Product updated successfully.', 200);
     } catch (PDOException $e) {

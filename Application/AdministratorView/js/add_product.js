@@ -1,19 +1,21 @@
 import { Validator } from "../../Utils/Validator.js";
 import { AlertUtilities } from "../../Utils/AlertUtilites.js";
+import { ApiUtils } from "../../Utils/ApiUtils.js";
 
-function getCategories() {
-    // Query API for categories
-    var categories = [
-        "Laptops",
-        "Desktop Computers",
-        "Tablets",
-        "Smartphones",
-        "Monitors",
-        "Keyboards & Computer Mice",
-        "Headphones & Earbuds"
-    ];
+const utils = new ApiUtils();
+var categories;
+
+async function getCategories() {
+    categories = JSON.parse(sessionStorage.getItem("categories"));
+    if (categories == null) {
+        await utils.getRequest({ "type": "getCategories" })
+            .then((data) => {
+                categories = data;
+                sessionStorage.setItem("categories", JSON.stringify(categories));
+            })
+    }
+
     var categoriesSelect = document.getElementById("category-select");
-
     for (var i = 0; i < categories.length; i++) {
         var option = document.createElement("option");
         option.value = categories[i];
@@ -27,33 +29,40 @@ function getCategories() {
     categoriesSelect.appendChild(newCategoryOption);
 }
 
-function getRetailers() {
+async function getRetailers() {
     // Query API for retailers
-    var retailers = [
-        "retailer A",
-        "retailer B"
-    ];
+    var retailers;
 
+    retailers = JSON.parse(sessionStorage.getItem("retailers"));
+    if (retailers == null) {
+        retailers = [];
+        await utils.getRequest({ "type": "getAllRetailers" })
+            .then((data) => {
+                var retailersObj = data;
+                for (let i = 0; i < retailersObj.length; i++) {
+                    retailers.push(retailersObj[i].retailer_name);
+                }
+                sessionStorage.setItem("retailers", JSON.stringify(retailers));
+            })
+    }
     var retailerSelect = document.getElementById("retailer-select");
 
     for (var i = 0; i < retailers.length; i++) {
         var option = document.createElement("option");
-        option.value = retailers[i];
-        option.innerText = retailers[i];
+        option.value = retailers[i].retailer_name;
+        option.innerText = retailers[i].retailer_name;
         retailerSelect.appendChild(option);
     }
 }
 
-// Populate fields
-getCategories();
-getRetailers();
+await Promise.all([getCategories(), getRetailers()]);
 
 // Add new category
 var selectEl = document.getElementById('category-select');
 var newCatInput = document.getElementById('new-category');
 var formGroupCat = document.getElementById('category-group');
 
-selectEl.addEventListener("change", function() {
+selectEl.addEventListener("change", function () {
     if (selectEl.value === "add_new") {
         newCatInput.style.display = "block";
         newCatInput.focus();
@@ -122,21 +131,32 @@ document.getElementById("add-product-form").addEventListener("submit", function 
         return;
     }
 
+    if (!categories.includes(category)) {
+        categories.push(category);
+    }
+
     var newProductRequest = {
-        "type": "CreateProduct",
+        "type": "addProduct",
         "title": title,
         "price": price,
-        "discounted-price": discountedPrice,
+        "discount_price": discountedPrice,
         "image_url": imageURL,
         "product_link": productLink,
-        "num_reviews": numReviews,
-        "average_rating": averageRating,
+        "nr_reviews": numReviews,
+        "rating": averageRating,
         "category": category,
         "retailer": retailer
     };
 
-    var successMessage = new AlertUtilities(document.getElementById("add-error"));
-    successMessage.showAndDismissAlert();
+    var successMessage = new AlertUtilities(document.getElementById("add-success"), "Product " + title);
+    var errorMessage = new AlertUtilities(document.getElementById("add-error"), "Product " + title);
+
+    utils.getRequest(newProductRequest)
+        .then((data) => {
+            successMessage.showAndDismissAlert();
+        })
+        .catch((error) => {
+            errorMessage.showAndDismissAlert();
+        });
     clearForm();
-    console.log("Simulate API request to add product");
 });
