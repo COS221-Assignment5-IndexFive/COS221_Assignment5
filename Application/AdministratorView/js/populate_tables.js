@@ -97,6 +97,11 @@ function getSessionItemJSON(itemKey) {
 var users = getSessionItemJSON("users");
 var products = getSessionItemJSON("products");
 var retailers = getSessionItemJSON("retailers");
+console.log(users);
+console.log(products);
+console.log(retailers);
+
+var utils = new ApiUtils();
 
 // Populate tables
 function populateUsers() {
@@ -106,10 +111,10 @@ function populateUsers() {
       displayUsers(users);
       resolve("Loaded users from storage");
     }
-    utils.getRequest({ "type": "getUsers" })
+    utils.getRequest({ "type": "getAllUsers" })
       .then((data) => {
         users = data;
-        sessionStorage.setItem("users", data);
+        sessionStorage.setItem("users", JSON.stringify(users));
         displayUsers(users);
       })
       .catch(() => {
@@ -131,6 +136,7 @@ function populateProducts() {
       .then((retProd) => {
         products = retProd;
         displayProducts(products);
+        sessionStorage.setItem("products", JSON.stringify(products));
       })
       .catch((error) => {
         reject("Error fetching products")
@@ -140,8 +146,6 @@ function populateProducts() {
       })
   })
 }
-
-var utils = new ApiUtils();
 
 function populateRetailers() {
   return new Promise((resolve, reject) => {

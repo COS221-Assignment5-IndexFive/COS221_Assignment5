@@ -1,84 +1,13 @@
 import { Validator } from "../../Utils/Validator.js";
 import { AlertUtilities } from "../../Utils/AlertUtilites.js";
 
-var users = [
-  {
-    "id": 1,
-    "firstname": "Alice",
-    "lastname": "Johnson",
-    "email": "alice.johnson@example.com",
-    "phone": "1234567890"
-  },
-  {
-    "id": 2,
-    "firstname": "Brian",
-    "lastname": "Smith",
-    "email": "brian.smith@example.com",
-    "phone": "2345678901"
-  },
-  {
-    "id": 3,
-    "firstname": "Catherine",
-    "lastname": "Lee",
-    "email": "catherine.lee@example.com",
-    "phone": "3456789012"
-  },
-  {
-    "id": 4,
-    "firstname": "Daniel",
-    "lastname": "Thompson",
-    "email": "daniel.thompson@example.com",
-    "phone": "4567890123"
-  },
-  {
-    "id": 5,
-    "firstname": "Emily",
-    "lastname": "Davis",
-    "email": "emily.davis@example.com",
-    "phone": "5678901234"
-  },
-  {
-    "id": 6,
-    "firstname": "Frank",
-    "lastname": "Martin",
-    "email": "frank.martin@example.com",
-    "phone": "6789012345"
-  },
-  {
-    "id": 7,
-    "firstname": "Grace",
-    "lastname": "Chen",
-    "email": "grace.chen@example.com",
-    "phone": "7890123456"
-  },
-  {
-    "id": 8,
-    "firstname": "Henry",
-    "lastname": "Wilson",
-    "email": "henry.wilson@example.com",
-    "phone": "8901234567"
-  },
-  {
-    "id": 9,
-    "firstname": "Isabella",
-    "lastname": "Moore",
-    "email": "isabella.moore@example.com",
-    "phone": "9012345678"
-  },
-  {
-    "id": 10,
-    "firstname": "Jack",
-    "lastname": "Taylor",
-    "email": "jack.taylor@example.com",
-    "phone": "0123456789"
-  }
-];
 
 
 function displayError() {
     document.getElementsByClassName("user-form")[0].classList.add("hidden");
     document.getElementsByClassName("error-message-id")[0].classList.remove("hidden");
 }
+
 
 function isNumericString(value) {
     return !isNaN(value) && value.trim() !== "";
@@ -112,19 +41,20 @@ if (!isNumericString(id)) {
     displayError();
     throw new Error("ID has to be a number");
 }
+// Load users
+var users = sessionStorage.getItem("users");
 
-var index = -1;
-for (var i = 0; i < users.length; i++) {
-    if (users[i].id == id) {
-        index = i;
-        break;
-    }
-}
+// Get GET (lol, get get) params
+const params = new URLSearchParams(window.location.search);
+const userID = params.get("id");
 
-if (index < 0) {
+// Check if user id exists as param
+if (!userID) {
     displayError();
-    throw new Error("User does not exist");
 }
+
+// Check if user id in users arr
+var user = users.filter(user => user.user_id == userID);
 
 populateFormFields(index);
 
