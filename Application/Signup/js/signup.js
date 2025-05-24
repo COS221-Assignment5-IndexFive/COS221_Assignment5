@@ -269,6 +269,7 @@ window.onload = function()
             { 
                 try 
                 {
+console.log("Response: ",xhr.responseText);
                     var response = JSON.parse(xhr.responseText);
 
                     if(response.success == true) 
@@ -283,7 +284,7 @@ window.onload = function()
                 }
             }
         };
-
+console.log("Sending: ", data);
         xhr.send(JSON.stringify(data));
     });
 }
