@@ -67,7 +67,7 @@ function determineView(type)
     }
     else if(type == "retailer")
     {
-        window.location.href = "../../RetailerView/php/retailer.php";
+        window.location.href = "../../RetailerView/php/index.php";
     }
     else if(type == "admin")
     {
@@ -166,7 +166,7 @@ window.onload = function()
                         setCookie("apikey", response.data.apikey, 7);
                         determineView(response.data.user_type);
                     }
-                 else
+                    else
                     {
                         var errorDiv = document.getElementById("loginError");
                         errorDiv.textContent = response.message || "Incorrect email or password.";
@@ -179,7 +179,7 @@ window.onload = function()
                 }
             }
         };
-         
+
         xhr.send(JSON.stringify(data));
     });
 }
