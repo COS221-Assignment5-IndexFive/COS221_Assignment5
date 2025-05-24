@@ -6,6 +6,16 @@ function toggleLoadingScreen() {
   document.getElementById("spinner").classList.toggle("visible");
 }
 
+// Make rows clickable
+function redirectOnRowClick(entityType, newURL) {
+  document.querySelectorAll(`.clickable-row-${entityType}`).forEach(row => {
+    row.addEventListener("click", () => {
+      var id = row.childNodes[0].innerHTML;
+      window.location.href = `${newURL}?id=${id}`;
+    });
+  });
+}
+
 // Define display functions
 function displayUsers(users) {
   var table = document.querySelector("#dt-users tbody");
@@ -32,6 +42,7 @@ function displayUsers(users) {
 
     table.appendChild(newRow);
   }
+  redirectOnRowClick("user", "single_user_view.php");
 }
 
 function displayProducts(products) {
@@ -59,6 +70,7 @@ function displayProducts(products) {
 
     table.appendChild(newRow);
   }
+  redirectOnRowClick("product", "product_details.php");
 }
 
 function displayRetailers(retailers) {
@@ -81,6 +93,7 @@ function displayRetailers(retailers) {
     newRow.appendChild(tdName);
     table.appendChild(newRow);
   }
+  redirectOnRowClick("retailer", "retailer_detail.php");
 }
 
 function getSessionItemJSON(itemKey) {
@@ -97,9 +110,6 @@ function getSessionItemJSON(itemKey) {
 var users = getSessionItemJSON("users");
 var products = getSessionItemJSON("products");
 var retailers = getSessionItemJSON("retailers");
-console.log(users);
-console.log(products);
-console.log(retailers);
 
 var utils = new ApiUtils();
 
@@ -184,21 +194,6 @@ async function populateAll() {
     console.log(error);
   }
 
-
-  // Make rows clickable
-  function redirectOnRowClick(entityType, newURL) {
-    document.querySelectorAll(`.clickable-row-${entityType}`).forEach(row => {
-      row.addEventListener("click", () => {
-        var id = row.childNodes[0].innerHTML;
-        window.location.href = `${newURL}?id=${id}`;
-      });
-    });
-  }
-
-  redirectOnRowClick("user", "single_user_view.php");
-  redirectOnRowClick("product", "product_details.php");
-  redirectOnRowClick("retailer", "retailer_detail.php");
-
   // Count total num of products displayed
   function countProducts() {
     const prodCount = document.getElementById("product-count");
@@ -237,7 +232,6 @@ async function populateAll() {
     });
   }
 }
-
 
 populateAll();
 // Add refresh functionality

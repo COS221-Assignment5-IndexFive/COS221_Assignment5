@@ -96,6 +96,9 @@ class API {
         addToWatchlist($this->conn, $input);
         break;
 
+      case 'UpdateUser':
+        updateUser($this->conn, $input);
+        break;   
 			default:
         sendResponse($success=false, $data = null, $message = 'Invalid action', $statusCode = 400) ;
 				break;

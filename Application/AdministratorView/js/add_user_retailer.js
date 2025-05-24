@@ -67,7 +67,8 @@ document.getElementById("add-user-form").addEventListener("submit", function(eve
     if (type === "user") {
         var request = {
             "type": "Signup",
-            "name": firstName + "" + lastName,
+            "name": firstName,
+            "surname": lastName,
             "email": email,
             "password": password,
             "cell_number": phoneNum

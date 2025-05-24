@@ -31,7 +31,7 @@ function register($connection, $data)
         $cellNumber,
         $data["email"],
         $aoikey
-    ) ;
+    );
 
     $result = $stmt->execute();
 
