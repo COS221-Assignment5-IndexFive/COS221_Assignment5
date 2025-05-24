@@ -78,20 +78,4 @@ function getCategories($db,$input){
         sendResponse(false,null,"Error: ". $e->getMessage(),500);
     }
 }
-
-//stolen from @morgan
-function sendResponse($success, $data = null, $message = '', $statusCode = 200)
-{
-    http_response_code($statusCode);
-    header('Content-Type: application/json');
-    echo json_encode([
-        'success' => $success,
-        'statusCode' => $statusCode ,
-        'message' => $message,
-        'data' => $data
-    ]);
-    exit;
-}
-
-
 ?>
