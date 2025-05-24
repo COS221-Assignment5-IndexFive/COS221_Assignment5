@@ -83,121 +83,164 @@ function displayRetailers(retailers) {
   }
 }
 
-var users;
-var products;
-var retailers;
+function getSessionItemJSON(itemKey) {
+  var out;
+  try {
+    out = JSON.parse(sessionStorage.getItem(itemKey));
+  } catch (error) {
+    out = null;
+  }
+
+  return out;
+}
+
+var users = getSessionItemJSON("users");
+var products = getSessionItemJSON("products");
+var retailers = getSessionItemJSON("retailers");
+
 // Populate tables
 function populateUsers() {
   // Send API request to fetch all users
   return new Promise((resolve, reject) => {
+    if (users != null) {
+      displayUsers(users);
+      resolve("Loaded users from storage");
+    }
     utils.getRequest({ "type": "getUsers" })
       .then((data) => {
         users = data;
+        sessionStorage.setItem("users", data);
         displayUsers(users);
       })
       .catch(() => {
         console.log("Error: ");
+        reject("Error populating users");
       })
-      .finally(() => resolve(1))
+      .finally(() => resolve("Fetched users"))
   });
 }
 
 function populateProducts() {
   // Send API request to fetch products
   return new Promise((resolve, reject) => {
+    if (products != null) {
+      displayProducts(products);
+      resolve("Loaded products from storage");
+    }
     utils.getRequest({ "type": "getProducts" })
       .then((retProd) => {
         products = retProd;
         displayProducts(products);
       })
       .catch((error) => {
-        // Error handling
+        reject("Error fetching products")
       })
       .finally(() => {
-        resolve(1);
+        resolve("Fetched products");
       })
   })
 }
 
 var utils = new ApiUtils();
 
-async function populateRetailers() {
+function populateRetailers() {
   return new Promise((resolve, reject) => {
+    if (retailers != null) {
+      displayRetailers(retailers);
+      resolve("Loaded retailers from session storage");
+    }
     utils.getRequest({ "type": "getAllRetailers" })
       .then((retailerRes) => {
         retailers = retailerRes;
+        sessionStorage.setItem("retailers", JSON.stringify(retailers));
         displayRetailers(retailers);
       })
       .catch((error) => {
         console.log(error);
       })
-      .finally(() => { resolve(1) });
+      .finally(() => { resolve("Fetched retailers") });
   });
 }
 
-var doneCount = 0;
+async function populateAll() {
+  toggleLoadingScreen();
+  try {
+    if (document.getElementById("users") != null
+      && document.getElementById("products") != null
+      && document.getElementById("retailers") != null) {
+      await Promise.all([populateUsers(), populateRetailers(), populateProducts()]);
+    } else if (document.getElementById("users") != null) {
+      await populateUsers();
+    } else if (document.getElementById("products") != null) {
+      await populateProducts();
+    } else {
+      await populateRetailers();
+    }
+  } catch (error) {
+    console.log(error);
+  }
 
-toggleLoadingScreen();
-if (document.getElementById("users") != null
-  && document.getElementById("products") != null
-  && document.getElementById("retailers") != null) {
-  await Promise.all([populateUsers(), populateRetailers(), populateProducts()]);
-} else if (document.getElementById("users") != null) {
-  await populateUsers();
-} else if (document.getElementById("products") != null) {
-  await populateProducts();
-} else {
-  await populateRetailers();
-}
 
-// Make rows clickable
-function redirectOnRowClick(entityType, newURL) {
-  document.querySelectorAll(`.clickable-row-${entityType}`).forEach(row => {
-    row.addEventListener("click", () => {
-      var id = row.childNodes[0].innerHTML;
-      window.location.href = `${newURL}?id=${id}`;
+  // Make rows clickable
+  function redirectOnRowClick(entityType, newURL) {
+    document.querySelectorAll(`.clickable-row-${entityType}`).forEach(row => {
+      row.addEventListener("click", () => {
+        var id = row.childNodes[0].innerHTML;
+        window.location.href = `${newURL}?id=${id}`;
+      });
     });
-  });
-}
+  }
 
-redirectOnRowClick("user", "single_user_view.php");
-redirectOnRowClick("product", "product_details.php");
-redirectOnRowClick("retailer", "retailer_detail.php");
+  redirectOnRowClick("user", "single_user_view.php");
+  redirectOnRowClick("product", "product_details.php");
+  redirectOnRowClick("retailer", "retailer_detail.php");
 
-// Count total num of products displayed
-function countProducts() {
-  const prodCount = document.getElementById("product-count");
-  if (prodCount != null) {
-    prodCount.innerHTML = document.querySelectorAll(".data-table tr").length - 1;
+  // Count total num of products displayed
+  function countProducts() {
+    const prodCount = document.getElementById("product-count");
+    if (prodCount != null) {
+      prodCount.innerHTML = document.querySelectorAll(".data-table tr").length - 1;
+    }
+  }
+
+  countProducts();
+  toggleLoadingScreen();
+
+  // Search bars
+  const userSearch = document.getElementById("user-search");
+  const productSearch = document.getElementById("product-search");
+  const retailerSearch = document.getElementById("retailer-search");
+
+  if (userSearch) {
+    userSearch.addEventListener("input", (event) => {
+      var searchTerm = event.target.value.toLowerCase();
+      displayUsers(users.filter(user => user.first_name.toLowerCase().includes(searchTerm) || user.last_name.toLowerCase().includes(searchTerm)));
+    });
+  }
+
+  if (productSearch) {
+    productSearch.addEventListener("input", (event) => {
+      var searchTerm = event.target.value.toLowerCase();
+      displayProducts(products.filter(product => product.title.toLowerCase().includes(searchTerm)));
+      countProducts();
+    });
+  }
+
+  if (retailerSearch) {
+    retailerSearch.addEventListener("input", (event) => {
+      var searchTerm = event.target.value.toLowerCase();
+      displayRetailers(retailers.filter(retailer => retailer.retailer_name.toLowerCase().includes(searchTerm)));
+    });
   }
 }
 
-countProducts();
-toggleLoadingScreen();
 
-// Search bars
-const userSearch = document.getElementById("user-search");
-const productSearch = document.getElementById("product-search");
-const retailerSearch = document.getElementById("retailer-search");
-
-if (userSearch) {
-  userSearch.addEventListener("input", (event) => {
-    var searchTerm = event.target.value.toLowerCase();
-    displayUsers(users.filter(user => user.first_name.toLowerCase().includes(searchTerm) || user.last_name.toLowerCase().includes(searchTerm)));
-  });
-}
-
-if (productSearch) {
-  productSearch.addEventListener("input", (event) => {
-    var searchTerm = event.target.value.toLowerCase();
-    displayProducts(products.filter(product => product.title.toLowerCase().includes(searchTerm)));
-    countProducts();
-  });
-}
-
-if (retailerSearch) {
-  retailerSearch.addEventListener("input", (event) => {
-    var searchTerm = event.target.value.toLowerCase();
-    displayRetailers(retailers.filter(retailer => retailer.retailer_name.toLowerCase().includes(searchTerm)));
-  });
-}
+populateAll();
+// Add refresh functionality
+document.getElementById("refresh").addEventListener("click", (event) => {
+  sessionStorage.clear();
+  users = null;
+  products = null;
+  retailers = null;
+  populateAll();
+});
