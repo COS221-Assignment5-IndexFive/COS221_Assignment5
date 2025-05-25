@@ -4,14 +4,14 @@ function productAuth() {
         sendResponse(false,null,"Access denied :(", 403);
     }
 
-    if (($_SESSION["user_type"] == "admin" || $_SESSION["user_type"] == "retailer")) {
+    if (!($_SESSION["user_type"] == "admin" || $_SESSION["user_type"] == "retailer")) {
         sendResponse(false,null,"Unorthorised user :(",401);
     }
 }
 
 function addProduct($db,$input){
     #product id is auto incriment
-    // productAuth();
+    productAuth();
     try{
         $stmt = $db->prepare("
             INSERT INTO products
