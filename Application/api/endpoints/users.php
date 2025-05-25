@@ -56,7 +56,7 @@ function removeUser($connection, $data) {
 function getAllUsers($connection) {
     authUsers($connection);
 
-    $stmt = $connection->prepare("SELECT user_id, first_name, last_name, email_address, cell_number, apikey FROM users");
+    $stmt = $connection->prepare("SELECT user_id, first_name, last_name, email_address, cell_number FROM users");
     if (!$stmt) {
         sendResponse(false, null, 'Failed to prepare statement: ' . $connection->error, 500);
     }
