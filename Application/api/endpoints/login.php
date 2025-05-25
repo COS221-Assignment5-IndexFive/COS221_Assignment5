@@ -56,7 +56,6 @@ function signup($connection, $data)
     $stmt->close();
 
     $hashed = password_hash($data["password"], PASSWORD_DEFAULT);
-    $apikey = bin2hex(random_bytes(16));
 
 
     $stmt = $connection->prepare("
@@ -75,8 +74,7 @@ function signup($connection, $data)
         $data["name"],
         $data["surname"],
         $data["cell_number"],
-        $data["email"],
-        $apikey
+        $data["email"]
     );
 
     $result = $stmt->execute();
@@ -113,7 +111,7 @@ function login($connection, $data)
     $email = $data['email'];
     $password = $data['password'];
 
-    $stmt = $connection->prepare("SELECT user_id, password_hash, apikey FROM users WHERE email_address = ?");
+    $stmt = $connection->prepare("SELECT user_id, password_hash FROM users WHERE email_address = ?");
 
     if (!$stmt) 
     {
@@ -144,9 +142,9 @@ function login($connection, $data)
             $_SESSION['user_id'] = $user_id;
             $_SESSION['user_type'] = $user_type;
             if ($user_type == "retailer") {
-                sendResponse(true, ['apikey' => $row['apikey'], 'user_type' => $user_type, 'retailer_id' => $user_id], 'Login successful.', 200);
+                sendResponse(true,['user_type' => $user_type, 'retailer_id' => $user_id], 'Login successful.', 200);
             }
-            sendResponse(true, ['apikey' => $row['apikey'], 'user_type' => $user_type], 'Login successful.', 200);
+            sendResponse(true, ['user_type' => $user_type], 'Login successful.', 200);
         } 
         else 
         {

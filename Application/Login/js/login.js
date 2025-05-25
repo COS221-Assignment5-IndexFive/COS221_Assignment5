@@ -175,7 +175,6 @@ window.onload = function()
                     if (response.success == true) 
                     {
                         console.log(response.data);
-                        setCookie("apikey", response.data.apikey, 7);
                         if (response.data.user_type == "retailer") {
                             determineView(response.data.user_type, response.data.retailer_id);
                         } else {
