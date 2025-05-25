@@ -55,6 +55,8 @@ class API {
       case 'addRetailer':
         addRetailer($this->conn, $input);
         break;
+      case 'updateRetailer':
+        updateRetailer($this->conn, $input);
       case 'removeRetailer':
         removeRetailer($this->conn, $input);
         break;
