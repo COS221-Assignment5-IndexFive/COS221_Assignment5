@@ -28,7 +28,7 @@ async function loadRetailer() {
     }
 
     sessionStorage.setItem("retailerID", id);
-    setRetailerName(id);
+    await setRetailerName(id);
 }
 
 async function setRetailerName(retailerID) {
@@ -74,9 +74,10 @@ function paginationInit(productsArr) {
 }
 
 function displayPages(currentPage) {
-    if ((currentPage > pages.length && pages.length != 0) || pages.length == 0) {
-        displayProducts([]);
+    if ((currentPage > pages.length && pages.length != 0)) {
         return;
+    } else if (pages.length == 0) {
+        displayProducts([]);
     }
     displayProducts(pages[currentPage - 1]);
     var pagination = document.querySelector(".pagination");
