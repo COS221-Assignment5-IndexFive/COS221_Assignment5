@@ -66,3 +66,52 @@
 .add-product .btn-secondary:hover {
   background: rgba(0, 0, 0, 0.2);
 }
+
+/* Ensure each group is the reference for its error-message */
+.add-product .form-group {
+  position: relative;
+  margin-bottom: 1.5rem; /* space for error message overlay */
+}
+
+/* Base styles for the error message (hidden) */
+.add-product .error-message {
+  position: absolute;
+  left: 0;
+  bottom: -1.2rem;            /* just below the input */
+  font-size: 0.875rem;
+  color: #e74c3c;
+  line-height: 1;
+  visibility: hidden;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+  pointer-events: none;
+}
+
+/* Red border on invalid input */
+.add-product .form-group.has-error input {
+  border: 1px solid #e74c3c;
+}
+
+/* Show error message when has-error is set */
+.add-product .form-group.has-error .error-message {
+  visibility: visible;
+  opacity: 1;
+}
+
+/* Style the dropdown like the other inputs */
+.form-group select {
+  appearance: none;
+  -webkit-appearance: none;
+  padding: 0.5rem 0.75rem;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  border-radius: 4px;
+  background: rgba(255, 255, 255, 0.6) url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2210%22%20height%3D%227%22%20viewBox%3D%220%200%2010%207%22%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%3E%3Cpath%20d%3D%22M0%200l5%207%205-7z%22%20fill%3D%22%23666%22/%3E%3C/svg%3E") no-repeat right 0.75rem center;
+  background-size: 0.65rem;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+/* Ensure the new-category input inherits the error styles too */
+.form-group.has-error #new-category {
+  border-color: #e74c3c;
+}

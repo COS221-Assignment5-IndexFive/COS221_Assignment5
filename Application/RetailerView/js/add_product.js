@@ -1,19 +1,21 @@
 import { Validator } from "../../Utils/Validator.js";
 import { AlertUtilities } from "../../Utils/AlertUtilites.js";
+import { ApiUtils } from "../../Utils/ApiUtils.js";
 
-function getCategories() {
-    // Query API for categories
-    var categories = [
-        "Laptops",
-        "Desktop Computers",
-        "Tablets",
-        "Smartphones",
-        "Monitors",
-        "Keyboards & Computer Mice",
-        "Headphones & Earbuds"
-    ];
+const utils = new ApiUtils();
+var categories;
+
+async function getCategories() {
+    categories = JSON.parse(sessionStorage.getItem("categories"));
+    if (categories == null) {
+        await utils.getRequest({ "type": "getCategories" })
+            .then((data) => {
+                categories = data;
+                sessionStorage.setItem("categories", JSON.stringify(categories));
+            })
+    }
+
     var categoriesSelect = document.getElementById("category-select");
-
     for (var i = 0; i < categories.length; i++) {
         var option = document.createElement("option");
         option.value = categories[i];
@@ -27,33 +29,15 @@ function getCategories() {
     categoriesSelect.appendChild(newCategoryOption);
 }
 
-function getRetailers() {
-    // Query API for retailers
-    var retailers = [
-        "retailer A",
-        "retailer B"
-    ];
 
-    var retailerSelect = document.getElementById("retailer-select");
-
-    for (var i = 0; i < retailers.length; i++) {
-        var option = document.createElement("option");
-        option.value = retailers[i];
-        option.innerText = retailers[i];
-        retailerSelect.appendChild(option);
-    }
-}
-
-// Populate fields
-getCategories();
-getRetailers();
+await Promise.all([getCategories()]);
 
 // Add new category
 var selectEl = document.getElementById('category-select');
 var newCatInput = document.getElementById('new-category');
 var formGroupCat = document.getElementById('category-group');
 
-selectEl.addEventListener("change", function() {
+selectEl.addEventListener("change", function () {
     if (selectEl.value === "add_new") {
         newCatInput.style.display = "block";
         newCatInput.focus();
@@ -74,7 +58,6 @@ function clearForm() {
     document.getElementById("product-link").value = "";
     document.getElementById("image-url").value = "";
     document.getElementById("category-select").value = "";
-    document.getElementById("retailer-select").value = "";
 }
 
 // Form validation
@@ -107,28 +90,37 @@ document.getElementById("add-product-form").addEventListener("submit", function 
     var category = selectEl.value;
     apv.validationHandler("fg-category", apv.validateCategory(category));
 
-    var retailer = document.getElementById("retailer-select").value;
-    apv.validationHandler("fg-retailer", retailer !== "");
 
     if (!apv.valid) {
         return;
     }
 
+    if (!categories.includes(category)) {
+        categories.push(category);
+    }
+
     var newProductRequest = {
-        "type": "CreateProduct",
+        "type": "addProduct",
         "title": title,
         "price": price,
-        "discounted-price": discountedPrice,
+        "discount_price": discountedPrice,
         "image_url": imageURL,
         "product_link": productLink,
-        "num_reviews": 0,
-        "average_rating": 0,
+        "nr_reviews": 0,
+        "rating": 0,
         "category": category,
-        "retailer": retailer
+        "retailer": sessionStorage.getItem("retailerName")
     };
 
-    var successMessage = new AlertUtilities(document.getElementById("add-error"));
-    successMessage.showAndDismissAlert();
+    var successMessage = new AlertUtilities(document.getElementById("add-success"), "Product " + title);
+    var errorMessage = new AlertUtilities(document.getElementById("add-error"), "Product " + title);
+
+    utils.getRequest(newProductRequest)
+        .then((data) => {
+            successMessage.showAndDismissAlert();
+        })
+        .catch((error) => {
+            errorMessage.showAndDismissAlert();
+        });
     clearForm();
-    console.log("Simulate API request to add product");
 });
