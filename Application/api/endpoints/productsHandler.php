@@ -4,7 +4,7 @@ function productAuth() {
         sendResponse(false,null,"Access denied :(", 403);
     }
 
-    if (($_SESSION["user_type"] == "admin" || $_SESSION["user_type"] == "retailer")) {
+    if (!($_SESSION["user_type"] == "admin" || $_SESSION["user_type"] == "retailer")) {
         sendResponse(false,null,"Unorthorised user :(",401);
     }
 }
