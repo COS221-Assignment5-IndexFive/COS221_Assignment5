@@ -80,11 +80,9 @@ function clearForm() {
     document.getElementById("title").value = "";
     document.getElementById("price").value = "";
     document.getElementById("discounted-price").value = "";
-    document.getElementById("rating").value = "";
     document.getElementById("product-link").value = "";
     document.getElementById("image-url").value = "";
     document.getElementById("category-select").value = "";
-    document.getElementById("num-reviews").value = "";
     document.getElementById("retailer-select").value = "";
 }
 
@@ -115,17 +113,8 @@ document.getElementById("add-product-form").addEventListener("submit", function 
     var productLink = document.getElementById("product-link").value;
     apv.validationHandler("fg-product-link", apv.validateURL(productLink));
 
-    var numReviews = document.getElementById("num-reviews").value;
-    apv.validationHandler("fg-num-reviews", apv.validateNumReviews(numReviews));
-
-    var averageRating = document.getElementById("rating").value;
-    apv.validationHandler("fg-rating", apv.validateRating(averageRating));
-
     var category = selectEl.value;
     apv.validationHandler("fg-category", apv.validateCategory(category));
-
-    var retailer = document.getElementById("retailer-select").value;
-    apv.validationHandler("fg-retailer", retailer !== "");
 
     if (!apv.valid) {
         return;
@@ -142,10 +131,8 @@ document.getElementById("add-product-form").addEventListener("submit", function 
         "discount_price": discountedPrice,
         "image_url": imageURL,
         "product_link": productLink,
-        "nr_reviews": numReviews,
-        "rating": averageRating,
         "category": category,
-        "retailer": retailer
+        // "retailer": retailer
     };
 
     var successMessage = new AlertUtilities(document.getElementById("add-success"), "Product " + title);

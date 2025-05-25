@@ -143,7 +143,9 @@ function login($connection, $data)
 
             $_SESSION['user_id'] = $user_id;
             $_SESSION['user_type'] = $user_type;
-
+            if ($user_type == "retailer") {
+                sendResponse(true, ['apikey' => $row['apikey'], 'user_type' => $user_type, 'retailer_id' => $user_id], 'Login successful.', 200);
+            }
             sendResponse(true, ['apikey' => $row['apikey'], 'user_type' => $user_type], 'Login successful.', 200);
         } 
         else 

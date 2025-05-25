@@ -55,7 +55,7 @@ function validatePassword()
     return valid;
 }
 
-function determineView(type)
+function determineView(type, retailerID)
 {
     /*
         Determines the location the user is sent to after registration (Customer/ Retailer view).
@@ -67,7 +67,7 @@ function determineView(type)
     }
     else if(type == "retailer")
     {
-        window.location.href = "../../RetailerView/php/index.php";
+        window.location.href = "../../RetailerView/php/index.php?retlr=" + retailerID;
     }
     else if(type == "admin")
     {
@@ -163,8 +163,13 @@ window.onload = function()
     
                     if (response.success == true) 
                     {
+                        console.log(response.data);
                         setCookie("apikey", response.data.apikey, 7);
-                        determineView(response.data.user_type);
+                        if (response.data.user_type == "retailer") {
+                            determineView(response.data.user_type, response.data.retailer_id);
+                        } else {
+                            determineView(response.data.user_type);
+                        }
                     }
                     else
                     {
