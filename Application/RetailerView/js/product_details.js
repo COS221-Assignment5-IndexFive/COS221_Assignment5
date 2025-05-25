@@ -71,7 +71,6 @@ async function loadProduct() {
       return;
     });
 
-  console.log(product);
   document.getElementById("product-id").value = product.product_id;
   document.getElementById("title").value = product.title;
   document.getElementById("price").value = product.price;
@@ -84,7 +83,6 @@ async function loadProduct() {
 
 await Promise.all([getCategories(), loadProduct()]);
 document.getElementById("category-select").value = product.category;
-// document.getElementById("retailer-select").innerText = product.retailer;
 
 // Add new category
 var selectEl = document.getElementById('category-select');
@@ -124,7 +122,7 @@ document.getElementById("change-product-form").addEventListener("submit", functi
   console.log(discountedPrice);
   if (discountedPrice != undefined && discountedPrice !== "") {
     if (validPrice) {
-      pdv.validationHandler("fg-discount-price", pdv.validatePrice(discountedPrice) && discountedPrice < price);
+      pdv.validationHandler("fg-discount-price", pdv.validatePrice(discountedPrice) && Number(discountedPrice) < Number(price));
     } else {
       pdv.validationHandler("fg-discount-price", pdv.validatePrice(discountedPrice));
     }
@@ -151,6 +149,7 @@ document.getElementById("change-product-form").addEventListener("submit", functi
 
   var newProductRequest = {
     "type": "updateProduct",
+    "product_id": product.product_id,
     "title": title,
     "price": price,
     "discount_price": discountedPrice,

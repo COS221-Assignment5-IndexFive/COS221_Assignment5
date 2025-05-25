@@ -150,22 +150,10 @@ function displayProducts(products) {
     redirectOnRowClick("product", "product_details.php");
 }
 
-function getSessionItemJSON(itemKey) {
-    var out;
-    try {
-        out = JSON.parse(sessionStorage.getItem(itemKey));
-    } catch (error) {
-        out = null;
-    }
-
-    return out;
-}
-
-var products = null;
-
 var utils = new ApiUtils();
 
 function populateProducts() {
+    var products = null
     // Send API request to fetch products
     return new Promise((resolve, reject) => {
         if (products == null) {
