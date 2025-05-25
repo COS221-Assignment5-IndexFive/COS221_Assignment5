@@ -56,8 +56,9 @@ function paginationInit(productsArr) {
 
 function displayPages(currentPage) {
   if (currentPage > pages.length && pages.length != 0) {
-    displayProducts([]);
     return;
+  } else if (pages.length == 0) {
+    displayProducts([]);
   }
   displayProducts(pages[currentPage - 1]);
   var pagination = document.querySelector(".pagination");
