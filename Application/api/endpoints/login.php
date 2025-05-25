@@ -89,7 +89,7 @@ function signup($connection, $data)
         $_SESSION['user_id'] = $user_id;
         $_SESSION['user_type'] = $user_type;
 
-        sendResponse($success=true, $data=['apikey' => $apikey ], $message='User registered successfully.', $statusCode=200);
+        sendResponse($success=true, $data=null, $message='User registered successfully.', $statusCode=200);
     } 
     else 
     {

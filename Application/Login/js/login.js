@@ -1,3 +1,21 @@
+function showLoadingScreen() 
+{
+    /*
+        Shows the loading spinner overlay.
+    */
+    document.getElementById("spinner").classList.remove("hidden");
+    document.getElementById("spinner").classList.add("visible");
+}
+
+function hideLoadingScreen() 
+{
+    /*
+        Hides the loading spinner overlay.
+    */
+    document.getElementById("spinner").classList.remove("visible");
+    document.getElementById("spinner").classList.add("hidden");
+}
+
 function validateEmail()
 {
     /*
@@ -75,17 +93,6 @@ function determineView(type, retailerID)
     }
 }
 
-function setCookie(cname, cvalue, ex) 
-{
-    /*
-        Sets a cookie with the given name, value, and expiration in days.
-    */
-    const d = new Date();
-    d.setTime(d.getTime() + (ex*24*60*60*1000));
-    let expires = "expires="+ d.toUTCString();
-    document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
-}
-
 window.onload = function()
 {
     /*
@@ -148,7 +155,9 @@ window.onload = function()
             email: emailField.value,
             password: passwordField.value,
         };
-    
+        
+        showLoadingScreen();
+
         var xhr = new XMLHttpRequest();
         xhr.open("POST", "../../api/api.php", true);
         xhr.setRequestHeader("Content-Type", "application/json");
@@ -157,12 +166,17 @@ window.onload = function()
         {
             if (xhr.readyState == 4) 
             {
+                hideLoadingScreen();
+                
                 try 
                 {
                     var response = JSON.parse(xhr.responseText);
     
                     if (response.success == true) 
                     {
+<<<<<<< HEAD
+                        determineView(response.data.user_type);
+=======
                         console.log(response.data);
                         setCookie("apikey", response.data.apikey, 7);
                         if (response.data.user_type == "retailer") {
@@ -170,6 +184,7 @@ window.onload = function()
                         } else {
                             determineView(response.data.user_type);
                         }
+>>>>>>> main
                     }
                     else
                     {
