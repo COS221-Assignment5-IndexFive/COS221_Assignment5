@@ -52,15 +52,12 @@ function paginationInit(productsArr) {
   for (var i = 0; i < productsArr.length; i += 50) {
     pages.push(productsArr.slice(i, i + 50));
   }
-
-  console.log(pages);
 }
 
 function displayPages(currentPage) {
   if (currentPage > pages.length && pages.length != 0) {
     return;
   }
-  console.log(pages[currentPage - 1]);
   displayProducts(pages[currentPage - 1]);
   var pagination = document.querySelector(".pagination");
   // Remove existing numerical page buttons
@@ -200,18 +197,23 @@ function populateProducts() {
   // Send API request to fetch products
   return new Promise((resolve, reject) => {
     if (products == null) {
+      console.log("here");
       utils.getRequest({ "type": "GetProducts" })
         .then((retProd) => {
           products = retProd;
           sessionStorage.setItem("products", JSON.stringify(products));
+          paginationInit(products);
+          displayPages(1);
+          resolve("Success");
         })
         .catch((error) => {
           console.log("Error fetching products");
         })
+    } else {
+      paginationInit(products);
+      displayPages(1);
+      resolve("Success");
     }
-    paginationInit(products);
-    displayPages(1);
-    resolve("Success");
   });
 }
 
@@ -255,9 +257,12 @@ async function populateAll() {
   // Count total num of products displayed
   function countProducts() {
     const prodCount = document.getElementById("product-count");
-    if (prodCount != null) {
-      prodCount.innerHTML = document.querySelectorAll(".data-table tr").length - 1;
+    var count = 0;
+    for (let i = 0; i < pages.length; i++) {
+      count += pages[i].length;
     }
+    prodCount.innerHTML = count;
+
   }
 
   countProducts();
