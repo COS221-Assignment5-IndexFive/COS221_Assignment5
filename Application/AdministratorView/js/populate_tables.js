@@ -257,6 +257,9 @@ async function populateAll() {
   // Count total num of products displayed
   function countProducts() {
     const prodCount = document.getElementById("product-count");
+    if (prodCount == null) {
+      return;
+    }
     var count = 0;
     for (let i = 0; i < pages.length; i++) {
       count += pages[i].length;
