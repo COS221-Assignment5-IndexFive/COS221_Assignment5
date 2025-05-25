@@ -4,7 +4,7 @@ body {
     background: #f9f9fb;
 }
 
-.spinner-section {
+.spinner-section { 
     position: fixed;
     inset: 0;
     background: rgba(255, 255, 255, 0.6);

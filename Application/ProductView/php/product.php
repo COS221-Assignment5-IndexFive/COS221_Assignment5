@@ -28,7 +28,6 @@
             </h2>
         
             <form id="reviewForm">
-                <input type="text" id="reviewerName" placeholder="Your name" required>
         
                 <textarea id="reviewText" placeholder="Write your review..." required></textarea>
                 <div id="card-cont">
@@ -64,9 +63,6 @@
 <div class="retailers-compare"></div>
 
 </div>
-
-
-
 
 
 </body>
