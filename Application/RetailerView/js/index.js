@@ -75,6 +75,7 @@ function paginationInit(productsArr) {
 
 function displayPages(currentPage) {
     if ((currentPage > pages.length && pages.length != 0) || pages.length == 0) {
+        displayProducts([]);
         return;
     }
     displayProducts(pages[currentPage - 1]);
@@ -152,8 +153,10 @@ function displayProducts(products) {
 
 var utils = new ApiUtils();
 
+var products;
+
 function populateProducts() {
-    var products = null
+    products = null
     // Send API request to fetch products
     return new Promise((resolve, reject) => {
         if (products == null) {
