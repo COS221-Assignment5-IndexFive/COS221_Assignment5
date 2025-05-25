@@ -15,7 +15,8 @@
   <link rel="stylesheet" href="../css/product_details.css" />
 </head>
 <body>
-  <?php include 'sidebar.php';?>
+  <?php include 'sidebar.php'; ?>
+  <?php include "spinner.php"; ?>
   <div class="alert-container">
     <?php include "update_alerts.php"?>
     <?php include "delete_alerts.php"?>

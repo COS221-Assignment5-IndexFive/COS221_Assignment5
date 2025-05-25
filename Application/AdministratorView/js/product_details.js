@@ -7,6 +7,12 @@ function displayError() {
   document.getElementsByClassName("error-message-id")[0].classList.remove("hidden");
 }
 
+// Loading Spinner
+function toggleLoadingScreen() {
+  document.getElementById("spinner").classList.toggle("hidden");
+  document.getElementById("spinner").classList.toggle("visible");
+}
+
 function isNumericString(value) {
   return !isNaN(value) && value.trim() !== "";
 }
@@ -98,7 +104,6 @@ async function loadProduct() {
       return;
     });
 
-  console.log(product);
   document.getElementById("product-id").value = product.product_id;
   document.getElementById("title").value = product.title;
   document.getElementById("price").value = product.price;
@@ -107,9 +112,22 @@ async function loadProduct() {
   document.getElementById("product-link").value = product.product_link;
   document.getElementById("image-url").value = product.image_url;
   document.getElementById("product-img").src = product.image_url;
+
+  var retailers = sessionStorage.getItem("retailers");
+  var retailerSelect = document.getElementById("retailer-select");
+  if (!retailers.includes(product.retailer)) {
+    var option = document.createElement("option");
+    option.value = product.retailer;
+    option.innerHTML = product.retailer;
+    retailerSelect.appendChild(option);
+  }
+  retailerSelect.value = product.retailer;
 }
 
+toggleLoadingScreen();
 await Promise.all([getCategories(), loadProduct(), getRetailers()]);
+toggleLoadingScreen();
+
 document.getElementById("category-select").value = product.category;
 // document.getElementById("retailer-select").innerText = product.retailer;
 

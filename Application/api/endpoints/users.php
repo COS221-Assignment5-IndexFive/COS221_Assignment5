@@ -52,7 +52,6 @@ function removeUser($connection, $data) {
     }
 }
 
-
 function getAllUsers($connection) {
     authUsers($connection);
 
