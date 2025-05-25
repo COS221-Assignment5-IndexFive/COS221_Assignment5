@@ -174,9 +174,6 @@ window.onload = function()
     
                     if (response.success == true) 
                     {
-<<<<<<< HEAD
-                        determineView(response.data.user_type);
-=======
                         console.log(response.data);
                         setCookie("apikey", response.data.apikey, 7);
                         if (response.data.user_type == "retailer") {
@@ -184,7 +181,6 @@ window.onload = function()
                         } else {
                             determineView(response.data.user_type);
                         }
->>>>>>> main
                     }
                     else
                     {
