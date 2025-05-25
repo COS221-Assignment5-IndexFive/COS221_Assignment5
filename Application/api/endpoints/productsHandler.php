@@ -11,7 +11,7 @@ function productAuth() {
 
 function addProduct($db,$input){
     #product id is auto incriment
-    // productAuth();
+    productAuth();
     try{
         $stmt = $db->prepare("
             INSERT INTO products
