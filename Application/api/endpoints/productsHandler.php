@@ -43,12 +43,14 @@ function deleteProduct($db,$input){
 function updateProduct($db,$input){
     // productAuth();
     try{
-        $stmt=$db->prepare("
+        $stmt = $db->prepare("
             UPDATE products
             SET rating = ?, title = ?, image_url = ?, product_link = ?, price = ?, discount_price = ?, nr_reviews = ?, category = ?, retailer = ?
             WHERE product_id = ?
         ");
-        $stmt->execute([
+        // Assuming $db is a MySQLi connection
+        $stmt->bind_param(
+            "dsssddissi",
             $input['rating'],
             $input['title'],
             $input['image_url'],
@@ -57,11 +59,13 @@ function updateProduct($db,$input){
             $input['discount_price'],
             $input['nr_reviews'],
             $input['category'],
-            $input['product_id'],
-            $input['retailer']
-        ]);
+            $input['retailer'],
+            $input['product_id']
+        );
+        $stmt->execute();
+        $stmt->close();
         sendResponse(true, null, 'Product updated successfully.', 200);
-    } catch (PDOException $e) {
+    } catch (Exception $e) {
         sendResponse(false, null, 'Product not updated: ' . $e->getMessage(), 500);
     }
 }
