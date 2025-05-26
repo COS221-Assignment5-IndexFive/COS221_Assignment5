@@ -1,12 +1,12 @@
 <?php
-function authUsers() {
+function authUsers($connection) {
     if (!isset($_SESSION['user_id']) || !isAdmin($connection, $_SESSION['user_id'])) {
         sendResponse(false, null, 'Unauthorized: Admin access required.', 403);
     }
 }
 
 function addUser($connection, $data) {
-    authUsers();
+    authUsers($connection);
     $required = ['email_address', 'password', 'first_name'];
     foreach ($required as $field) {
         if (empty($data[$field])) {
@@ -19,13 +19,13 @@ function addUser($connection, $data) {
     $first_name = $data['first_name'];
     $last_name = $data['last_name'] ?? null;
     $cell = $data['cell_number'] ?? null;
-    $apikey = bin2hex(random_bytes(32));
+    $apikey = bin2hex(random_bytes(16));
 
     $stmt = $connection->prepare("INSERT INTO users (password_hash, first_name, last_name, cell_number, email_address, apikey) VALUES (?, ?, ?, ?, ?, ?)");
     $stmt->bind_param("ssssss", $password, $first_name, $last_name, $cell, $email, $apikey);
 
     if ($stmt->execute()) {
-        sendResponse(true, ['user_id' => $stmt->insert_id], 'User added successfully.', 201);
+        sendResponse(true, ['user_id' => $stmt->insert_id], 'User added successfully.', 200);
     } else {
         sendResponse(false, null, 'Failed to add user: ' . $stmt->error, 500);
     }
@@ -33,8 +33,7 @@ function addUser($connection, $data) {
 
 
 function removeUser($connection, $data) {
-    authUsers();
-
+    authUsers($connection);
     if (empty($data['user_id'])) {
         sendResponse(false, null, 'User ID is required.', 400);
     }
@@ -53,11 +52,10 @@ function removeUser($connection, $data) {
     }
 }
 
-
 function getAllUsers($connection) {
-    authUsers();
+    authUsers($connection);
 
-    $stmt = $connection->prepare("SELECT user_id, first_name, last_name, email_address, cell_number, apikey FROM users");
+    $stmt = $connection->prepare("SELECT user_id, first_name, last_name, email_address, cell_number FROM users");
     if (!$stmt) {
         sendResponse(false, null, 'Failed to prepare statement: ' . $connection->error, 500);
     }
@@ -74,7 +72,7 @@ function getAllUsers($connection) {
 }
 
 function updateUser($connection, $data) {
-    authUsers();
+    authUsers($connection);
     // Validate ID
     $id = null;
     if (!key_exists('user_id', $data)) {

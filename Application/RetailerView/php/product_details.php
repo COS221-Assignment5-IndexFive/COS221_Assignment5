@@ -10,7 +10,7 @@
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
 
   <!-- Main Stylesheets -->
-  <link rel="stylesheet" href="../css/retailer.css" />
+  <link rel="stylesheet" href="../../AdministratorView/css/main.css" />
   <link rel="stylesheet" href="../../AdministratorView/css/messages.css" />
   <link rel="stylesheet" href="../css/product_details.css" />
 </head>

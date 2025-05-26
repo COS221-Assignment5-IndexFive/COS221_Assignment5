@@ -45,6 +45,66 @@ function displayUsers(users) {
   redirectOnRowClick("user", "single_user_view.php");
 }
 
+var pages = [];
+
+function paginationInit(productsArr) {
+  pages = [];
+  for (var i = 0; i < productsArr.length; i += 50) {
+    pages.push(productsArr.slice(i, i + 50));
+  }
+}
+
+function displayPages(currentPage) {
+  if (currentPage > pages.length && pages.length != 0) {
+    return;
+  } else if (pages.length == 0) {
+    displayProducts([]);
+  }
+  displayProducts(pages[currentPage - 1]);
+  var pagination = document.querySelector(".pagination");
+  // Remove existing numerical page buttons
+  Array.from(pagination.querySelectorAll('li:not(.prev-next)')).forEach(li => li.remove());
+
+  var nextPrevArr = document.querySelectorAll(".prev-next");
+  var prev = nextPrevArr[0];
+  var next = nextPrevArr[1];
+
+  prev.addEventListener("click", (event) => {
+    if (currentPage > 1) {
+      displayPages(currentPage - 1);
+    }
+  })
+
+  next.addEventListener("click", (event) => {
+    if (currentPage < pages.length) {
+      displayPages(currentPage + 1);
+    }
+  })
+
+  // Create and insert current page button
+  var pageLi = document.createElement("li");
+  var pageBtn = document.createElement("button");
+  pageBtn.type = "button";
+  pageBtn.textContent = currentPage;
+  pageBtn.classList.add("active");
+  pageLi.appendChild(pageBtn);
+  pagination.insertBefore(pageLi, pagination.children[1]);
+
+  // Insert next two pages
+  for (let i = currentPage + 1; i <= currentPage + 2; i++) {
+    const altPageLi = document.createElement("li");
+    const altPageBtn = document.createElement("button");
+    altPageBtn.type = "button";
+    altPageBtn.textContent = i;
+    altPageBtn.addEventListener("click", (event) => {
+      displayPages(i);
+    });
+    altPageLi.appendChild(altPageBtn);
+    // Insert each new page after the current page
+    pagination.insertBefore(altPageLi, pagination.children[2 + (i - currentPage - 1)]);
+  }
+}
+
 function displayProducts(products) {
   var table = document.querySelector("#dt-products tbody");
   table.innerHTML = "";
@@ -138,23 +198,25 @@ function populateUsers() {
 function populateProducts() {
   // Send API request to fetch products
   return new Promise((resolve, reject) => {
-    if (products != null) {
-      displayProducts(products);
-      resolve("Loaded products from storage");
+    if (products == null) {
+      console.log("here");
+      utils.getRequest({ "type": "GetProducts" })
+        .then((retProd) => {
+          products = retProd;
+          sessionStorage.setItem("products", JSON.stringify(products));
+          paginationInit(products);
+          displayPages(1);
+          resolve("Success");
+        })
+        .catch((error) => {
+          console.log("Error fetching products");
+        })
+    } else {
+      paginationInit(products);
+      displayPages(1);
+      resolve("Success");
     }
-    utils.getRequest({ "type": "getProducts" })
-      .then((retProd) => {
-        products = retProd;
-        displayProducts(products);
-        sessionStorage.setItem("products", JSON.stringify(products));
-      })
-      .catch((error) => {
-        reject("Error fetching products")
-      })
-      .finally(() => {
-        resolve("Fetched products");
-      })
-  })
+  });
 }
 
 function populateRetailers() {
@@ -197,13 +259,18 @@ async function populateAll() {
   // Count total num of products displayed
   function countProducts() {
     const prodCount = document.getElementById("product-count");
-    if (prodCount != null) {
-      prodCount.innerHTML = document.querySelectorAll(".data-table tr").length - 1;
+    if (prodCount == null) {
+      return;
     }
+    var count = 0;
+    for (let i = 0; i < pages.length; i++) {
+      count += pages[i].length;
+    }
+    prodCount.innerHTML = count;
+
   }
 
   countProducts();
-  toggleLoadingScreen();
 
   // Search bars
   const userSearch = document.getElementById("user-search");
@@ -220,7 +287,8 @@ async function populateAll() {
   if (productSearch) {
     productSearch.addEventListener("input", (event) => {
       var searchTerm = event.target.value.toLowerCase();
-      displayProducts(products.filter(product => product.title.toLowerCase().includes(searchTerm)));
+      paginationInit(products.filter(product => product.title.toLowerCase().includes(searchTerm)));
+      displayPages(1);
       countProducts();
     });
   }
@@ -231,9 +299,14 @@ async function populateAll() {
       displayRetailers(retailers.filter(retailer => retailer.retailer_name.toLowerCase().includes(searchTerm)));
     });
   }
+
+  toggleLoadingScreen();
 }
 
+toggleLoadingScreen();
 populateAll();
+toggleLoadingScreen();
+
 // Add refresh functionality
 document.getElementById("refresh").addEventListener("click", (event) => {
   sessionStorage.clear();

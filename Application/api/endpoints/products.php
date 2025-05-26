@@ -1,54 +1,94 @@
 <?php
-session_start();
-//any users can use these functions
-function getProducts($db,$input){
-    
-    $query="SELECT * FROM products";
-    $filters=[];
-    $parameters=[];
-    $types="";
-    if(!empty($input['category'])){
-        $filters[]="category = ?";
-        $parameters[]=$input['category'];
-        $types="s";
+function getProducts($db, $input)
+{
+    // Check if user is logged in
+    if (session_status() === PHP_SESSION_NONE) 
+    {
+        session_start();
     }
-    if(!empty($input['min_price'])){
-        $filters[]="price >= ?";
-        $parameters[]=$input['min_price'];
-        $types="d";
+
+    if (!isset($_SESSION['user_id'])) 
+    {
+        sendResponse(false, null, "Access denied: User not logged in.", 403);
     }
-    if(!empty($input['max_price'])){
-        $filters[]="price <= ?";
-        $parameters[]=$input['max_price'];
-        $types="d";
+
+    $query = "SELECT * FROM products";
+    $filters = [];
+    $parameters = [];
+    $types = "";
+
+    if(!empty($input['category']))
+    {
+        $filters[] = "category = ?";
+        $parameters[] = $input['category'];
+        $types = "s";
     }
-    if(!empty($filters)){
-        $query.= "WHERE ". implode(" AND ",$filters);
+
+    if (!empty($input['min_price'])) 
+    {
+        $filters[] = "(COALESCE(discount_price, price)) >= ?";
+        $parameters[] = $input['min_price'];
+        $types .= "d";
     }
-    if(!empty($input['sort_by'])){
-        $allowedSorts=['price','rating','nr_reviews'];//only allowing to sort by these, the others seem unneseary
-        if(in_array($input['sort_by'],$allowedSorts)){
-            $order=strtoupper($input['order']??'ASC');//ensures it is always uppercase
-            $order=($order==='DESC')?'DESC':'ASC';
-            $query.=" ORDER BY {$input['sort_by']} $order";
+
+    if (!empty($input['max_price'])) 
+    {
+        $filters[] = "(COALESCE(discount_price, price)) <= ?";
+        $parameters[] = $input['max_price'];
+        $types .= "d";
+    }
+
+    if(!empty($filters))
+    {
+        $query .= " WHERE ". implode(" AND ", $filters);
+    }
+
+    if(!empty($input['sort_by']))
+    {
+        $allowedSorts = ['price','rating','nr_reviews']; //only allowing to sort by these, the others seem unneseary
+
+        if(in_array($input['sort_by'], $allowedSorts))
+        {
+            $order = strtoupper($input['order'] ?? 'ASC'); //ensures it is always uppercase
+            $order = ($order === 'DESC') ? 'DESC' : 'ASC';
+
+            if ($input['sort_by'] === 'price') 
+            {
+                $query .= " ORDER BY COALESCE(discount_price, price) $order";
+            } 
+            else 
+            {
+                $query .= " ORDER BY {$input['sort_by']} $order";
+            }
         }
     }
+
     $stmt=$db->prepare($query);
-    if(!$stmt){
-        sendResponse(false,null,"Products not fetched :".$db->error,500);
+
+    if(!$stmt)
+    {
+        sendResponse(false ,null ,"Products not fetched :".$db->error ,500);
     }
-    if(!empty($parameters)){
-        $stmt->bind_param($types,...$parameters);
+
+    if(!empty($parameters))
+    {
+        $stmt->bind_param($types, ...$parameters);
     }
+
     $stmt->execute();
     $result=$stmt->get_result();
-    $products=$result->fetch_All(MYSQLI_ASSOC);
-    sendResponse(true,$products,"Products fetched :)",200);
-    
+
+    $products = [];
+    while ($row = $result->fetch_assoc()) 
+    {
+        $products[] = $row;
+    }
+
+    sendResponse(true,$products, "Products fetched :)" ,200);
 }
 
 function getProductByID($db,$input){
-    if(empty($input['prodict_id'])){//if there is no product id you cannot get the product
+    if(empty($input['product_id'])){//if there is no product id you cannot get the product
         sendResponse(false,null,"Product id is invalid",400);
     }
     
@@ -66,8 +106,7 @@ function getProductByID($db,$input){
 
 function getCategories($db,$input){
     
-    $query = $db->query("SELECT DISTINCT category FROM products ORDER BY category ASC");
-    $result = $db->query($query);
+    $result = $db->query("SELECT DISTINCT category FROM products ORDER BY category ASC");
     if($result){
         $categories=[];
         while($row=$result->fetch_assoc()){

@@ -9,6 +9,7 @@ require_once 'endpoints/retailers.php';
 require_once 'endpoints/users.php';
 require_once 'endpoints/products.php';
 require_once 'endpoints/productsHandler.php';
+require_once 'endpoints/watchList.php';
 
 class API {
 
@@ -43,7 +44,8 @@ class API {
 			exit;
 		}
 
-		switch ($action) {
+		switch ($action) 
+    {
       case 'Signup':
 				signup($this->conn,  $input);
         break;
@@ -53,6 +55,8 @@ class API {
       case 'addRetailer':
         addRetailer($this->conn, $input);
         break;
+      case 'updateRetailer':
+        updateRetailer($this->conn, $input);
       case 'removeRetailer':
         removeRetailer($this->conn, $input);
         break;
@@ -78,7 +82,6 @@ class API {
       case 'updateProduct':
         updateProduct($this->conn, $input);
         break;
-
       // everyone can use these
       case 'GetProducts': // retuns all products in the products table
         getProducts($this->conn, $input);
@@ -90,15 +93,22 @@ class API {
         getCategories($this->conn, $input);
         break;
 
-
-      // addoing to watch list :
       case 'AddWatchlist': 
         addToWatchlist($this->conn, $input);
+        break;
+
+      case 'GetWatchlist': 
+        getWatchlist($this->conn);
+        break;
+
+      case 'DeleteWatchlist': 
+        removeFromWatchlist($this->conn, $input);
         break;
 
       case 'UpdateUser':
         updateUser($this->conn, $input);
         break;   
+
 			default:
         sendResponse($success=false, $data = null, $message = 'Invalid action', $statusCode = 400) ;
 				break;

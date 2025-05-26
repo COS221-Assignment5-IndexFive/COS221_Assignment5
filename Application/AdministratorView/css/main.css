@@ -224,3 +224,45 @@ body.loading {
 
 .hidden { display: none !important; }
 .visible { display: flex !important; }
+
+/* Pagination Styles */
+.pagination {
+  display: flex;
+  list-style: none;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 2rem;
+}
+.pagination li {}
+
+.pagination li button,
+.pagination li span {
+  display: block;
+  padding: 0.5rem 0.75rem;
+  border-radius: 4px;
+  border: 1px solid var(--glass-border);
+  background: var(--glass-bg);
+  backdrop-filter: blur(10px);
+  color: var(--text-dark);
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+}
+.pagination li button:hover:not(.disabled):not(.active) {
+  background: rgba(255, 255, 255, 0.3);
+}
+.pagination li button.disabled,
+.pagination li span.disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+.pagination li button.active,
+.pagination li span.current {
+  background: var(--primary-gradient);
+  border-color: var(--primary-gradient);
+  color: var(--text-light);
+  pointer-events: none;
+}
+.pagination li.prev-next button {
+  font-weight: bold;
+}

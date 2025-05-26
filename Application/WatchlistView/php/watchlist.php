@@ -11,7 +11,7 @@
         <div class="input-container">
             <h1>Your Watchlist</h1>
         </div>
-
+        <?php include "spinner.php";?>
         <div id="watchlist-container" class="results-container">
             <h2>Tracked Products</h2>
             <div id="watchlist-list" class="product-list"></div>

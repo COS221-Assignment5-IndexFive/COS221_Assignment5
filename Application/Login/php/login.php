@@ -8,6 +8,7 @@
     </head>
     
     <body>
+        <?php include "spinner.php";?>
         <form id="loginForm">
             <div class=input-container>
                 <h1>Login</h1>

@@ -1,35 +1,3 @@
-/*
-    The products returned by the getProducts function will populate 
-    the allProducts array to easily manage filtering and sorting.
-*/
-let allProducts = [];
-
-function getCookie(cname) 
-{
-    /*
-        Retrieves the value of a cookie by its name.
-    */
-    let name = cname + "=";
-    let decodedCookie = decodeURIComponent(document.cookie);
-    let ca = decodedCookie.split(';');
-
-    for(let i = 0; i <ca.length; i++) 
-    {
-        let c = ca[i];
-        while (c.charAt(0) == ' ') 
-        {
-            c = c.substring(1);
-        }
-
-        if (c.indexOf(name) == 0) 
-        {
-            return c.substring(name.length, c.length);
-        }
-    }
-
-    return "";
-}
-
 function showLoadingScreen() 
 {
     /*
@@ -51,29 +19,12 @@ function hideLoadingScreen()
 function getProducts(isInitialLoad = false) 
 {
     /*
-        Sends a request to fetch products from the server using the user's API key.
-        On success, populates the allProducts array and applies filters to display products.
+        Sends a request to fetch products from the server.
+        On success, applies filters to display products.
     */
-    var userAPI = getCookie("apikey");
-    /*
-        Expected request structure:
-        {
-            type: "GetProducts",
-            apikey: userApI
-        };
-
-        Expected response structure:
-        {
-            success: <success indicator>
-            message: <message>
-            data: <JSON object of products>
-        }
-    */
-
     var reqData = 
     {
-        type: "GetProducts",
-        apiKey: userAPI
+        type: "GetProducts"
     };
 
     showLoadingScreen();
@@ -94,11 +45,9 @@ function getProducts(isInitialLoad = false)
 
                 if (response.success == true) 
                 {
-                    allProducts = response.data;
-
                     if(isInitialLoad == true)
                     {
-                        let topRated = getTopRated(allProducts);
+                        let topRated = getTopRated(response.data);
                         displayProducts(topRated, true);
                     }
                     else
@@ -148,156 +97,141 @@ function getTopRated(products)
     return arr.slice(0, 8);
 }
 
-function extractNumericPrice(priceStr) 
-{
-    /*
-        Extracts and returns the numeric value from a price string.
-    */
-    var result = "";
-    for (var i = 0; i < priceStr.length; i++) 
-    {
-        var ch = priceStr[i];
-
-        if ((ch >= '0' && ch <= '9') || ch === '.') 
-        {
-            result += ch;
-        }
-    }
-
-    return parseFloat(result);
-}
-
-function sortProducts(products, sortValue) 
-{
-    /*
-        Sorts the given products array based on the selected sort 
-        option (price, rating, or alphabetical) using bubble sort.
-    */
-    var n = products.length;
-    var swapped = true;
-
-    while (swapped) 
-    {
-        swapped = false;
-
-        for (var i = 1; i < n; i++) 
-        {
-            var swap = false;
-
-            if (sortValue === "price-asc") 
-            {
-                var priceA = extractNumericPrice(products[i - 1].price);
-                var priceB = extractNumericPrice(products[i].price);
-
-                if (priceA > priceB)
-                {
-                    swap = true;
-                }
-            } 
-            else if (sortValue === "price-desc")
-            {
-                var priceA = extractNumericPrice(products[i - 1].price);
-                var priceB = extractNumericPrice(products[i].price);
-                if (priceA < priceB)
-                {
-                    swap = true;
-                }
-            } 
-            else if (sortValue === "rating") 
-            {
-                var ratingA = products[i - 1].rating || 0;
-                var ratingB = products[i].rating || 0;
-
-                if (ratingA < ratingB)
-                {
-                    swap = true;
-                }
-            } 
-            else 
-            {
-                if (products[i - 1].title.localeCompare(products[i].title) > 0)
-                {
-                    swap = true;
-                }
-            }
-
-            if (swap) 
-            {
-                var temp = products[i - 1];
-                products[i - 1] = products[i];
-                products[i] = temp;
-                swapped = true;
-            }
-        }
-
-        n--;
-    }
-    return products;
-}
-
 function applyAllFilters()
 {
     /*
-        Applies search, category, on sale, and sort filters to the allProducts array and displayes them.
+        Applies search, category, on sale, and sort filters to the product and displayes them.
     */
     const searchValue = document.getElementById('search').value.trim().toLowerCase();
     const selectedCategory = document.getElementById('category').value;
     const onSaleChecked = document.getElementById('onSale').checked;
     const sortValue = document.getElementById('sort').value;
+    const minPrice = document.getElementById('minPrice').value;
+    const maxPrice = document.getElementById('maxPrice').value;
 
-    let filtered = [];
-
-    for(var i = 0; i < allProducts.length; i++) 
+    var reqData = 
     {
-        var product = allProducts[i];
-        var match = true;
+        type: "GetProducts"
+    };
 
-        if (searchValue && product.title.toLowerCase().indexOf(searchValue) === -1)
-        {
-            match = false;
-        }
+    if (selectedCategory !== "default") 
+    {
+        reqData.category = selectedCategory;
+    }
 
-        if (selectedCategory !== "default" && product.category !== selectedCategory)
-        {
-            match = false;
-        }
+    if (minPrice) 
+    {
+        reqData.min_price = parseFloat(minPrice);
+    }
 
-        if (onSaleChecked && !(product.discount_price && product.discount_price !== product.price))
-        {
-            match = false;
-        }
+    if (maxPrice) 
+    {
+        reqData.max_price = parseFloat(maxPrice);
+    }
 
-        if (match)
+    if (sortValue && sortValue !== "default") 
+    {
+        if (sortValue === "price-asc") 
         {
-            filtered.push(product);
+            reqData.sort_by = "price";
+            reqData.order = "ASC";
+        } 
+        else if (sortValue === "price-desc") 
+        {
+            reqData.sort_by = "price";
+            reqData.order = "DESC";
+        } 
+        else if (sortValue === "rating") 
+        {
+            reqData.sort_by = "rating";
+            reqData.order = "DESC";
         }
     }
 
-    filtered = sortProducts(filtered, sortValue);
+    showLoadingScreen();
 
-    displayProducts(filtered, false);
+    var req = new XMLHttpRequest();
+    req.open("POST", "../../api/api.php", true);
+    req.setRequestHeader("Content-Type", "application/json");
 
-    let noResults = document.getElementById("noResults");
-
-    if (!noResults) 
+    req.onreadystatechange = function () 
     {
-        noResults = document.createElement("div");
-        noResults.id = "noResults";
-        noResults.style.color = "#d8000c";
-        noResults.style.marginTop = "16px";
-        document.getElementById("product-list").appendChild(noResults);
-    }
+        if (req.readyState == 4) 
+        {
+            hideLoadingScreen();
 
-    if (filtered.length == 0) 
-    {
-        noResults.textContent = "hmm... No results match your filters!";
-        noResults.style.display = "block";
-    } 
-    else 
-    {
-        noResults.textContent = "";
-        noResults.style.display = "none";
-    }
+            try 
+            {
+                var response = JSON.parse(req.responseText);
+
+                if (response.success == true) 
+                {
+                    let filtered = response.data;
+
+                    if (searchValue) 
+                    {
+                        let filteredBySearch = [];
+                        for (let i = 0; i < filtered.length; i++) 
+                        {
+                            let product = filtered[i];
+
+                            if (product.title.toLowerCase().includes(searchValue)) 
+                            {
+                                filteredBySearch.push(product);
+                            }
+                        }
+
+                        filtered = filteredBySearch;
+                    }
+
+                    if (onSaleChecked) 
+                    {
+                        let filteredOnSale = [];
+
+                        for (let i = 0; i < filtered.length; i++) 
+                        {
+                            let product = filtered[i];
+                            if (product.discount_price && product.discount_price !== product.price) 
+                            {
+                                filteredOnSale.push(product);
+                            }
+                        }
+
+                        filtered = filteredOnSale;
+                    }
+
+                    displayProducts(filtered, false);
+
+                    let noResults = document.getElementById("noResults");
+                    if (!noResults) 
+                    {
+                        noResults = document.createElement("div");
+                        noResults.id = "noResults";
+                        noResults.style.color = "#d8000c";
+                        noResults.style.marginTop = "16px";
+                        document.getElementById("product-list").appendChild(noResults);
+                    }
+
+                    if (filtered.length == 0) 
+                    {
+                        noResults.textContent = "hmm... No results match your filters!";
+                        noResults.style.display = "block";
+                    } 
+                    else 
+                    {
+                        noResults.textContent = "";
+                        noResults.style.display = "none";
+                    }
+                }
+            } 
+            catch (e) 
+            {
+                console.error("Parsing error:", e);
+            }
+        }
+    };
+
+    req.send(JSON.stringify(reqData));
 }
 
 function addWatchlist(productId)
@@ -305,28 +239,9 @@ function addWatchlist(productId)
     /*
         Sends a request to the server to add the specified product to the user's watchlist.
     */
-    var userAPI = getCookie("apikey");
-
-    /*
-        Expected request structure:
-        {
-            type: "AddWatchlist",
-            apikey: userApI,
-            product_id: productId
-        };
-
-        Expected response structure:
-        {
-            success: <success indicator>
-            message: <message>
-            data: null
-        }
-    */
-
     var reqData = 
     {
         type: "AddWatchlist",
-        apikey: userAPI,
         product_id: productId
     };
 
@@ -415,7 +330,7 @@ function displayProducts(products, isTopRated = true)
                 <span class="rating-value">${product.rating || '--'}</span>
             </div>
             <div class="product-image">
-                <img src="${product.image_url}" alt="${product.title}">
+                <img src="${product.image_url}" alt="${displayTitle}">
             </div>
             <div class="product-info">
                 <span class="product-title">${displayTitle}</span>
