@@ -5,9 +5,9 @@ if (session_status() === PHP_SESSION_NONE) {
 
 // adding a retailer into the retailers table - only an administrator is allowed
 function addRetailer($connection, $data) {
-    // if (!isset($_SESSION['user_id']) || !isAdmin($connection, $_SESSION['user_id'])) {
-    //     sendResponse(false, null, 'Unauthorized: Admin access required.', 403);
-    // }
+    if (!isset($_SESSION['user_id']) || !isAdmin($connection, $_SESSION['user_id'])) {
+        sendResponse(false, null, 'Unauthorized: Admin access required.', 403);
+    }
 
     if (empty($data['retailer_name'])) {
         sendResponse(false, null, 'Retailer name is required.', 400);
