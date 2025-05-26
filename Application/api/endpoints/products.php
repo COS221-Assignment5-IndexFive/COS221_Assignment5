@@ -109,7 +109,7 @@ function getCategories($db,$input){
         $query = $db->query("SELECT DISTINCT category FROM products ORDER BY category ASC");
         if($query){
             $categories=[];
-            while($row=$result->fetch_assoc()){
+            while($row=$query->fetch_assoc()){
                 $categories[]=$row['category'];
             }
             sendResponse(true, $categories,"Categories fetched :)", 200);
