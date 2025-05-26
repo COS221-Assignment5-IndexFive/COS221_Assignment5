@@ -31,35 +31,35 @@
       <form class="form-grid" id="add-user-form">
         <div class="form-group" id="fg-first-name">
           <label for="first-name">First Name</label>
-          <input type="text" id="first-name" name="first-name" placeholder="Enter first name" />
+          <input type="text" id="first-name" name="first-name" placeholder="Enter first name" required />
           <div class="error-message">
             Please enter a first name.
           </div>
         </div>
         <div class="form-group" id="fg-last-name">
           <label for="last-name">Last Name</label>
-          <input type="text" id="last-name" name="last-name" placeholder="Enter last name" />
+          <input type="text" id="last-name" name="last-name" placeholder="Enter last name" required />
           <div class="error-message">
             Please enter a valid last name.
           </div>
         </div>
         <div class="form-group" id="fg-email">
           <label for="email">Email</label>
-          <input type="email" id="email" name="email" placeholder="Enter email address" />
+          <input type="email" id="email" name="email" placeholder="Enter email address" required />
           <div class="error-message">
             Please enter a valid email.
           </div>
         </div>
         <div class="form-group" id="fg-phone">
           <label for="phone">Phone Number</label>
-          <input type="tel" id="phone" name="phone" placeholder="Enter phone number" />
+          <input type="tel" id="phone" name="phone" placeholder="Enter phone number" required/>
           <div class="error-message">
             Please enter a valid phone number.
           </div>
         </div>
         <div class="form-group" id="fg-retailer">
           <label for="retailer-name">Retailer Name</label>
-          <input type="text" id="retailer-name" name="retailer-name" placeholder="Enter retailer name" />
+          <input type="text" id="retailer-name" name="retailer-name" placeholder="Enter retailer name" required />
           <div class="error-message">
             Please enter a valid retailer name.
           </div>

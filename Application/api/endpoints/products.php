@@ -105,16 +105,65 @@ function getProductByID($db,$input){
 }
 
 function getCategories($db,$input){
-    
-    $result = $db->query("SELECT DISTINCT category FROM products ORDER BY category ASC");
-    if($result){
-        $categories=[];
-        while($row=$result->fetch_assoc()){
-            $categories[]=$row['category'];
+    try{
+        $query = $db->query("SELECT DISTINCT category FROM products ORDER BY category ASC");
+        if($query){
+            $categories=[];
+            while($row=$result->fetch_assoc()){
+                $categories[]=$row['category'];
+            }
+            sendResponse(true, $categories,"Categories fetched :)", 200);
         }
-        sendResponse(true, $categories,"Categories fetched :)", 200);
-    }else{
+    }catch(PDOException $e){
         sendResponse(false,null,"Error: ". $e->getMessage(),500);
     }
+}
+
+function getComparisonsByTitle($db,$input){
+    $user_id=$_SESSION['user_id']??'';
+    if(!$user_id){
+        sendResponse(false,null,"Unorthorised user :(",401);
+        return;
+    }
+    $title=$input['title']??'';
+    if(empty($title)){
+        sendResponse(false, null,"Product title not foud to perform comparison :(",400);
+        return;
+    }
+    $words=explode(" ",$title);
+    $search="%".implode("%",$words)."%";
+    $stmt=$db->prepare("SELECT * FROM products WHERE title LIKE ? AND retailer_id!=?");
+    if(!stmt){
+        sendResponse(false,null,"Statememnt prep failed in comparison: ".$db->error,500);
+        return;
+    }
+    $stmt->bind_param("si",$search,$user_id);
+    $stmt->execute();
+    $res=$stmt->get_result();
+    //if no products are found, shorten the search till you can find multiple options
+    while($res->num_rows===0 && count($words)>1){
+        array_pop($words);//get rid of last word
+        $search="%".implode("%",$words)."%";//update search
+        $stmt->close();
+        $stmt=$db->prepare("SELECT * FROM products WHERE title LIKE ? AND retailer_id!=?");
+        if(!stmt){
+            sendResponse(false,null,"Statememnt prep failed in comparison: ".$db->error,500);
+            return;
+        }
+        $stmt->bind_param("si",$search,$user_id);
+        $stmt->execute();
+        $res=$stmt->get_result();
+    }
+    if($res->num_rows>0){
+        $prods=[];
+        while($row=$res->fetch_assoc()){
+            $prods[]=$row;
+        }
+        $stmt->close();
+        sendResponse(true,$prods,"Products fetched successfully :)",200);
+    }else{
+        $stmt->close();
+        sendResponse(false,null,"No comparable products found :(",404);
+    }    
 }
 ?>

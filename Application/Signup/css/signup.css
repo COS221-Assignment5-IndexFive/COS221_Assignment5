@@ -4,6 +4,11 @@ body
     font-family: 'Segoe UI', Arial, Helvetica, sans-serif;
     min-height: 100vh;
     margin: 0;
+}
+
+.signup-main 
+{
+    min-height: calc(100vh - 80px);
     display: flex;
     justify-content: center;
     align-items: center;
