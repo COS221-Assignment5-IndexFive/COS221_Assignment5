@@ -1,0 +1,393 @@
+body
+{
+    background: linear-gradient(135deg, #e0e7ff 0%, #f5f6fa 100%);
+    font-family: 'Segoe UI', Arial, Helvetica, sans-serif;
+    min-height: 100vh;
+    margin: 0;
+    color: #22223b;
+}
+
+.page-container
+{
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 32px;
+}
+
+.main-flex
+{
+    display: flex;
+    gap: 32px;
+    margin-bottom: 32px;
+    align-items: stretch;
+}
+
+.product-main
+{
+    flex: 3;
+    min-width: 0;
+    background: #fff;
+    border-radius: 18px;
+    box-shadow: 0 8px 32px rgba(99,102,241,0.10);
+    padding: 40px 40px 32px 40px;
+    display: flex;
+    gap: 40px;
+    align-items: flex-start;
+}
+
+.product-image-area
+{
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 280px;
+    min-height: 320px;
+    background: #fff;
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+.product-image-area img
+{
+    width: 100%;
+    height: auto;
+    max-height: 340px;
+    object-fit: contain;
+}
+
+.product-info-area
+{
+    flex: 2;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+}
+
+.product-info-area h1
+{
+    font-size: 35px;
+    margin: 0 0 8px 0;
+    font-weight: 700;
+}
+
+.product-retailer
+{
+    font-size: 16px;
+    color: #888;
+    margin-bottom: 8px;
+}
+
+.product-rating
+{
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 17.6px;
+}
+
+.stars
+{
+    color: #fbbf24;
+    font-size: 20.8px;
+}
+
+.product-price
+{
+    font-size: 32px;
+    color: #6366f1;
+    font-weight: 700;
+    margin-top: 12px;
+}
+
+.product-actions
+{
+    margin-top: 18px;
+    display: flex;
+    gap: 16px;
+}
+
+.add-watchlist-btn
+{
+    background: linear-gradient(90deg, #6366f1 0%, #60a5fa 100%);
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 600;
+    padding: 10px 24px;
+    cursor: pointer;
+    box-shadow: 0 2px 8px rgba(99,102,241,0.08);
+    transition: background 0.2s, box-shadow 0.2s;
+}
+
+.add-watchlist-btn:hover
+{
+    background: linear-gradient(90deg, #4f46e5 0%, #2563eb 100%);
+    box-shadow: 0 4px 16px rgba(99,102,241,0.15);
+}
+
+.similar-panel
+{
+    flex: 1.2;
+    background: #fff;
+    border-radius: 18px;
+    box-shadow: 0 8px 32px rgba(99,102,241,0.10);
+    padding: 28px 24px;
+    min-width: 260px;
+    max-width: 340px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.similar-panel h2
+{
+    margin: 0 0 18px 0;
+    font-size: 19.2px;
+    text-align: center;
+    font-weight: 700;
+}
+
+.similar-list
+{
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.similar-item
+{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #f8fafc;
+    border-radius: 12px;
+    padding: 10px 14px;
+    box-shadow: 0 2px 8px rgba(99,102,241,0.06);
+    transition: box-shadow 0.2s, transform 0.2s;
+    cursor: pointer;
+}
+
+.similar-item:hover
+{
+    box-shadow: 0 6px 24px rgba(99,102,241,0.13);
+    transform: translateY(-2px) scale(1.02);
+}
+
+.sim-info
+{
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.sim-title
+{
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.sim-retailer
+{
+    font-size: 14.72px;
+    color: #888;
+}
+
+.sim-price
+{
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    font-weight: 600;
+}
+
+.reviews-panel
+{
+    background: none;
+    box-shadow: none;
+    border-radius: 0;
+    padding: 0;
+    margin-bottom: 32px;
+    width: 100%;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+}
+
+.review-list
+{
+    margin: 0;
+    padding: 0;
+    border: none;
+}
+
+.review-list-container,
+.review-form-container
+{
+    background: #fff;
+    border-radius: 18px;
+    box-shadow: 0 8px 32px rgba(99,102,241,0.10);
+    padding: 32px;
+    margin-bottom: 28px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.review-list-container
+{
+    margin-bottom: 32px;
+    overflow: visible;
+}
+
+.review-item + .review-item
+{
+    margin-top: 18px;
+}
+
+.review-item .meta
+{
+    display: flex;
+    gap: 12px;
+    font-size: 15.2px;
+    color: #888;
+    margin-bottom: 6px;
+}
+
+.review-item .text
+{
+    font-size: 17.28px;
+    line-height: 1.5;
+}
+
+.form-group
+{
+    margin-bottom: 14px;
+}
+
+.form-group textarea
+{
+    resize: none;
+}
+
+.form-group label
+{
+    display: block;
+    margin-bottom: 6px;
+    font-weight: 600;
+    font-size: 16px;
+}
+
+.form-group input,
+.form-group textarea
+{
+    width: 100%;
+    padding: 8px;
+    border: 1.5px solid #bfc9d9;
+    border-radius: 8px;
+    font-family: inherit;
+    font-size: 16px;
+    background: #fff;
+    transition: border-color 0.2s;
+}
+
+.form-group input:focus,
+.form-group textarea:focus
+{
+    border-color: #6366f1;
+    outline: none;
+}
+
+.rating-input
+{
+    margin-bottom: 12px;
+}
+
+.star-rating
+{
+    display: inline-flex;
+    flex-direction: row-reverse;
+    gap: 4px;
+}
+
+.star-rating input
+{
+    display: none;
+}
+
+.star-rating label
+{
+    color: #e5e7eb;
+    font-size: 24px;
+    cursor: pointer;
+    transition: color 0.2s;
+}
+
+.star-rating label:hover,
+.star-rating label:hover ~ label,
+.star-rating input:checked ~ label
+{
+    color: #fbbf24;
+}
+
+.submit-review
+{
+    background: linear-gradient(90deg, #6366f1 0%, #60a5fa 100%);
+    color: white;
+    border: none;
+    padding: 10px 24px;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s, box-shadow 0.2s;
+    margin-top: 8px;
+    box-shadow: 0 2px 8px rgba(99,102,241,0.08);
+}
+
+.submit-review:hover
+{
+    background: linear-gradient(90deg, #4f46e5 0%, #2563eb 100%);
+    box-shadow: 0 4px 16px rgba(99,102,241,0.15);
+}
+
+.discount-price
+{
+    color: #ef4444;
+    font-weight: 700;
+}
+
+.original-price
+{
+    text-decoration: line-through;
+    color: #888;
+    font-size: 18px;
+}
+
+.spinner-section
+{
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(255,255,255,0.6);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+    transition: opacity 0.2s;
+}
+
+.spinner-section.hidden
+{
+    display: none;
+}
+
+.spinner-section.visible
+{
+    display: flex;
+}

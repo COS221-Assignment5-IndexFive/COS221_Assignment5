@@ -124,6 +124,14 @@ class API {
 			removeFromWatchlist($this->conn, $input);
 			break;
 
+		case "getReviews":
+			getReviews($this->conn, $input);
+			break;
+			
+    	case "addReview":
+			addReview($this->conn, $input);
+			break;
+
 		default:
         	sendResponse($success=false, $data = null, $message = 'Invalid action', $statusCode = 400) ;
 			break;
