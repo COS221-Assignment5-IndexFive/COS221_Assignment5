@@ -1,5 +1,11 @@
 import { ApiUtils } from "../../Utils/ApiUtils.js";
 
+// Logout
+document.getElementById("logout").addEventListener("click", (event) => {
+    sessionStorage.clear();
+    window.location.href = "../php/logout.php";
+});
+
 function isNumericString(value) {
   return !isNaN(value) && value.trim() !== "";
 }
