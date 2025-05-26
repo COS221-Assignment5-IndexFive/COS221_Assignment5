@@ -119,7 +119,7 @@ function getCategories($db,$input){
     }
 }
 
-function getComparisonsByTitle($db,$input){
+function getComparisonByTitle($db,$input){
     $user_id=$_SESSION['user_id']??'';
     if(!$user_id){
         sendResponse(false,null,"Unorthorised user :(",401);
@@ -130,14 +130,20 @@ function getComparisonsByTitle($db,$input){
         sendResponse(false, null,"Product title not foud to perform comparison :(",400);
         return;
     }
+    $retailer_id = $input['retailer_id'] ?? '';
+    if (empty($retailer_id)) {
+        sendResponse(false, null,"Retailer ID required :(",400);
+        return;
+    }
+
     $words=explode(" ",$title);
     $search="%".implode("%",$words)."%";
     $stmt=$db->prepare("SELECT * FROM products WHERE title LIKE ? AND retailer_id!=?");
-    if(!stmt){
+    if(!$stmt){
         sendResponse(false,null,"Statememnt prep failed in comparison: ".$db->error,500);
         return;
     }
-    $stmt->bind_param("si",$search,$user_id);
+    $stmt->bind_param("si",$search,$retailer_id);
     $stmt->execute();
     $res=$stmt->get_result();
     //if no products are found, shorten the search till you can find multiple options
@@ -146,11 +152,11 @@ function getComparisonsByTitle($db,$input){
         $search="%".implode("%",$words)."%";//update search
         $stmt->close();
         $stmt=$db->prepare("SELECT * FROM products WHERE title LIKE ? AND retailer_id!=?");
-        if(!stmt){
+        if(!$stmt){
             sendResponse(false,null,"Statememnt prep failed in comparison: ".$db->error,500);
             return;
         }
-        $stmt->bind_param("si",$search,$user_id);
+        $stmt->bind_param("si",$search,$retailer_id);
         $stmt->execute();
         $res=$stmt->get_result();
     }
