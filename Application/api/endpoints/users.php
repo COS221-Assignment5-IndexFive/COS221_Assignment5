@@ -55,18 +55,18 @@ function removeUser($connection, $data) {
 function getAllUsers($connection) {
     authUsers($connection);
 
-    $stmt = $connection->prepare("SELECT user_id, first_name, last_name, email_address, cell_number FROM users");
+    $stmt = $connection->prepare("SELECT user_id, first_name, last_name, email_address, cell_number FROM users WHERE user_id NOT IN (SELECT retailer_id FROM retailers)");
     if (!$stmt) {
         sendResponse(false, null, 'Failed to prepare statement: ' . $connection->error, 500);
     }
 
     $stmt->execute();
     $result = $stmt->get_result();
-
     $users = [];
     while ($row = $result->fetch_assoc()) {
         $users[] = $row;
     }
+    $stmt->close();
 
     sendResponse(true, $users, 'Users fetched successfully.', 200);
 }

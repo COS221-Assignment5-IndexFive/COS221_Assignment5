@@ -5,9 +5,9 @@ if (session_status() === PHP_SESSION_NONE) {
 
 // adding a retailer into the retailers table - only an administrator is allowed
 function addRetailer($connection, $data) {
-    if (!isset($_SESSION['user_id']) || !isAdmin($connection, $_SESSION['user_id'])) {
-        sendResponse(false, null, 'Unauthorized: Admin access required.', 403);
-    }
+    // if (!isset($_SESSION['user_id']) || !isAdmin($connection, $_SESSION['user_id'])) {
+    //     sendResponse(false, null, 'Unauthorized: Admin access required.', 403);
+    // }
 
     if (empty($data['retailer_name'])) {
         sendResponse(false, null, 'Retailer name is required.', 400);
@@ -25,25 +25,24 @@ function addRetailer($connection, $data) {
     $first_name = $data['first_name'];
     $last_name = $data['last_name'] ?? null;
     $cell = $data['cell_number'] ?? null;
-    $apikey = bin2hex(random_bytes(16));
 
-    $stmt = $connection->prepare("INSERT INTO users (password_hash, first_name, last_name, cell_number, email_address, apikey) VALUES (?, ?, ?, ?, ?, ?)");
-    $stmt->bind_param("ssssss", $password, $first_name, $last_name, $cell, $email, $apikey);
+    $stmt = $connection->prepare("INSERT INTO users (password_hash, first_name, last_name, cell_number, email_address) VALUES (?, ?, ?, ?, ?)");
+    $stmt->bind_param("sssss", $password, $first_name, $last_name, $cell, $email);
 
     if (!$stmt->execute()) {
         sendResponse(false, null, 'Failed to add user: ' . $stmt->error, 500);
     } 
-    
+    $id = $connection->insert_id;
     $stmt->close();
 
     $retailer_name = $data['retailer_name'];
     $num_products = $data['num_products'] ?? -1;
 
-    $stmt = $connection->prepare("INSERT INTO retailers (retailer_name, num_products) VALUES (?, ?)");
+    $stmt = $connection->prepare("INSERT INTO retailers (retailer_id, retailer_name, num_products) VALUES (?, ?, ?)");
     if (!$stmt) {
         sendResponse(false, null, 'Failed to prepare statement: ' . $connection->error, 500);
     }
-    $stmt->bind_param("si", $retailer_name, $num_products);
+    $stmt->bind_param("isi",$id, $retailer_name, $num_products);
 
     if ($stmt->execute()) {
         sendResponse(true, ['retailer_id' => $stmt->insert_id], 'Retailer added successfully.', 200);
