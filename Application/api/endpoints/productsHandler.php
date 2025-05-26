@@ -77,18 +77,5 @@ function updateProduct($db,$input){
     }
 }
 
-//stolen from @morgan
-function sendResponse($success, $data = null, $message = '', $statusCode = 200)
-{
-    http_response_code($statusCode);
-    header('Content-Type: application/json');
-    echo json_encode([
-        'success' => $success,
-        'statusCode' => $statusCode ,
-        'message' => $message,
-        'data' => $data
-    ]);
-    exit;
-}
 
 ?>

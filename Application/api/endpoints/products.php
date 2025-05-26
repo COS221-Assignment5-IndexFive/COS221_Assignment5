@@ -48,7 +48,7 @@ function getProducts($db,$input){
 }
 
 function getProductByID($db,$input){
-    if(empty($input['prodict_id'])){//if there is no product id you cannot get the product
+    if(empty($input['product_id'])){//if there is no product id you cannot get the product
         sendResponse(false,null,"Product id is invalid",400);
     }
     
@@ -65,33 +65,55 @@ function getProductByID($db,$input){
 }
 
 function getCategories($db,$input){
-    
-    $query = $db->query("SELECT DISTINCT category FROM products ORDER BY category ASC");
-    $result = $db->query($query);
-    if($result){
-        $categories=[];
-        while($row=$result->fetch_assoc()){
-            $categories[]=$row['category'];
+    try{
+        $query = $db->query("SELECT DISTINCT category FROM products ORDER BY category ASC");
+        if($query){
+            $categories=[];
+            while($row=$result->fetch_assoc()){
+                $categories[]=$row['category'];
+            }
+            sendResponse(true, $categories,"Categories fetched :)", 200);
         }
-        sendResponse(true, $categories,"Categories fetched :)", 200);
-    }else{
+    }catch(PDOException $e){
         sendResponse(false,null,"Error: ". $e->getMessage(),500);
     }
 }
 
-//stolen from @morgan
-function sendResponse($success, $data = null, $message = '', $statusCode = 200)
-{
-    http_response_code($statusCode);
-    header('Content-Type: application/json');
-    echo json_encode([
-        'success' => $success,
-        'statusCode' => $statusCode ,
-        'message' => $message,
-        'data' => $data
-    ]);
-    exit;
+function getComparisonsByCategory($db,$input){
+    try{
+        $user_id=$_SESSION['user_id']??'';
+        if(!$user_id){
+            sendResponse(false,null,"Unorthorised user :(",401);
+        }
+        $title=$input['title']??'';
+        if(empty($title)){
+            sendResponse(false, null,"Product title not foud to perform comparison :(",400);
+        }
+        $words=explode(" ",$title);
+        $search="%".implode("%",$words)."%";
+        $stmt=$db->prepare("SELECT * FROM products WHERE title LIKE ? AND retailer_id!=?");
+        $stmt->bind_param("si",$search,$user_id);
+        $stmt->execute();
+        $res=$stmt->get_result();
+        //if no products are found, shorten the search till you can find multiple options
+        while($res->num_rows===0 && count($words)>1){
+            array_pop($words);//get rid of last word
+            $search="%".implode("%",$words)."%";//update search
+            $stmt->bind_param("si",$search,$user_id);
+            $stmt->execute();
+            $res=$stmt->get_result();
+        }
+        if($res->num_rows>0){
+            $prods=[];
+            while($row=$res->fetch_assoc()){
+                $prods[]=$row;
+            }
+            sendResponse(true,$prods,"Products fetched successfully :)",200);
+        }else{
+            sendResponse(false,null,"No comparable products found :(",404);
+        }
+    }catch(PDOException $e){
+        sendResponse(false,null,"Error fetching products for comparison: ".$e.getMessage(),500);
+    }
 }
-
-
 ?>
