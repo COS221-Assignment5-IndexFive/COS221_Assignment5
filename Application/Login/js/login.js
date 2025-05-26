@@ -1,3 +1,21 @@
+function showLoadingScreen() 
+{
+    /*
+        Shows the loading spinner overlay.
+    */
+    document.getElementById("spinner").classList.remove("hidden");
+    document.getElementById("spinner").classList.add("visible");
+}
+
+function hideLoadingScreen() 
+{
+    /*
+        Hides the loading spinner overlay.
+    */
+    document.getElementById("spinner").classList.remove("visible");
+    document.getElementById("spinner").classList.add("hidden");
+}
+
 function validateEmail()
 {
     /*
@@ -55,7 +73,7 @@ function validatePassword()
     return valid;
 }
 
-function determineView(type)
+function determineView(type, retailerID)
 {
     /*
         Determines the location the user is sent to after registration (Customer/ Retailer view).
@@ -67,23 +85,12 @@ function determineView(type)
     }
     else if(type == "retailer")
     {
-        window.location.href = "../../RetailerView/php/retailer.php";
+        window.location.href = "../../RetailerView/php/index.php?retlr=" + retailerID;
     }
     else if(type == "admin")
     {
         window.location.href = "../../AdministratorView/php/index.php";
     }
-}
-
-function setCookie(cname, cvalue, ex) 
-{
-    /*
-        Sets a cookie with the given name, value, and expiration in days.
-    */
-    const d = new Date();
-    d.setTime(d.getTime() + (ex*24*60*60*1000));
-    let expires = "expires="+ d.toUTCString();
-    document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
 }
 
 window.onload = function()
@@ -148,7 +155,9 @@ window.onload = function()
             email: emailField.value,
             password: passwordField.value,
         };
-    
+        
+        showLoadingScreen();
+
         var xhr = new XMLHttpRequest();
         xhr.open("POST", "../../api/api.php", true);
         xhr.setRequestHeader("Content-Type", "application/json");
@@ -157,16 +166,22 @@ window.onload = function()
         {
             if (xhr.readyState == 4) 
             {
+                hideLoadingScreen();
+                
                 try 
                 {
                     var response = JSON.parse(xhr.responseText);
     
                     if (response.success == true) 
                     {
-                        setCookie("apikey", response.data.apikey, 7);
-                        determineView(response.data.user_type);
+                        console.log(response.data);
+                        if (response.data.user_type == "retailer") {
+                            determineView(response.data.user_type, response.data.retailer_id);
+                        } else {
+                            determineView(response.data.user_type);
+                        }
                     }
-                 else
+                    else
                     {
                         var errorDiv = document.getElementById("loginError");
                         errorDiv.textContent = response.message || "Incorrect email or password.";
@@ -179,7 +194,7 @@ window.onload = function()
                 }
             }
         };
-         
+
         xhr.send(JSON.stringify(data));
     });
 }

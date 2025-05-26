@@ -9,6 +9,7 @@ require_once 'endpoints/retailers.php';
 require_once 'endpoints/users.php';
 require_once 'endpoints/products.php';
 require_once 'endpoints/productsHandler.php';
+require_once 'endpoints/watchList.php';
 
 class API {
 
@@ -120,39 +121,6 @@ class API {
 			break;
 		}
 	}
-
-  // @g3rard-j used for testing
-	// private function getUsers($data) {
-	// 	$query = "SELECT * FROM users";
-	// 	$stmt = $this->conn->prepare($query);
-
-	// 	$stmt->execute();
-	// 	$results = $stmt->get_result();
-	// 	$users = [];
-	// 	while ($row = $results->fetch_assoc()) {
-	// 		$users[] = $row;
-	// 	}
-
-	// 	echo json_encode([
-	// 		"data" => $users
-	// 	]);
-	// }
-
-	// private function getProducts($data) {
-	// 	$query = "SELECT * FROM products";
-	// 	$stmt = $this->conn->prepare($query);
-
-	// 	$stmt->execute();
-	// 	$results = $stmt->get_result();
-	// 	$products = [];
-	// 	while ($row = $results->fetch_assoc()) {
-	// 		$products[] = $row;
-	// 	}
-
-	// 	echo json_encode([
-	// 		"data" => $products
-	// 	]);
-	
 }
 
 API::instance()->handleRequest();

@@ -8,6 +8,7 @@
     </head>
     
     <body>
+        <?php include "spinner.php";?>
         <form id="signupForm">
             <div class="input-container">
                 <h1>Sign Up</h1>
@@ -16,6 +17,7 @@
                 <input id="phone" type="text" name="phone" placeholder="Phone number" required>
                 <input id="email" type="email" name="email" placeholder="Email" required>
                 <input id="password" type="password" name="password" placeholder="Password" required>
+                <div id="signupError" class="signup-error"></div>
                 <button id="submit" type="submit">Sign Up</button>
             </div>
         </form>

@@ -10,8 +10,7 @@
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
 
   <!-- Styles -->
-  <link rel="stylesheet" href="../css/retailer.css" />
-  <link rel="stylesheet" href="../css/retailer_dashboard.css" />
+  <link rel="stylesheet" href="../../AdministratorView/css/main.css" />
 </head>
 <body>
   <?php include '../../Utils/spinner.php' ?>
@@ -30,28 +29,27 @@
 
       <div class="count-display">Total Products: <span id="product-count">0</span></div>
 
-      <table class="data-table">
+      <table class="data-table" id="dt-products">
         <colgroup>
           <col style="width: 10%;">
-          <col style="width: 50%;">
-          <col style="width: 20%;">
-          <col style="width: 20%;">
+          <col style="width: 45%;">
+          <col style="width: 45%;">
         </colgroup>
         <thead>
-          <tr><th>ID</th><th>Title</th><th>Price</th><th>Actions</th></tr>
+          <tr><th>ID</th><th>Title</th><th>Price</th></tr>
         </thead>
         <tbody>
-          <tr class="clickable-row-product" data-href="#">
-            <td>301</td>
-            <td>Ergonomic Chair</td>
-            <td>$149.99</td>
-            <td>
-              <button class="btn btn-sm btn-danger"><span class="material-icons">delete</span></button>
-            </td>
-          </tr>
           <!-- more rows -->
         </tbody>
       </table>
+      <ul class="pagination">
+        <li class="prev-next">
+          <button type="button" data-page="1">&laquo; Prev</button>
+        </li>
+        <li class="prev-next">
+          <button type="button" data-page="3">Next &raquo;</button>
+        </li>
+      </ul>
     </section>
   </main>
     <script type="module" src="../js/index.js"></script>

@@ -1,5 +1,18 @@
 import { Validator } from "../../Utils/Validator.js";
 import { AlertUtilities } from "../../Utils/AlertUtilites.js";
+import { ApiUtils } from "../../Utils/ApiUtils.js";
+
+// Generic error display helpers
+function displayError(formGroupId) {
+    document.getElementById(formGroupId).classList.add("has-error");
+}
+
+function hideError(formGroupId) {
+    var formGroup = document.getElementById(formGroupId);
+    if (formGroup.classList.contains("has-error")) {
+        formGroup.classList.remove("has-error");
+    }
+}
 
 // Reset form
 function clearForm() {
@@ -14,7 +27,7 @@ function clearForm() {
 }
 
 // Form validation + action
-document.getElementById("add-user-form").addEventListener("submit", function(event) {
+document.getElementById("add-user-form").addEventListener("submit", function (event) {
     event.preventDefault();
     const auv = new Validator();
     var firstName = document.getElementById("first-name").value;
@@ -41,52 +54,58 @@ document.getElementById("add-user-form").addEventListener("submit", function(eve
         auv.validationHandler("fg-retailer", auv.validateRetailer(retailer.value) && retailer.value !== "");
     }
 
+    var retailerName = retailer.value;
+
     if (!auv.valid) {
         return;
     }
 
     // Validation successful, call API endpoint
-    
-    console.log(type);
+    const utils = new ApiUtils();
+
+    var successMessage = new AlertUtilities(document.getElementById("add-success"), email);
+    var errorMessage = new AlertUtilities(document.getElementById("add-error"), email);
+
+    var request = {
+        "type": "Signup",
+        "name": firstName,
+        "surname": lastName,
+        "email": email,
+        "password": password,
+        "cell_number": phoneNum
+    };
+
     if (type === "user") {
-
-        console.log("Simulated add user endpoint");
-    } else if (type === "retailer") {
-        var request = new XMLHttpRequest();
-
-        request.onreadystatechange = function() {
-            if (this.readyState == 4 && this.status == 200) {
-                var successMessage = new AlertUtilities(document.getElementById("add-success"), email);
+        console.log(retailer);
+        utils.getRequest(request)
+            .then((data) => {
                 successMessage.showAndDismissAlert();
-            } else if (this.readyState == 4) {
-                var errorMessage = new AlertUtilities(document.getElementById("add-error"), email);
+            })
+            .catch((error) => {
                 errorMessage.showAndDismissAlert();
-            }
-        }
-
-        request.open("POST", "http://localhost/COS221_Assignment5/api/api.php", true);
-        request.send(JSON.stringify({
-            "type": "addRetailer",
-            "name": retailer
-        }));
-        // console.log("Simulated add retailer endpoint");
+            })
+            .finally(() => {
+                clearForm();
+            })
+    } else if (type === "retailer") {
+        var request = {
+        "type": "addRetailer",
+        "first_name": firstName,
+        "last_name": lastName,
+        "email_address": email,
+        "password": password,
+        "cell_number": phoneNum,
+        "retailer_name": retailerName
+    };
+        utils.getRequest(request)
+            .then((data) => {
+                successMessage.showAndDismissAlert();
+            })
+            .catch((error) => {
+                errorMessage.showAndDismissAlert();
+            })
+            .finally(() => {
+                clearForm();
+            })
     }
-
-
-    // var successAlert = new AlertUtilities(document.getElementById("add-success"), "Added user " + firstName + " " + lastName);
-    // successAlert.showAndDismissAlert();
-    // clearForm();
-
 });
-
-// Generic error display helpers
-function displayError(formGroupId) {
-    document.getElementById(formGroupId).classList.add("has-error");
-}
-
-function hideError(formGroupId) {
-    var formGroup = document.getElementById(formGroupId);
-    if (formGroup.classList.contains("has-error")) {
-        formGroup.classList.remove("has-error");
-    }
-}

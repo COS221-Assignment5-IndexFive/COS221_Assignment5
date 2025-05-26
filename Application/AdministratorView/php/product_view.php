@@ -44,6 +44,14 @@
           <!-- Repeat rows dynamically -->
         </tbody>
       </table>
+      <ul class="pagination">
+        <li class="prev-next">
+          <button type="button" data-page="1">&laquo; Prev</button>
+        </li>
+        <li class="prev-next">
+          <button type="button" data-page="3">Next &raquo;</button>
+        </li>
+      </ul>
     </section>
   </main>
   <script type="module" src="../js/populate_tables.js"></script>

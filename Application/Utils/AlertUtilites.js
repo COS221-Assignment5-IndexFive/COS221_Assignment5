@@ -20,14 +20,15 @@ export class AlertUtilities {
                 this.message = "Failed to delete " + itemName;
                 break;
             case "update-success":
-                this.message = "Updated " + itemName;
+                this.message = "Successfully Updated " + itemName;
                 break;
             case "update-error":
                 this.message = "Failed to update " + itemName;
                 break;
         }
+        alertEl.innerHTML = "";
         var messageSpan = document.createElement("span");
-        messageSpan.innerText = this.message;
+        messageSpan.innerHTML = this.message;
         this.alertEl.appendChild(messageSpan);
     }
 

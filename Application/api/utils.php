@@ -38,3 +38,11 @@ function sendResponse($success, $data = null, $message = '', $statusCode = 200)
     ]);
     exit;
 }
+
+function validateEmail($email) {
+    return preg_match("/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i", $email);
+}
+
+function validatePhone($phoneNum) {
+    return preg_match("/^\+?\d{11}$|^\d{10}$/", $phoneNum);
+}

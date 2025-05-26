@@ -31,6 +31,13 @@
                             <option value="price-desc">Price: High to Low</option>
                             <option value="rating">Rating</option>
                         </select>
+                        <div class="price-range-row">
+                            <label for="minPrice">Min Price</label>
+                            <input type="number" id="minPrice" class="price-input" placeholder="Min" min="0" step="10">
+
+                            <label for="maxPrice">Max Price</label>
+                            <input type="number" id="maxPrice" class="price-input" placeholder="Max" min="0" step="10">
+                        </div>
                         <label>
                             <input class="filter-checkbox" type="checkbox" name="onSale" id="onSale"> On Sale
                         </label>

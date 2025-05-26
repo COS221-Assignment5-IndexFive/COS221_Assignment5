@@ -351,3 +351,42 @@ button[type="submit"]:hover
 {
     display: flex;
 }
+
+.price-range-row 
+{
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    margin-bottom: 0;
+    margin-top: 0;
+}
+
+.price-range-row label 
+{
+    font-size: 15px;
+    color: #3a3a3a;
+    margin-right: 0;
+    margin-bottom: 0;
+    font-weight: 500;
+}
+
+.price-input 
+{
+    width: 85px;
+    box-sizing: border-box;
+    padding: 10px 12px;
+    border: 1.5px solid #bfc9d9;
+    border-radius: 8px;
+    font-size: 16px;
+    background: #f8fafc;
+    transition: border-color 0.2s;
+    margin-bottom: 0;
+    display: block;
+    margin-left: 0;
+}
+
+.price-input:focus 
+{
+    border-color: #6366f1;
+    outline: none;
+}
