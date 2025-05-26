@@ -199,7 +199,6 @@ function populateProducts() {
   // Send API request to fetch products
   return new Promise((resolve, reject) => {
     if (products == null) {
-      console.log("here");
       utils.getRequest({ "type": "GetProducts" })
         .then((retProd) => {
           products = retProd;
