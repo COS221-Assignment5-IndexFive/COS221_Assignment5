@@ -116,6 +116,14 @@ class API {
 			addToWatchlist($this->conn, $input);
 			break;
 
+		case 'GetWatchlist': 
+			getWatchlist($this->conn, $input);
+			break;
+
+		case 'DeleteWatchlist': 
+			removeFromWatchlist($this->conn, $input);
+			break;
+
 		default:
         	sendResponse($success=false, $data = null, $message = 'Invalid action', $statusCode = 400) ;
 			break;
