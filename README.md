@@ -9,20 +9,26 @@
 - [XAMPP](https://www.apachefriends.org/) installed on Windows
 
 #### Setting everything up:
-- Navigate to the `htdocs` XAMPP directory. It is usually stored at `C:\xampp\htdocs`
-- Clone the repository with `git clone https://github.com/COS221-Assignment5-IndexFive/COS221_Assignment5.git`
-- Move into repository folder with `cd COS221_Assignment5`
-- Create a `.env` file in the root folder of the project (where you should currently be) with the following structure:
+- Start a WSL session
+- Navigate to the `htdocs` XAMPP directory. It can usually be found at `/mnt/c/xampp/htdocs`
+- Clone the repository
+  ```
+  git clone https://github.com/COS221-Assignment5-IndexFive/COS221_Assignment5.git
+  cd COS221_Assignment5
+  ```
+- Create a `.env` file in the root folder of the project (on the same level as the `setup.sh` file) with the following structure:
 
 ```
-DB_HOST=<where your MariaDB server is hosted>
+DB_HOST=<your MariaDB host (i.e. localhost)>
 DB_NAME=index5_db
 DB_USER=<your MariaDB user>
-DB_PASS=<your MariaDB pass>
+DB_PASS=<your MariaDB password>
 ```
-
-- Make the setup script executable with `sudo chmod +x setup.sh`
-- Run the setup script with `./setup.sh`
+- Make the setup script executable and run it
+```
+  sudo chmod +x setup.sh`
+  ./setup.sh
+```
 - CompareIt should now be running at http://localhost/COS221_Assignment5/Application/Login/php/login.php
 
 ### Linux
