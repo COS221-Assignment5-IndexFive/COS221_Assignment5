@@ -78,6 +78,20 @@ body
     margin-bottom: 8px;
 }
 
+.product-retailer a {
+    all: unset;
+    cursor: pointer;
+}
+
+.product-retailer:hover
+{
+    cursor: pointer;
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 2px;
+    text-decoration-color: #ccc;
+}
+
 .product-rating
 {
     display: flex;
@@ -121,6 +135,27 @@ body
     transition: background 0.2s, box-shadow 0.2s;
 }
 
+.back-btn
+{
+    background: linear-gradient(90deg, #e5e7eb 0%, #d4d4d8 100%);
+    color: #444;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 600;
+    padding: 10px 24px;
+    cursor: pointer;
+    box-shadow: 0 2px 8px rgba(156,163,175,0.08);
+    transition: background 0.2s, box-shadow 0.2s;
+}
+
+.back-btn:hover
+{
+    background: linear-gradient(90deg, #d4d4d8 0%, #a1a1aa 100%);
+    box-shadow: 0 4px 16px rgba(156,163,175,0.15);
+}
+
+
 .add-watchlist-btn:hover
 {
     background: linear-gradient(90deg, #4f46e5 0%, #2563eb 100%);
@@ -139,6 +174,10 @@ body
     display: flex;
     flex-direction: column;
     gap: 12px;
+    max-height: 600px;
+    overflow-y: auto;
+    scrollbar-width: thin;
+    scrollbar-color: #d1d5db #f9fafb;
 }
 
 .similar-panel h2
@@ -189,6 +228,13 @@ body
 {
     font-size: 16px;
     font-weight: 600;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: normal;
+    max-height: 2.8em; /* fallback for 2 lines */
 }
 
 .sim-retailer
@@ -203,6 +249,14 @@ body
     align-items: center;
     gap: 4px;
     font-weight: 600;
+}
+
+.arrow.cheaper {
+  color: #10b981;
+}
+
+.arrow.expensive {
+  color: #ef4444;
 }
 
 .reviews-panel

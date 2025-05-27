@@ -12,7 +12,7 @@ $user_id = isset($_SESSION['user_id']) ? $_SESSION['user_id'] : null;
     <script>
         const USER_ID = <?php echo json_encode($user_id); ?>;
     </script>
-    <script type="text/javascript" src="../js/product.js"></script>
+    <script type="module" src="../js/product.js"></script>
 </head>
 <body>
     <?php include "spinner.php";?>
@@ -24,7 +24,18 @@ $user_id = isset($_SESSION['user_id']) ? $_SESSION['user_id'] : null;
             </div>
             <aside class="similar-panel">
                 <h2>Other Retailers</h2>
-                <ul class="similar-list"></ul>
+                <ul class="similar-list">
+                    <!-- <li class="similar-item">
+                        <div class="sim-info">
+                            <div class="sim-title">Similar 1</div>
+                            <div class="sim-retailer">Retailer A</div>
+                        </div>
+                        <div class="sim-price">
+                            <span class="arrow cheaper">▼</span>
+                            <span>$179.00</span>
+                        </div>
+                    </li> -->
+                </ul>
             </aside>
         </div>
         <section class="reviews-panel">
