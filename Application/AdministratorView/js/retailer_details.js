@@ -102,12 +102,6 @@ document.getElementById("change-retailer-form").addEventListener("submit", funct
     })
 });
 
-// Count section
-function countProducts() {
-  document.getElementById("product-count").innerHTML = document.querySelectorAll(".data-table tr").length - 1;
-}
-
-countProducts();
 
 // Delete section
 var deleteSuccessMessage = new AlertUtilities(document.getElementById("delete-success"), "Deleted Retailer " + retailer.retailer_id);

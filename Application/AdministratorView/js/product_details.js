@@ -54,7 +54,9 @@ async function getRetailers() {
       .then((data) => {
         var retailersObj = data;
         for (let i = 0; i < retailersObj.length; i++) {
-          retailers.push(retailersObj[i].retailer_name);
+          if (retailersObj[i] != undefined) {
+            retailers.push(retailersObj[i].retailer_name);
+          }
         }
         sessionStorage.setItem("retailers", JSON.stringify(retailers));
       })
@@ -113,7 +115,8 @@ async function loadProduct() {
   document.getElementById("image-url").value = product.image_url;
   document.getElementById("product-img").src = product.image_url;
 
-  var retailers = sessionStorage.getItem("retailers");
+  var retailers = JSON.parse(sessionStorage.getItem("retailers"));
+  console.log(product.retailer);
   var retailerSelect = document.getElementById("retailer-select");
   if (!retailers.includes(product.retailer)) {
     var option = document.createElement("option");
@@ -125,7 +128,8 @@ async function loadProduct() {
 }
 
 toggleLoadingScreen();
-await Promise.all([getCategories(), loadProduct(), getRetailers()]);
+await getRetailers();
+await Promise.all([getCategories(), loadProduct()]);
 toggleLoadingScreen();
 
 document.getElementById("category-select").value = product.category;
@@ -190,8 +194,8 @@ document.getElementById("change-product-form").addEventListener("submit", functi
   var category = selectEl.value;
   pdv.validationHandler("fg-category", pdv.validateCategory(category));
 
-  var retailer = document.getElementById("retailer-select").value;
-  pdv.validationHandler("fg-retailer", retailer !== "");
+  var retailerName = document.getElementById("retailer-select").value;
+  pdv.validationHandler("fg-retailer", retailerName !== "");
 
   if (!pdv.valid) {
     return;
@@ -199,6 +203,7 @@ document.getElementById("change-product-form").addEventListener("submit", functi
 
   var newProductRequest = {
     "type": "updateProduct",
+    "product_id": product.product_id,
     "title": title,
     "price": price,
     "discount_price": discountedPrice,
@@ -207,7 +212,7 @@ document.getElementById("change-product-form").addEventListener("submit", functi
     "nr_reviews": numReviews,
     "rating": averageRating,
     "category": category,
-    "retailer": retailer
+    "retailer": retailerName
   };
 
   var successUpdate = new AlertUtilities(document.getElementById("update-success"), "Product " + product.product_id);

@@ -78,30 +78,12 @@
           <button type="button" class="btn btn-danger" id="delete-btn"><span class="material-icons">delete</span> Delete Retailer</button>
         </div>
       </form>
-
-      <div class="count-display">Total Products: <span id="product-count">0</span></div>
       <table class="data-table">
         <colgroup>
           <col style="width: 10%;">
           <col style="width: 60%;">
           <col style="width: 30%;">
         </colgroup>
-        <thead>
-          <tr><th>ID</th><th>Title</th><th>Price</th></tr>
-        </thead>
-        <tbody>
-          <tr class="clickable-row-product" data-href="#">
-            <td>301</td>
-            <td>Ergonomic Chair</td>
-            <td>$149.99</td>
-          </tr>
-          <tr class="clickable-row-product" data-href="#">
-            <td>302</td>
-            <td>Desk Lamp</td>
-            <td>$39.99</td>
-          </tr>
-          <!-- Repeat rows dynamically -->
-        </tbody>
       </table>
     </section>
   </main>

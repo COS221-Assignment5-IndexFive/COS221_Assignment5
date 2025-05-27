@@ -234,7 +234,6 @@ body.loading {
   gap: 0.5rem;
   margin-top: 2rem;
 }
-.pagination li {}
 
 .pagination li button,
 .pagination li span {

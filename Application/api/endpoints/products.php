@@ -105,16 +105,116 @@ function getProductByID($db,$input){
 }
 
 function getCategories($db,$input){
-    
-    $result = $db->query("SELECT DISTINCT category FROM products ORDER BY category ASC");
-    if($result){
-        $categories=[];
-        while($row=$result->fetch_assoc()){
-            $categories[]=$row['category'];
+    try{
+        $query = $db->query("SELECT DISTINCT category FROM products ORDER BY category ASC");
+        if($query){
+            $categories=[];
+            while($row=$query->fetch_assoc()){
+                $categories[]=$row['category'];
+            }
+            sendResponse(true, $categories,"Categories fetched :)", 200);
         }
-        sendResponse(true, $categories,"Categories fetched :)", 200);
-    }else{
+    }catch(PDOException $e){
         sendResponse(false,null,"Error: ". $e->getMessage(),500);
+    }
+}
+
+function getComparisonByTitle($db,$input){
+    $user_id=$_SESSION['user_id']??'';
+    if(!$user_id){
+        sendResponse(false,null,"Unorthorised user :(",401);
+        return;
+    }
+    $title=$input['title']??'';
+    if(empty($title)){
+        sendResponse(false, null,"Product title not foud to perform comparison :(",400);
+        return;
+    }
+    $retailer_id = $input['retailer_id'] ?? '';
+    if (empty($retailer_id)) {
+        sendResponse(false, null,"Retailer ID required :(",400);
+        return;
+    }
+
+    $words=explode(" ",$title);
+    $search="%".implode("%",$words)."%";
+    $stmt=$db->prepare("SELECT * FROM products WHERE title LIKE ? AND retailer_id!=?");
+    if(!$stmt){
+        sendResponse(false,null,"Statememnt prep failed in comparison: ".$db->error,500);
+        return;
+    }
+    $stmt->bind_param("si",$search,$retailer_id);
+    $stmt->execute();
+    $res=$stmt->get_result();
+    //if no products are found, shorten the search till you can find multiple options
+    while($res->num_rows===0 && count($words)>1){
+        array_pop($words);//get rid of last word
+        $search="%".implode("%",$words)."%";//update search
+        $stmt->close();
+        $stmt=$db->prepare("SELECT * FROM products WHERE title LIKE ? AND retailer_id!=?");
+        if(!$stmt){
+            sendResponse(false,null,"Statememnt prep failed in comparison: ".$db->error,500);
+            return;
+        }
+        $stmt->bind_param("si",$search,$retailer_id);
+        $stmt->execute();
+        $res=$stmt->get_result();
+    }
+    if($res->num_rows>0){
+        $prods=[];
+        while($row=$res->fetch_assoc()){
+            $prods[]=$row;
+        }
+        $stmt->close();
+        sendResponse(true,$prods,"Products fetched successfully :)",200);
+    }else{
+        $stmt->close();
+        sendResponse(true,null,"No comparable products found :(",200);
+    }    
+}
+
+function getReviews($db, $input) 
+{
+    if (empty($input['product_id'])) 
+    {
+        sendResponse(false, null, "Product id is invalid", 400);
+    }
+
+    $stmt = $db->prepare(
+        "SELECT reviews.user_id, users.first_name AS user_name, reviews.rating, reviews.review_body 
+         FROM reviews 
+         JOIN users ON reviews.user_id = users.user_id 
+         WHERE reviews.product_id = ?"
+    );
+    $stmt->bind_param("i", $input['product_id']);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    $reviews = [];
+    while ($row = $result->fetch_assoc()) 
+    {
+        $reviews[] = $row;
+    }
+
+    sendResponse(true, $reviews, "Reviews fetched", 200);
+}
+
+function addReview($db, $input) 
+{
+    if (empty($input['product_id']) || empty($input['user_id']) || empty($input['rating']) || empty($input['review_body'])) {
+        sendResponse(false, null, "Missing required fields", 400);
+    }
+
+    $stmt = $db->prepare("INSERT INTO reviews (user_id, product_id, rating, review_body) VALUES (?, ?, ?, ?)");
+    $stmt->bind_param("iiis", $input['user_id'], $input['product_id'], $input['rating'], $input['review_body']);
+
+    if ($stmt->execute()) 
+    {
+        sendResponse(true, null, "Review added", 201);
+    } 
+    else 
+    {
+        sendResponse(false, null, "Failed to add review", 500);
     }
 }
 ?>

@@ -2,12 +2,16 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Find Products</title>
+    <title>Product Lookup</title>
     <link rel="stylesheet" type="text/css" href="../css/customer.css">
-    <script type="text/javascript" src="../js/customer.js"></script>
+    <script type="module" src="../js/customer.js"></script>
 </head>
 <body>
+    <?php include '../../Header/php/header.php';?>
     <?php include "spinner.php";?>
+    <div class="alert-container">
+        <?php include "../../AdministratorView/php/add_alerts.php"?>
+    </div>
     <div class="main-layout">
         <aside class="sidebar">
             <form id="productFilterForm">
@@ -32,11 +36,14 @@
                             <option value="rating">Rating</option>
                         </select>
                         <div class="price-range-row">
-                            <label for="minPrice">Min Price</label>
-                            <input type="number" id="minPrice" class="price-input" placeholder="Min" min="0" step="10">
-
-                            <label for="maxPrice">Max Price</label>
-                            <input type="number" id="maxPrice" class="price-input" placeholder="Max" min="0" step="10">
+                            <div class="price-pair">
+                                <label for="minPrice">Min Price</label>
+                                <input type="number" id="minPrice" class="price-input" placeholder="Min" min="0" step="10">
+                            </div>
+                            <div class="price-pair">
+                                <label for="maxPrice">Max Price</label>
+                                <input type="number" id="maxPrice" class="price-input" placeholder="Max" min="0" step="10">
+                            </div>
                         </div>
                         <label>
                             <input class="filter-checkbox" type="checkbox" name="onSale" id="onSale"> On Sale
@@ -48,7 +55,7 @@
         </aside>
         <main class="content">
             <div id="results-container" class="results-container">
-                <h2 id="productsHeading">Top Rated Products</h2>
+                <h1 id="productsHeading">Top Rated Products</h1>
                 <div id="product-list" class="product-list"></div>
                 <div id="noResults" style="display:none; color:#d8000c; margin-top:16px;"></div>
             </div>

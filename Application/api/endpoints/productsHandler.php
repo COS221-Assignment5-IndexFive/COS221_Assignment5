@@ -69,4 +69,6 @@ function updateProduct($db,$input){
         sendResponse(false, null, 'Product not updated: ' . $e->getMessage(), 500);
     }
 }
+
+
 ?>

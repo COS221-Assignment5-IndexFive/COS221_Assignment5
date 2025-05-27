@@ -1,0 +1,72 @@
+.top-nav 
+{
+  background: #fff;
+  padding: 18px 40px;
+  box-shadow: 0 2px 12px rgba(99,102,241,0.08);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  font-family: 'Segoe UI', Arial, Helvetica, sans-serif;
+}
+
+.nav-wrapper 
+{
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.nav-logo 
+{
+  font-size: 26px;
+  font-weight: 700;
+  color: #6366f1;
+  text-decoration: none;
+  letter-spacing: 1px;
+  transition: color 0.2s;
+}
+
+.nav-logo:hover 
+{
+  color: #4f46e5;
+}
+
+.nav-links 
+{
+  display: flex;
+  align-items: center;
+  gap: 0;
+}
+
+.nav-links a 
+{
+  margin-left: 32px;
+  font-size: 16px;
+  color: #1f2937;
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.2s;
+  padding: 8px 0;
+  border-bottom: 2px solid transparent;
+}
+
+.nav-links a:hover 
+{
+  color: #6366f1;
+  border-bottom: 2px solid #6366f1;
+}
+
+.logout-btn 
+{
+  color: #ef4444;
+  font-weight: 600;
+  margin-left: 32px;
+  transition: color 0.2s;
+}
+
+.logout-btn:hover 
+{
+  color: #b91c1c;
+  border-bottom: 2px solid #ef4444;
+}
