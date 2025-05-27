@@ -1,14 +1,79 @@
 # COS221_Assignment5
 
-## Quick Guide to Repository + Projects :round_pushpin:
-(A suggestion for organizing our workflow, definitely up for discussion :smiley:)
-- The repository is where we store all files related to our assignment.
-- A repository is like a snapshot of a local directory stored on a remote server allowing team members to work on the same files simultanously.
-- For a quick introduction to understanding and using GitHub: [Fireship Video](https://youtu.be/HkdAHXoRtos?si=ax6mAmmd5BQ5ZsaP)
-- We use Projects to manage tasks (commonly referred to as **issues** in Git terms), including what needs to be done to mark an issue as completed, assigning issues to members etc.
-- [What we are aiming for](https://youtu.be/yFQ-p6wMS_Y?si=Xkz19jPfAGdglEEm)
-- For each assignment deadline there is a **milestone**, milestones an be viewed by either going to the _Pull requests_ or the _Issues_ tab and clicking on the Milestone button
-- Issues are assigned to milestones which allows us to track our progress towards meeting a specific deadline. Issues can be assigned to multiple milestones.
-- The **README** is written in the [markdown format](https://youtu.be/HUBNt18RFbo?si=gQAA_U-E8poBMxpN), most importantly: [emojis](https://gist.github.com/rxaviers/7360908) can be used throughout :smirk:
-- A Discord Bot will send notifications of any hapennings on the repo to the `github-updates` text channel on our Discord server
-- git showcase
+## Quick Guide to Running CompareIt on your device
+
+### Windows
+#### Prerequisites:
+- [WSL](https://learn.microsoft.com/en-us/windows/wsl/install) installed with any Ubuntu distribution deployed
+- [MariaDB](https://www.geeksforgeeks.org/how-to-install-configure-mariadb-on-ubuntu/) installed on WSL 
+- [XAMPP](https://www.apachefriends.org/) installed on Windows
+
+#### Setting everything up:
+- Navigate to the `htdocs` XAMPP directory. It is usually stored at `C:\xampp\htdocs`
+- Clone the repository with `git clone https://github.com/COS221-Assignment5-IndexFive/COS221_Assignment5.git`
+- Move into repository folder with `cd COS221_Assignment5`
+- Create a `.env` file in the root folder of the project (where you should currently be) with the following structure:
+
+```
+DB_HOST=<where your MariaDB server is hosted>
+DB_NAME=index5_db
+DB_USER=<your MariaDB user>
+DB_PASS=<your MariaDB pass>
+```
+
+- Make the setup script executable with `sudo chmod +x setup.sh`
+- Run the setup script with `./setup.sh`
+- CompareIt should now be running at http://localhost/COS221_Assignment5/Application/Login/php/login.php
+
+### Linux
+
+#### Prerequisites:
+
+* A Debian-based distro (e.g. Ubuntu 20.04+)
+* Apache 2, PHP (with mysqli) and MariaDB installed:
+
+  ```bash
+  sudo apt update
+  sudo apt install apache2 mariadb-server php php-mysqli git -y
+  ```
+* Services running:
+
+  ```bash
+  sudo systemctl enable --now apache2
+  sudo systemctl enable --now mariadb
+  ```
+
+#### Setting everything up:
+
+- Navigate to your web-root and clone the repo:
+
+   ```bash
+   cd /var/www/html
+   sudo git clone https://github.com/COS221-Assignment5-IndexFive/COS221_Assignment5.git
+   ```
+- Change into the project directory:
+
+   ```bash
+   cd COS221_Assignment5
+   ```
+- Create a `.env` file in the project root (same folder as `setup.sh`) with:
+
+   ```
+   DB_HOST=<your MariaDB host (e.g. localhost)>
+   DB_NAME=index5_db
+   DB_USER=<your MariaDB user>
+   DB_PASS=<your MariaDB password>
+   ```
+- Make the setup script executable and run it:
+
+   ```bash
+   chmod +x setup.sh
+   ./setup.sh
+   ```
+- Ensure Apache can serve the files (if you get permission errors, adjust ownership or permissions):
+
+   ```bash
+   sudo chown -R www-data:www-data /var/www/html/COS221_Assignment5
+   sudo chmod -R 755 /var/www/html/COS221_Assignment5
+   ```
+- Visit in your browser at http://localhost/COS221\_Assignment5/Application/Login/php/login.php

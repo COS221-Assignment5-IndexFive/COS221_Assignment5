@@ -106,6 +106,9 @@ function displayPages(currentPage) {
 }
 
 function displayProducts(products) {
+  if (products == null) {
+    return;
+  }
   var table = document.querySelector("#dt-products tbody");
   table.innerHTML = "";
   for (var i = 0; i < products.length; i++) {
