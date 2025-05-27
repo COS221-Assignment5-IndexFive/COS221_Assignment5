@@ -54,7 +54,7 @@ document.getElementById("add-user-form").addEventListener("submit", function (ev
         auv.validationHandler("fg-retailer", auv.validateRetailer(retailer.value) && retailer.value !== "");
     }
 
-    var retailerName = retailer.value;
+    var retailerName = (retailer != null) ? value : "";
 
     if (!auv.valid) {
         return;
