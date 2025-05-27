@@ -369,6 +369,12 @@ async function getComparisonProducts() {
         return;
     })
 
+    if(comparisons == null)
+    {
+        hideLoadingScreen();
+        return;
+    }
+    
     for (let i = 0; i < comparisons.length; i++) {
         buildComparisonCard(comparisons[i], product.price);
     }

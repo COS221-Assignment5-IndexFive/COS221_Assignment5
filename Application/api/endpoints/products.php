@@ -169,7 +169,7 @@ function getComparisonByTitle($db,$input){
         sendResponse(true,$prods,"Products fetched successfully :)",200);
     }else{
         $stmt->close();
-        sendResponse(false,null,"No comparable products found :(",404);
+        sendResponse(true,null,"No comparable products found :(",200);
     }    
 }
 
