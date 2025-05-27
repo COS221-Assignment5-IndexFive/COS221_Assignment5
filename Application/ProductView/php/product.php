@@ -16,6 +16,9 @@ $user_id = isset($_SESSION['user_id']) ? $_SESSION['user_id'] : null;
 </head>
 <body>
     <?php include "spinner.php";?>
+    <div class="alert-container">
+        <?php include "../../AdministratorView/php/add_alerts.php"?>
+    </div>
     <div class="page-container">
         <div class="main-flex">
             <div class="product-main">
@@ -24,18 +27,7 @@ $user_id = isset($_SESSION['user_id']) ? $_SESSION['user_id'] : null;
             </div>
             <aside class="similar-panel">
                 <h2>Other Retailers</h2>
-                <ul class="similar-list">
-                    <!-- <li class="similar-item">
-                        <div class="sim-info">
-                            <div class="sim-title">Similar 1</div>
-                            <div class="sim-retailer">Retailer A</div>
-                        </div>
-                        <div class="sim-price">
-                            <span class="arrow cheaper">▼</span>
-                            <span>$179.00</span>
-                        </div>
-                    </li> -->
-                </ul>
+                <ul class="similar-list"></ul>
             </aside>
         </div>
         <section class="reviews-panel">
