@@ -12,23 +12,27 @@
 - Start a WSL session
 - Navigate to the `htdocs` XAMPP directory. It can usually be found at `/mnt/c/xampp/htdocs`
 - Clone the repository
-  ```
-  git clone https://github.com/COS221-Assignment5-IndexFive/COS221_Assignment5.git
-  cd COS221_Assignment5
-  ```
+  
+```bash
+git clone https://github.com/COS221-Assignment5-IndexFive/COS221_Assignment5.git
+cd COS221_Assignment5
+```
 - Create a `.env` file in the root folder of the project (on the same level as the `setup.sh` file) with the following structure:
 
-```
+```bash
 DB_HOST=<your MariaDB host (i.e. localhost)>
 DB_NAME=index5_db
 DB_USER=<your MariaDB user>
 DB_PASS=<your MariaDB password>
 ```
+
 - Make the setup script executable and run it
-```
+  
+```bash
   sudo chmod +x setup.sh`
   ./setup.sh
 ```
+
 - CompareIt should now be running at http://localhost/COS221_Assignment5/Application/Login/php/login.php
 
 ### Linux
