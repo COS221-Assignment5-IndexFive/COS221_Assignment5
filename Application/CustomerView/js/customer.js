@@ -1,3 +1,5 @@
+import { AlertUtilities } from "../../Utils/AlertUtilites.js";
+
 function showLoadingScreen() 
 {
     /*
@@ -256,13 +258,24 @@ function addWatchlist(productId)
             {
                 var response = JSON.parse(req.responseText);
 
-                if(response.success == false) 
+                if(response.success == true) 
                 {
-                    console.error("Failed to add product to watchlist: " + response.data);
+                    const alertEl = document.getElementById("add-success");
+                    const alert = new AlertUtilities(alertEl, "to watchlist");
+                    alert.showAndDismissAlert();
+                }
+                else
+                {
+                    const alertEl = document.getElementById("add-error");
+                    const alert = new AlertUtilities(alertEl, "to watchlist");
+                    alert.showAndDismissAlert();
                 }
             }
             catch(e)
             {
+                const alertEl = document.getElementById("add-error");
+                const alert = new AlertUtilities(alertEl, "to watchlist");
+                alert.showAndDismissAlert();
                 console.error("Parsing error:", e);
             }
         }

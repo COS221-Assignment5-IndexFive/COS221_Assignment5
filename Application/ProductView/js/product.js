@@ -1,4 +1,5 @@
 import { ApiUtils } from "../../Utils/ApiUtils.js";
+import { AlertUtilities } from "../../Utils/AlertUtilites.js";
 
 function showLoadingScreen() {
     /*
@@ -71,7 +72,8 @@ async function getProduct() {
 
 }
 
-function addWatchlist(productId) {
+function addWatchlist(productId) 
+{
     /*
         Sends a request to the server to add the specified product to the user's watchlist.
     */
@@ -84,16 +86,32 @@ function addWatchlist(productId) {
     var req = new XMLHttpRequest();
     req.open("POST", "../../api/api.php", true);
 
-    req.onreadystatechange = function () {
-        if (req.readyState == 4) {
-            try {
+    req.onreadystatechange = function () 
+    {
+        if (req.readyState == 4) 
+        {
+            try
+            {
                 var response = JSON.parse(req.responseText);
 
-                if (response.success == false) {
-                    console.error("Failed to add product to watchlist: " + response.data);
+                if(response.success == true) 
+                {
+                    const alertEl = document.getElementById("add-success");
+                    const alert = new AlertUtilities(alertEl, "to watchlist");
+                    alert.showAndDismissAlert();
+                }
+                else
+                {
+                    const alertEl = document.getElementById("add-error");
+                    const alert = new AlertUtilities(alertEl, "to watchlist");
+                    alert.showAndDismissAlert();
                 }
             }
-            catch (e) {
+            catch(e)
+            {
+                const alertEl = document.getElementById("add-error");
+                const alert = new AlertUtilities(alertEl, "to watchlist");
+                alert.showAndDismissAlert();
                 console.error("Parsing error:", e);
             }
         }

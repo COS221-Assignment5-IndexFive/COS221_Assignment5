@@ -1,3 +1,5 @@
+import { AlertUtilities } from "../../Utils/AlertUtilites.js";
+
 function getCookie(cname) 
 {
     /*
@@ -112,14 +114,24 @@ function deleteWatchlist(productId)
             {
                 var response = JSON.parse(req.responseText);
 
-                if (response.success == false) 
+                if (response.success == true) 
                 {
-                    console.error("Error deleting product: ", response.message);
+                    const alertEl = document.getElementById("delete-success");
+                    const alert = new AlertUtilities(alertEl, "from watchlist");
+                    alert.showAndDismissAlert();
+                }
+                else
+                {
+                    const alertEl = document.getElementById("delete-error");
+                    const alert = new AlertUtilities(alertEl, "from watchlist");
+                    alert.showAndDismissAlert();
                 }
             }
             catch(e)
             {
-                console.error("Parsing error:", e);
+                const alertEl = document.getElementById("delete-error");
+                const alert = new AlertUtilities(alertEl, "from watchlist");
+                alert.showAndDismissAlert();
             }
         }
     };

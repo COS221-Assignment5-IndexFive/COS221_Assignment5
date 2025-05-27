@@ -4,11 +4,14 @@
     <meta charset="UTF-8">
     <title>Product Lookup</title>
     <link rel="stylesheet" type="text/css" href="../css/customer.css">
-    <script type="text/javascript" src="../js/customer.js"></script>
+    <script type="module" src="../js/customer.js"></script>
 </head>
 <body>
     <?php include '../../Header/php/header.php';?>
     <?php include "spinner.php";?>
+    <div class="alert-container">
+        <?php include "../../AdministratorView/php/add_alerts.php"?>
+    </div>
     <div class="main-layout">
         <aside class="sidebar">
             <form id="productFilterForm">
