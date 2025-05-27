@@ -29,7 +29,7 @@ DB_PASS=<your MariaDB password>
 - Make the setup script executable and run it
   
 ```bash
-  sudo chmod +x setup.sh`
+  sudo chmod +x setup.sh
   ./setup.sh
 ```
 
