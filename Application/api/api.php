@@ -63,15 +63,10 @@ class API {
 		case 'getAllRetailers':
 			getAllRetailers($this->conn);
 			break;
-		// @g3rard-j used for testing
-		// case 'getUsers':
-			// $this->getUsers($input);
-			// break;
-			// case 'getProducts':
-			// 	$this->getProducts($input);
-			// 	break;
-
-
+		
+		case 'updateRetailer':
+			updateRetailer($this->conn, $input);
+			break;
 
 		case 'addUser':
 			addUser($this->conn, $input);
@@ -82,7 +77,9 @@ class API {
 		case 'getAllUsers':
 			getAllUsers($this->conn);
 			break;
-
+		case 'UpdateUser':
+			updateUser($this->conn, $input);
+			break;
 
 		// only administrators or retails can use these
 		case 'addProduct':
@@ -110,7 +107,7 @@ class API {
 			getComparisonByTitle($this->conn,$input);
 			break;
 
-
+		
 		// addoing to watch list :
 		case 'AddWatchlist': 
 			addToWatchlist($this->conn, $input);

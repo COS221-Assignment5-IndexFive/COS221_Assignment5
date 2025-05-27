@@ -1,0 +1,36 @@
+services:
+  # db:
+  #   image: mariadb:10.6
+  #   container_name: indexfive_db
+  #   restart: unless-stopped
+  #   environment:
+  #     MYSQL_RANDOM_ROOT_PASSWORD: "YES"       
+  #     MYSQL_DATABASE: ${DB_NAME}                   
+  #     MYSQL_USER: ${DB_USER}               
+  #     MYSQL_PASSWORD: ${DB_PASS}          
+  #   volumes:
+  #     - db_data:/var/lib/mysql                
+  #     - ./DB/dumps/index5_db.sql:/docker-entrypoint-initdb.d/init.sql
+  #   ports:
+  #     - "3306:3306"
+
+  web:
+    
+    image: php:8.1-apache
+    container_name: indexfive_app
+    restart: unless-stopped
+    build: 
+      context: .
+    # depends_on:
+    #   - db
+    volumes:
+      - ./Application:/var/www/html/Application                  
+      - ./php.ini:/usr/local/etc/php/php.ini
+      - ./default-conf.conf:/etc/apache2/sites-available/000-default.conf
+    ports:
+      - "80:80"
+    environment:
+      DB_HOST:     ${DB_HOST}
+      DB_NAME:     ${DB_NAME}
+      DB_USER:     ${DB_USER}
+      DB_PASSWORD: ${DB_PASS}
