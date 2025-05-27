@@ -71,14 +71,11 @@ function removeRetailer($connection, $data) {
         $stmt->close();
         sendResponse(false, null, 'Failed to remove user: ' . $stmt->error, 500);
     }
-
-    $stmt->close();
-
-    $stmt = $connection->prepare("DELETE FROM retailers WHERE retailer_id = ?");
-    if (!$stmt) {
-        sendResponse(false, null, 'Failed to prepare statement: ' . $connection->error, 500);
+    else
+    {
+        $stmt->close();
+        sendResponse(true, null, 'Retailer removed successfully.', 200);
     }
-    $stmt->bind_param("i", $retailer_id);
 
     if ($stmt->execute()) {
         if ($stmt->affected_rows > 0) {

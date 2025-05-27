@@ -1,6 +1,6 @@
 <?php
 function authUsers($connection) {
-    if (!isset($_SESSION['user_id']) || !isAdmin($connection, $_SESSION['user_id'])) {
+    if (!isset($_SESSION['user_id']) || $_SESSION['user_type'] !== "admin") {
         sendResponse(false, null, 'Unauthorized: Admin access required.', 403);
     }
 }
@@ -19,10 +19,9 @@ function addUser($connection, $data) {
     $first_name = $data['first_name'];
     $last_name = $data['last_name'] ?? null;
     $cell = $data['cell_number'] ?? null;
-    $apikey = bin2hex(random_bytes(16));
 
-    $stmt = $connection->prepare("INSERT INTO users (password_hash, first_name, last_name, cell_number, email_address, apikey) VALUES (?, ?, ?, ?, ?, ?)");
-    $stmt->bind_param("ssssss", $password, $first_name, $last_name, $cell, $email, $apikey);
+    $stmt = $connection->prepare("INSERT INTO users (password_hash, first_name, last_name, cell_number, email_address) VALUES (?, ?, ?, ?, ?)");
+    $stmt->bind_param("sssss", $password, $first_name, $last_name, $cell, $email);
 
     if ($stmt->execute()) {
         sendResponse(true, ['user_id' => $stmt->insert_id], 'User added successfully.', 200);

@@ -54,7 +54,7 @@ document.getElementById("add-user-form").addEventListener("submit", function (ev
         auv.validationHandler("fg-retailer", auv.validateRetailer(retailer.value) && retailer.value !== "");
     }
 
-    var retailerName = (retailer != null) ? value : "";
+    var retailerName = (retailer != null) ? retailer.value : "";
 
     if (!auv.valid) {
         return;
@@ -67,10 +67,10 @@ document.getElementById("add-user-form").addEventListener("submit", function (ev
     var errorMessage = new AlertUtilities(document.getElementById("add-error"), email);
 
     var request = {
-        "type": "Signup",
-        "name": firstName,
-        "surname": lastName,
-        "email": email,
+        "type": "addUser",
+        "first_name": firstName,
+        "last_name": lastName,
+        "email_address": email,
         "password": password,
         "cell_number": phoneNum
     };
