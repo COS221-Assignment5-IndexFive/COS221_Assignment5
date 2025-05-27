@@ -59,8 +59,8 @@ function signup($connection, $data)
 
 
     $stmt = $connection->prepare("
-        INSERT INTO users (password_hash, first_name, last_name, cell_number, email_address, apikey)
-        VALUES (?, ?, ?, ?, ?, ?)
+        INSERT INTO users (password_hash, first_name, last_name, cell_number, email_address)
+        VALUES (?, ?, ?, ?, ?)
     ");
 
     if (!$stmt) 
@@ -69,7 +69,7 @@ function signup($connection, $data)
     }
 
     $stmt->bind_param(
-        "ssssss",
+        "sssss",
         $hashed,
         $data["name"],
         $data["surname"],

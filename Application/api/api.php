@@ -46,7 +46,7 @@ class API {
 
 	switch ($action) {
 		case 'Signup':
-					register($this->conn,  $input);
+					signup($this->conn,  $input);
 			break;
 		case 'Login':
 					login($this->conn,  $input);
@@ -122,6 +122,14 @@ class API {
 
 		case 'DeleteWatchlist': 
 			removeFromWatchlist($this->conn, $input);
+			break;
+
+		case "getReviews":
+			getReviews($this->conn, $input);
+			break;
+			
+    	case "addReview":
+			addReview($this->conn, $input);
 			break;
 
 		default:

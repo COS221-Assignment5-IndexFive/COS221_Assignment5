@@ -172,4 +172,49 @@ function getComparisonByTitle($db,$input){
         sendResponse(false,null,"No comparable products found :(",404);
     }    
 }
+
+function getReviews($db, $input) 
+{
+    if (empty($input['product_id'])) 
+    {
+        sendResponse(false, null, "Product id is invalid", 400);
+    }
+
+    $stmt = $db->prepare(
+        "SELECT reviews.user_id, users.first_name AS user_name, reviews.rating, reviews.review_body 
+         FROM reviews 
+         JOIN users ON reviews.user_id = users.user_id 
+         WHERE reviews.product_id = ?"
+    );
+    $stmt->bind_param("i", $input['product_id']);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    $reviews = [];
+    while ($row = $result->fetch_assoc()) 
+    {
+        $reviews[] = $row;
+    }
+
+    sendResponse(true, $reviews, "Reviews fetched", 200);
+}
+
+function addReview($db, $input) 
+{
+    if (empty($input['product_id']) || empty($input['user_id']) || empty($input['rating']) || empty($input['review_body'])) {
+        sendResponse(false, null, "Missing required fields", 400);
+    }
+
+    $stmt = $db->prepare("INSERT INTO reviews (user_id, product_id, rating, review_body) VALUES (?, ?, ?, ?)");
+    $stmt->bind_param("iiis", $input['user_id'], $input['product_id'], $input['rating'], $input['review_body']);
+
+    if ($stmt->execute()) 
+    {
+        sendResponse(true, null, "Review added", 201);
+    } 
+    else 
+    {
+        sendResponse(false, null, "Failed to add review", 500);
+    }
+}
 ?>
